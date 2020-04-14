@@ -46,7 +46,8 @@ public class Client implements Runnable {
         send_data = scan.nextLine();
 
     }
-@Override
+
+    @Override
     public void run() {
 
         try {
@@ -57,7 +58,7 @@ public class Client implements Runnable {
                 BufferedReader reader = new BufferedReader(new InputStreamReader(input));
                 if (send_data != null) {
                     writer.println(Nom + " > " + send_data);
-                    send_data=null;
+                    send_data = null;
                     writer.flush();
                 }
                 if (reader.ready()) {
@@ -75,13 +76,20 @@ public class Client implements Runnable {
         }
 
     }
+
     public static void main(String arg[]) {
-        Client client = new Client("localhost", 6666, "Ait");
+        int i = 6667;
+        Client client = new Client("localhost", i, "User" + i);
         Thread t1 = new Thread(client);
 
         t1.start();
         while (true) {
             client.Clientwrite();
+            try {
+                Thread.sleep(100);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
         }
     }
 
