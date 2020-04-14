@@ -42,7 +42,7 @@ public class Client implements Runnable {
     public void Clientwrite() {
         Scanner scan = new Scanner(System.in);
 
-        System.out.print("> ");
+       // System.out.print("> ");
         send_data = scan.nextLine();
 
     }
@@ -57,7 +57,7 @@ public class Client implements Runnable {
                 InputStream input = socket.getInputStream(); // ouvre un flux d’entrée vers le socket
                 BufferedReader reader = new BufferedReader(new InputStreamReader(input));
                 if (send_data != null) {
-                    writer.println(Nom + " > " + send_data);
+                    writer.println(Nom + " : " + send_data);
                     send_data = null;
                     writer.flush();
                 }
@@ -78,7 +78,7 @@ public class Client implements Runnable {
     }
 
     public static void main(String arg[]) {
-        int i = 6667;
+        int i = 6668;
         Client client = new Client("localhost", i, "User" + i);
         Thread t1 = new Thread(client);
 

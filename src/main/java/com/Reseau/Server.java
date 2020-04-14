@@ -22,7 +22,7 @@ public class Server implements Runnable {
         try {
             Socket socket = serversocket.accept(); // établit la connexion
             System.out.println("Connected as " + socket.getInetAddress());
-            
+
             System.out.println("Server waiting for connection...");
             return socket;
         } catch (IOException ioe) {
@@ -30,8 +30,6 @@ public class Server implements Runnable {
         }
         return null;
     }
-
-    
 
     @Override
     public void run() {
@@ -42,17 +40,14 @@ public class Server implements Runnable {
             InputStream input = socket.getInputStream();
             BufferedReader reader = new BufferedReader(new InputStreamReader(input));
             writers.add(writer);
-            System.out.println("Connected as " + socket.getInetAddress());
-
-            System.out.println("Server waiting for connection...");
             while (true) {
-
                 if (reader.ready()) {
-                    for (PrintWriter writerr : writers) {
                     String text = reader.readLine();
-                    writerr.println(text);
-                    System.out.print(text);
-                    writerr.flush();
+                    for (PrintWriter writerr : writers) {
+                        
+                        writerr.println(text);
+                        System.out.println(text);
+                       // writerr.flush();
                     }
                 }
             }
@@ -60,10 +55,10 @@ public class Server implements Runnable {
             System.out.println(ioe.getMessage());
         }
     }
+
     public static void main(String arg[]) {
-        for(int i=6666;i<6680;i++)
-        {
-            new Thread(new Server("localhost", i),"client-"+Integer.toString(i)).start();
+        for (int i = 6666; i < 6680; i++) {
+            new Thread(new Server("localhost", i), "client-" + Integer.toString(i)).start();
         }
     }
 }
