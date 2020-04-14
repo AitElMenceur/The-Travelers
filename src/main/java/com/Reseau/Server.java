@@ -51,8 +51,10 @@ public class Server implements Runnable {
                     }
                 }
             }
-        } catch (IOException ioe) {
+           
+        } catch (IOException ioe) { 
             System.out.println(ioe.getMessage());
+            
         }
     }
 
