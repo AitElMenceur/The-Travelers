@@ -20,10 +20,11 @@ public class Server implements Runnable {
 
     public Socket connect() {
         try {
-            Socket socket = serversocket.accept(); // établit la connexion
-            System.out.println("Connected as " + socket.getInetAddress());
+            Socket socket = serversocket.accept();
 
-            System.out.println("Server waiting for connection...");
+            //System.out.println("Connected as " + socket.getInetAddress());
+
+            //System.out.println("Server waiting for connection...");
             return socket;
         } catch (IOException ioe) {
             System.out.println(ioe.getMessage());
@@ -35,26 +36,48 @@ public class Server implements Runnable {
     public void run() {
         try {
             Socket socket = connect();
+            boolean finish = true;
             OutputStream output = socket.getOutputStream();
             PrintWriter writer = new PrintWriter(output, true);
             InputStream input = socket.getInputStream();
             BufferedReader reader = new BufferedReader(new InputStreamReader(input));
             writers.add(writer);
-            while (true) {
+            while (finish) {
                 if (reader.ready()) {
-                    String text = reader.readLine();
-                    for (PrintWriter writerr : writers) {
-                        
-                        writerr.println(text);
-                        System.out.println(text);
-                       // writerr.flush();
+                    String text = reader.readLine();                    
+                    switch (text.substring(0, 2)) {
+                        case ("00"):
+                            writer.println("Welcome to the server");
+                            System.out.println("Connected in port " + socket.getLocalPort());
+                            break;
+                        case ("01"):
+                            writer.println("You join the chat " + text.substring(3, 4));
+                            break;
+                        case ("02"):
+                            writer.println("You leaved the chat " + text.substring(3, 4));
+                            break;
+                        case ("03"):
+                            String Groupnumber=text.substring(3,4);
+                            String Username=text.substring(4,12);
+                            String message=text.substring(12);
+                            for (PrintWriter writerr : writers) {
+                                writerr.println(Username+" to group "+Groupnumber+": "+message);
+                                System.out.println(text);
+                                // writerr.flush();
+                            }
+                            break;
+                        case ("FF"):
+                            writer.println("goodbye");
+                            finish = false;
+                            break;
                     }
+
                 }
             }
-           
-        } catch (IOException ioe) { 
+
+        } catch (IOException ioe) {
             System.out.println(ioe.getMessage());
-            
+
         }
     }
 

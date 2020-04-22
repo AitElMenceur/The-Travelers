@@ -3,14 +3,18 @@
 import java.io.*;
 import java.net.*;
 import java.util.Scanner;
+import java.util.jar.Attributes.Name;
+
+import main.java.com.Reseau.CommunicationFormator;
 
 public class Client implements Runnable {
-    private String Nom;
+    private String Name;
     private Socket socket;
     private String send_data = null;
+    private CommunicationFormator comFormator = new CommunicationFormator();
 
     public Client(String ip, int port, String nom) {
-        this.Nom = nom;
+        this.Name = nom;
         try {
             this.socket = new Socket(ip, port);
         } catch (IOException e) {
@@ -24,7 +28,7 @@ public class Client implements Runnable {
                                                             // = new PrintWriter(output, true);// écrit vers le flux de
                                                             // sortie, en
             PrintWriter writer = new PrintWriter(output, true);
-            writer.println(Nom + ": " + "Enter text: ");
+            writer.println(comFormator.connect());
             InputStream input = socket.getInputStream(); // ouvre un flux d’entrée vers le socket
             BufferedReader reader = new BufferedReader(new InputStreamReader(input));
             String line = reader.readLine(); // lit le flux d’entrée, en accord avec le protocole du serveur!
@@ -41,23 +45,23 @@ public class Client implements Runnable {
 
     public void Clientwrite() {
         Scanner scan = new Scanner(System.in);
-
-       // System.out.print("> ");
+        // System.out.print("> ");
         send_data = scan.nextLine();
 
     }
 
     @Override
     public void run() {
-
         try {
+            OutputStream output = socket.getOutputStream(); // ouvre un flux de sortie vers le socket PrintWriter
+            PrintWriter writer = new PrintWriter(output, true);
+            InputStream input = socket.getInputStream(); // ouvre un flux d’entrée vers le socket
+            BufferedReader reader = new BufferedReader(new InputStreamReader(input));
+            writer.println(comFormator.connect());
             while (true) {
-                OutputStream output = socket.getOutputStream(); // ouvre un flux de sortie vers le socket PrintWriter
-                PrintWriter writer = new PrintWriter(output, true);
-                InputStream input = socket.getInputStream(); // ouvre un flux d’entrée vers le socket
-                BufferedReader reader = new BufferedReader(new InputStreamReader(input));
+
                 if (send_data != null) {
-                    writer.println(Nom + " : " + send_data);
+                    writer.println(comFormator.send(send_data, "AA",Name));
                     send_data = null;
                     writer.flush();
                 }
@@ -78,7 +82,7 @@ public class Client implements Runnable {
     }
 
     public static void main(String arg[]) {
-        int i = 6668;
+        int i = 6667;
         Client client = new Client("localhost", i, "User" + i);
         Thread t1 = new Thread(client);
 
@@ -93,5 +97,4 @@ public class Client implements Runnable {
         }
     }
 
-    
 }
