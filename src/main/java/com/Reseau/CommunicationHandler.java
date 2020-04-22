@@ -1,4 +1,4 @@
-package main.java.com.Reseau;
+package com.Reseau;
 public interface CommunicationHandler {
     public String join(String GroupCode);
     public String leave(String GroupCode);

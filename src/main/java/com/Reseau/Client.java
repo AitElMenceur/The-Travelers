@@ -5,8 +5,6 @@ import java.net.*;
 import java.util.Scanner;
 import java.util.jar.Attributes.Name;
 
-import main.java.com.Reseau.CommunicationFormator;
-
 public class Client implements Runnable {
     private String Name;
     private Socket socket;
