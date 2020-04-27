@@ -62,9 +62,10 @@ public class Server implements Runnable {
                             String message=text.substring(12);
                             for (PrintWriter writerr : writers) {
                                 writerr.println(Username+" to group "+Groupnumber+": "+message);
-                                System.out.println(text);
+                                
                                 // writerr.flush();
                             }
+                            System.out.println(text);
                             break;
                         case ("FF"):
                             writer.println("goodbye");

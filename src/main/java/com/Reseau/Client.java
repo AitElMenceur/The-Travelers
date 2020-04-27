@@ -80,7 +80,7 @@ public class Client implements Runnable {
     }
 
     public static void main(String arg[]) {
-        int i = 6667;
+        int i = 6670;
         Client client = new Client("localhost", i, "User" + i);
         Thread t1 = new Thread(client);
 
