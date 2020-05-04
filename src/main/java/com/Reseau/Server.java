@@ -2,13 +2,14 @@
 
 import java.io.*;
 import java.net.*;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
 
 public class Server implements Runnable {
     private String ip;
     private ServerSocket serversocket;
-    private static Set<PrintWriter> writers = new HashSet<>();
+    // private static Set<PrintWriter> writers = new HashSet<>();
+
+    private static ArrayList<Group> listgrp = new ArrayList<Group>();
 
     public Server(String ip, int port) {
         try {
@@ -21,15 +22,28 @@ public class Server implements Runnable {
     public Socket connect() {
         try {
             Socket socket = serversocket.accept();
-
-            //System.out.println("Connected as " + socket.getInetAddress());
-
-            //System.out.println("Server waiting for connection...");
             return socket;
         } catch (IOException ioe) {
             System.out.println(ioe.getMessage());
         }
         return null;
+    }
+
+    public synchronized void remove(String Groupnumber, PrintWriter writer) {
+        for (Group p : listgrp) {
+            if (p.getGroupcode().equals(Groupnumber)) {
+                p.leave(writer);
+            }
+        }
+    }
+
+    public synchronized void add(String Groupnumber, PrintWriter writer) {
+        for (Group p : listgrp) {
+            if (p.getGroupcode().equals(Groupnumber)) {
+                System.out.println(p.getGroupcode() + "ok");
+                p.join(writer);
+            }
+        }
     }
 
     @Override
@@ -41,39 +55,52 @@ public class Server implements Runnable {
             PrintWriter writer = new PrintWriter(output, true);
             InputStream input = socket.getInputStream();
             BufferedReader reader = new BufferedReader(new InputStreamReader(input));
-            writers.add(writer);
+            // writers.add(writer);
             while (finish) {
                 if (reader.ready()) {
-                    String text = reader.readLine();                    
+                    String text = reader.readLine();
+                    System.out.println(text);
+                    String Groupnumber;
                     switch (text.substring(0, 2)) {
                         case ("00"):
                             writer.println("Welcome to the server");
                             System.out.println("Connected in port " + socket.getLocalPort());
                             break;
                         case ("01"):
-                            writer.println("You join the chat " + text.substring(3, 4));
+                            Groupnumber = text.substring(2, 4);
+                            add(Groupnumber, writer);
+                            writer.println("You join the chat " + Groupnumber);
                             break;
                         case ("02"):
-                            writer.println("You leaved the chat " + text.substring(3, 4));
+                            Groupnumber = text.substring(2, 4);
+                            remove(Groupnumber, writer);
+                            writer.println("You leaved the chat " + Groupnumber);
                             break;
                         case ("03"):
-                            String Groupnumber=text.substring(3,4);
-                            String Username=text.substring(4,12);
-                            String message=text.substring(12);
-                            for (PrintWriter writerr : writers) {
-                                writerr.println(Username+" to group "+Groupnumber+": "+message);
-                                
-                                // writerr.flush();
+                            Groupnumber = text.substring(2, 4);
+                            System.out.println(Groupnumber);
+                            for (Group p : listgrp) {
+                                System.out.println("p:" + p.getGroupcode());
+                                System.out.println("Grpnb:" + Groupnumber);
+                                if (p.getGroupcode().equals(Groupnumber)) {
+                                    p.send(text);
+                                }
                             }
-                            System.out.println(text);
                             break;
                         case ("FF"):
                             writer.println("goodbye");
                             finish = false;
+                            reader.close();
+                            writer.close();
+                            output.close();
+                            input.close();
                             break;
+
                     }
+                    text = null;
 
                 }
+
             }
 
         } catch (IOException ioe) {
@@ -83,6 +110,10 @@ public class Server implements Runnable {
     }
 
     public static void main(String arg[]) {
+        Group G1 = new Group("AA");
+        Group G2 = new Group("BB");
+        listgrp.add(G1);
+        listgrp.add(G2);
         for (int i = 6666; i < 6680; i++) {
             new Thread(new Server("localhost", i), "client-" + Integer.toString(i)).start();
         }

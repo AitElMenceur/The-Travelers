@@ -3,7 +3,6 @@
 import java.io.*;
 import java.net.*;
 import java.util.Scanner;
-import java.util.jar.Attributes.Name;
 
 public class Client implements Runnable {
     private String Name;
@@ -20,32 +19,10 @@ public class Client implements Runnable {
         }
     }
 
-    public void connect() {
-        try { // ouvre le socket
-            OutputStream output = socket.getOutputStream(); // ouvre un flux de sortie vers le socket PrintWriter writer
-                                                            // = new PrintWriter(output, true);// écrit vers le flux de
-                                                            // sortie, en
-            PrintWriter writer = new PrintWriter(output, true);
-            writer.println(comFormator.connect());
-            InputStream input = socket.getInputStream(); // ouvre un flux d’entrée vers le socket
-            BufferedReader reader = new BufferedReader(new InputStreamReader(input));
-            String line = reader.readLine(); // lit le flux d’entrée, en accord avec le protocole du serveur!
-            System.out.println(line);
-            input.close(); // clôt le inputStream
-            output.close(); // clôt le outputStream
-            socket.close(); // clôt le socket
-        } catch (UnknownHostException uhe) {
-            System.out.println(uhe.getMessage());
-        } catch (IOException ioe) {
-            System.out.println(ioe.getMessage());
-        }
-    }
-
     public void Clientwrite() {
         Scanner scan = new Scanner(System.in);
         // System.out.print("> ");
         send_data = scan.nextLine();
-
     }
 
     @Override
@@ -56,12 +33,28 @@ public class Client implements Runnable {
             InputStream input = socket.getInputStream(); // ouvre un flux d’entrée vers le socket
             BufferedReader reader = new BufferedReader(new InputStreamReader(input));
             writer.println(comFormator.connect());
+            String str_Groupe = "00";
+            Scanner scan = new Scanner(System.in);
             while (true) {
 
                 if (send_data != null) {
-                    writer.println(comFormator.send(send_data, "AA",Name));
-                    send_data = null;
+                    if (send_data.equalsIgnoreCase("join")) {
+                        
+                        System.out.println("Which Group?");
+                        str_Groupe = scan.next();
+                        writer.println(comFormator.join(str_Groupe));
+                    } else if (send_data.equalsIgnoreCase("leave")) {
+                        System.out.println("Which Group?");
+                        str_Groupe = scan.next();
+                        writer.println(comFormator.leave(str_Groupe));
+                    }else if (send_data.equalsIgnoreCase("quit")) {
+                        writer.println(comFormator.disconnect());
+                        return;
+                    } else {
+                        writer.println(comFormator.send(send_data, str_Groupe, Name));
+                    }
                     writer.flush();
+                    send_data = null;
                 }
                 if (reader.ready()) {
                     String line = reader.readLine(); // lit le flux d’entrée, en accord avec le protocole du serveur!
@@ -69,7 +62,6 @@ public class Client implements Runnable {
                 }
                 // input.close(); // clôt le inputStream
                 // output.close(); // clôt le outputStream
-
             }
         } catch (UnknownHostException uhe) {
             System.out.println(uhe.getMessage());
@@ -80,19 +72,19 @@ public class Client implements Runnable {
     }
 
     public static void main(String arg[]) {
-        int i = 6670;
+        int i = 6669;
         Client client = new Client("localhost", i, "User" + i);
         Thread t1 = new Thread(client);
 
         t1.start();
         while (true) {
-            client.Clientwrite();
+            
             try {
                 Thread.sleep(100);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
+            client.Clientwrite();
         }
     }
-
 }
