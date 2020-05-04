@@ -9,7 +9,7 @@ public class Server implements Runnable {
     private ServerSocket serversocket;
     // private static Set<PrintWriter> writers = new HashSet<>();
 
-    private static ArrayList<Group> listgrp = new ArrayList<Group>();
+    private static ArrayList<Group> listGroup = new ArrayList<Group>();
 
     public Server(String ip, int port) {
         try {
@@ -29,17 +29,17 @@ public class Server implements Runnable {
         return null;
     }
 
-    public synchronized void remove(String Groupnumber, PrintWriter writer) {
-        for (Group p : listgrp) {
-            if (p.getGroupcode().equals(Groupnumber)) {
+    public synchronized void remove(String groupNumber, PrintWriter writer) {
+        for (Group p : listGroup) {
+            if (p.getGroupcode().equals(groupNumber)) {
                 p.leave(writer);
             }
         }
     }
 
-    public synchronized void add(String Groupnumber, PrintWriter writer) {
-        for (Group p : listgrp) {
-            if (p.getGroupcode().equals(Groupnumber)) {
+    public synchronized void add(String groupNumber, PrintWriter writer) {
+        for (Group p : listGroup) {
+            if (p.getGroupcode().equals(groupNumber)) {
                 System.out.println(p.getGroupcode() + "ok");
                 p.join(writer);
             }
@@ -50,46 +50,45 @@ public class Server implements Runnable {
     public void run() {
         try {
             Socket socket = connect();
-            boolean finish = true;
+            boolean finish = false;
             OutputStream output = socket.getOutputStream();
             PrintWriter writer = new PrintWriter(output, true);
             InputStream input = socket.getInputStream();
             BufferedReader reader = new BufferedReader(new InputStreamReader(input));
             // writers.add(writer);
-            while (finish) {
+            while (!finish) {
                 if (reader.ready()) {
-                    String text = reader.readLine();
-                    System.out.println(text);
-                    String Groupnumber;
-                    switch (text.substring(0, 2)) {
+                    String Rawtext = reader.readLine();
+                    System.out.println(Rawtext);
+                    CommunicationDecoder dec = new CommunicationDecoder(Rawtext);
+                    String commandCode = dec.GetCommandCode(Rawtext);
+                    String groupNumber = dec.GetGroupcode(Rawtext);
+                    switch (commandCode) {
                         case ("00"):
                             writer.println("Welcome to the server");
                             System.out.println("Connected in port " + socket.getLocalPort());
                             break;
                         case ("01"):
-                            Groupnumber = text.substring(2, 4);
-                            add(Groupnumber, writer);
-                            writer.println("You join the chat " + Groupnumber);
+                            add(groupNumber, writer);
+                            writer.println("You join the chat " + groupNumber);
                             break;
                         case ("02"):
-                            Groupnumber = text.substring(2, 4);
-                            remove(Groupnumber, writer);
-                            writer.println("You leaved the chat " + Groupnumber);
+                            remove(groupNumber, writer);
+                            writer.println("You leaved the chat " + groupNumber);
                             break;
                         case ("03"):
-                            Groupnumber = text.substring(2, 4);
-                            System.out.println(Groupnumber);
-                            for (Group p : listgrp) {
+                            System.out.println(groupNumber);
+                            for (Group p : listGroup) {
                                 System.out.println("p:" + p.getGroupcode());
-                                System.out.println("Grpnb:" + Groupnumber);
-                                if (p.getGroupcode().equals(Groupnumber)) {
-                                    p.send(text);
+                                System.out.println("Grpnb:" + groupNumber);
+                                if (p.getGroupcode().equals(groupNumber)) {
+                                    p.send(Rawtext);
                                 }
                             }
                             break;
                         case ("FF"):
                             writer.println("goodbye");
-                            finish = false;
+                            finish = true;
                             reader.close();
                             writer.close();
                             output.close();
@@ -97,10 +96,8 @@ public class Server implements Runnable {
                             break;
 
                     }
-                    text = null;
-
+                    Rawtext = null;
                 }
-
             }
 
         } catch (IOException ioe) {
@@ -112,8 +109,8 @@ public class Server implements Runnable {
     public static void main(String arg[]) {
         Group G1 = new Group("AA");
         Group G2 = new Group("BB");
-        listgrp.add(G1);
-        listgrp.add(G2);
+        listGroup.add(G1);
+        listGroup.add(G2);
         for (int i = 6666; i < 6680; i++) {
             new Thread(new Server("localhost", i), "client-" + Integer.toString(i)).start();
         }

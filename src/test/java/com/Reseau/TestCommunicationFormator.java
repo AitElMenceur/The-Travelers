@@ -21,7 +21,7 @@ public class TestCommunicationFormator {
 
     @Test
     public void Testsend() {
-        assertEquals(comFormator.send("Message", "21", "User"),"0321User  Message");
+        assertEquals(comFormator.send("Message", "21", "User"),"0321User::::Message");
     }
 
     @Test

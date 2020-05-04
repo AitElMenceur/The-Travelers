@@ -1,5 +1,5 @@
 package com.Reseau;
-public interface CommunicationHandler {
+public interface CommunicationFormatorIT {
     public String join(String GroupCode);
     public String leave(String GroupCode);
     public String connect();

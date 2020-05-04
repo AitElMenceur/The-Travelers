@@ -21,10 +21,11 @@ public class Group {
         writers.remove(a);
     }
 
-    public void send(String text) {
-        String Groupnumber = text.substring(2, 4);
-        String Username = text.substring(4, 12);
-        String message = text.substring(12);
+    public void send(String Rawtext) {
+        CommunicationDecoder dec = new CommunicationDecoder(Rawtext);
+        String Groupnumber = dec.GetGroupcode(Rawtext);
+        String Username = dec.GetUsername(Rawtext);
+        String message = dec.GetMessage(Rawtext);
         for (PrintWriter w : writers) {
             w.println(Username + " to group " + Groupnumber + ": " + message);
             System.out.println(Username + " to group " + Groupnumber + ": " + message);

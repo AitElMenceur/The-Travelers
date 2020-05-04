@@ -1,6 +1,6 @@
 package com.Reseau;
 
-public class CommunicationFormator implements CommunicationHandler {    
+public class CommunicationFormator implements CommunicationFormatorIT {    
     /** 
      * Format join instruction
      * @param GroupCode
@@ -32,8 +32,8 @@ public class CommunicationFormator implements CommunicationHandler {
     @Override
     public String send(String Message, String GroupCode,String Username) {
         if(Username.length()<8){
-            for (int i =0;i<8-Username.length();i++){
-                Username=Username+" ";
+            for (int i =Username.length();i<8;i++){
+                Username=Username+":";
             }
         }
         return "03" + GroupCode + Username+Message;
