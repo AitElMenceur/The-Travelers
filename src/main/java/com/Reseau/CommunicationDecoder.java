@@ -15,10 +15,22 @@ public class CommunicationDecoder implements CommunicationDecoderIT {
 
     }
 
+    
+    /** 
+     * @param Rawtext
+     * @return String
+     * Extract the command code from a received string 
+     */
     public String GetCommandCode(String Rawtext) {
         return Rawtext.substring(0, 2);
     }
 
+    
+    /** 
+     * @param Rawtext
+     * @return String
+     * Extract the group code from a received string 
+     */
     public String GetGroupcode(String Rawtext) {
         try {
             return Rawtext.substring(2, 4);
@@ -27,6 +39,12 @@ public class CommunicationDecoder implements CommunicationDecoderIT {
         }
     }
 
+    
+    /** 
+     * @param Rawtext
+     * @return String
+     * Extract the username from a received string 
+     */
     public String GetUsername(String Rawtext) {
         try {
             return Rawtext.substring(4, 12).replaceAll(":", "");
@@ -35,6 +53,12 @@ public class CommunicationDecoder implements CommunicationDecoderIT {
         }
     }
 
+    
+    /** 
+     * @param Rawtext
+     * @return String
+     * Extract the message from a received string 
+     */
     public String GetMessage(String Rawtext) {
         try {
             return Rawtext.substring(12);
