@@ -49,6 +49,7 @@ public class Client implements Runnable {
                         writer.println(comFormator.leave(str_Groupe));
                     }else if (send_data.equalsIgnoreCase("quit")) {
                         writer.println(comFormator.disconnect());
+                        reader.close();
                         return;
                     } else {
                         writer.println(comFormator.send(send_data, str_Groupe, Name));
@@ -72,7 +73,7 @@ public class Client implements Runnable {
     }
 
     public static void main(String arg[]) {
-        int i = 6669;
+        int i = 6666;
         Client client = new Client("localhost", i, "User" + i);
         Thread t1 = new Thread(client);
 
