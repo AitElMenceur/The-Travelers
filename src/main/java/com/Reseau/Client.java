@@ -22,7 +22,10 @@ public class Client implements Runnable {
             e.printStackTrace();
         }
     }
-
+    /** 
+     * @param 
+     * Send Message and command to the server 
+     */
     public void writing() {
         try {
 
@@ -85,8 +88,10 @@ public class Client implements Runnable {
 
     }
 
+    
+    
     public static void main(String arg[]) {
-        int i = 6667;
+        int i = 6671;
         Client client = new Client("localhost", i, "User" + i);
         new Thread(client).start();
         client.writing();
