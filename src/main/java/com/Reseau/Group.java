@@ -1,11 +1,12 @@
 package com.Reseau;
 
-import java.io.PrintWriter;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
 import java.util.HashSet;
 import java.util.Set;
 
 public class Group {
-    private Set<PrintWriter> writers = new HashSet<>();
+    private Set<ObjectOutputStream> writers = new HashSet<>();
     private String GroupCode;
 
     public Group(String Groupcode) {
@@ -13,25 +14,27 @@ public class Group {
         this.writers = new HashSet<>();
     }
 
-    public void join(PrintWriter a) {
-        writers.add(a);
+    public void join(ObjectOutputStream output) {
+        writers.add(output);
     }
 
-    public void leave(PrintWriter a) {
-        writers.remove(a);
+    public void leave(ObjectOutputStream output) {
+        writers.remove(output);
     }
 
-    public void send(String Rawtext) {
-        CommunicationDecoder dec = new CommunicationDecoder(Rawtext);
-        String Groupnumber = dec.GetGroupcode(Rawtext);
-        String Username = dec.GetUsername(Rawtext);
-        String message = dec.GetMessage(Rawtext);
-        for (PrintWriter w : writers) {
-            w.println(Username + " to group " + Groupnumber + ": " + message);
-            System.out.println(Username + " to group " + Groupnumber + ": " + message);
+    public void send(Message msg) {
+        try {
+            for (ObjectOutputStream out : writers) {
+                out.writeObject(msg);
+                //System.out.println(msg.toString());
+            }
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
         }
-        
+
     }
+
     public String getGroupcode() {
         return GroupCode;
     }
