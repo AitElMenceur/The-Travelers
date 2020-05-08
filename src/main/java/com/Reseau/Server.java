@@ -4,24 +4,22 @@ import java.io.*;
 import java.net.*;
 import java.util.ArrayList;
 
-public class Server implements Runnable {
+public class Server extends AbstractServer implements Runnable {
     private String ip;
     private ServerSocket serversocket;
     // private static Set<PrintWriter> writers = new HashSet<>();
 
     private static ArrayList<Group> listGroup = new ArrayList<Group>();
-
     public Server(String ip, int port) {
-        try {
-            this.serversocket = new ServerSocket(port);
-        } catch (IOException ioe) {
-            System.out.println(ioe.getMessage());
-        }
+        super(ip, port);
+        listGroup.add(new Group("AA"));
+        listGroup.add(new Group("BB"));
     }
 
     public Socket connect() {
         try {
             Socket socket = serversocket.accept();
+            System.out.println("connected to " + socket.getLocalPort());
             return socket;
         } catch (IOException ioe) {
             System.out.println(ioe.getMessage());
@@ -29,80 +27,77 @@ public class Server implements Runnable {
         return null;
     }
 
-    public synchronized void remove(String groupNumber, PrintWriter writer) {
+    public synchronized void remove(String groupNumber, ObjectOutputStream output) {
         for (Group p : listGroup) {
             if (p.getGroupcode().equals(groupNumber)) {
-                p.leave(writer);
+                p.leave(output);
             }
         }
     }
 
-    public synchronized void add(String groupNumber, PrintWriter writer) {
+    public synchronized void add(String groupNumber, ObjectOutputStream output) {
         for (Group p : listGroup) {
             if (p.getGroupcode().equals(groupNumber)) {
                 System.out.println(p.getGroupcode() + "ok");
-                p.join(writer);
+                p.join(output);
             }
         }
     }
+
+    private ObjectOutputStream output;
+    private ObjectInputStream input;
+    private Data recieved;
 
     @Override
     public void run() {
         try {
             Socket socket = connect();
-            boolean finish = false;
-            OutputStream output = socket.getOutputStream();
-            PrintWriter writer = new PrintWriter(output, true);
-            InputStream input = socket.getInputStream();
-            BufferedReader reader = new BufferedReader(new InputStreamReader(input));
+            output = new ObjectOutputStream(socket.getOutputStream()); // ouvre un flux de sortie vers le socket //
+            input = new ObjectInputStream(socket.getInputStream()); // ouvre un flux d’entrée vers le socket
             // writers.add(writer);
-            while (!finish) {
-                if (reader.ready()) {
-                    String Rawtext = reader.readLine();
-                    System.out.println(Rawtext);
-                    CommunicationDecoder dec = new CommunicationDecoder(Rawtext);
-                    String commandCode = dec.GetCommandCode(Rawtext);
-                    String groupNumber = dec.GetGroupcode(Rawtext);
-                    switch (commandCode) {
-                        case ("00"):
-                            writer.println("Welcome to the server");
-                            System.out.println("Connected in port " + socket.getLocalPort());
-                            break;
-                        case ("01"):
-                            add(groupNumber, writer);
-                            writer.println("You join the chat " + groupNumber);
-                            break;
-                        case ("02"):
-                            remove(groupNumber, writer);
-                            writer.println("You leaved the chat " + groupNumber);
-                            break;
-                        case ("03"):
-                            System.out.println(groupNumber);
-                            for (Group p : listGroup) {
-                                System.out.println("p:" + p.getGroupcode());
-                                System.out.println("Grpnb:" + groupNumber);
-                                if (p.getGroupcode().equals(groupNumber)) {
-                                    p.send(Rawtext);
-                                }
-                            }
-                            break;
-                        case ("FF"):
-                            writer.println("goodbye");
-                            finish = true;
-                            reader.close();
-                            writer.close();
-                            output.close();
-                            input.close();
-                            break;
+            while (true) {
 
-                    }
-                    Rawtext = null;
+                recieved = (Message) input.readObject();
+                System.out.println(recieved.toString());
+                switch (recieved.GetCommand()) {
+                    case ("connect"):
+
+                        System.out.println("Connected in port " + socket.getLocalPort());
+                        break;
+                    case ("join"):
+                        add(recieved.GetGroupCode(), output);
+                        output.writeObject(new Message(recieved.GetUsername(), recieved.GetGroupCode(),
+                                recieved.GetCommand(), "You join the chat " + recieved.GetGroupCode()));
+                        break;
+                    case ("leave"):
+                        remove(recieved.GetGroupCode(), output);
+                        output.writeObject(new Message(recieved.GetUsername(), recieved.GetGroupCode(),
+                                recieved.GetCommand(), "You leave the chat " + recieved.GetGroupCode()));
+                        break;
+                    case ("send"):
+
+                        for (Group p : listGroup) {
+                            if (p.getGroupcode().equals(recieved.GetGroupCode())) {
+                                p.send((Message) recieved);
+                            }
+                        }
+                        break;
+                    case ("disconnect"):
+                        output.writeObject(new Message(recieved.GetUsername(), recieved.GetGroupCode(),
+                                recieved.GetCommand(), "bye " + recieved.GetUsername()));
+                        output.close();
+                        input.close();
+                        break;
+
                 }
+
             }
 
         } catch (IOException ioe) {
             System.out.println(ioe.getMessage());
-
+        } catch (ClassNotFoundException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
         }
     }
 
@@ -115,4 +110,6 @@ public class Server implements Runnable {
             new Thread(new Server("localhost", i), "client-" + Integer.toString(i)).start();
         }
     }
+
+    
 }

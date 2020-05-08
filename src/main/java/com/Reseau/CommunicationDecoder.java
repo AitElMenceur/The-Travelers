@@ -7,12 +7,10 @@ public class CommunicationDecoder implements CommunicationDecoderIT {
     private String message;
 
     public CommunicationDecoder(String Rawtext) {
-
         this.commandCode = GetCommandCode(Rawtext);
         this.groupCode = GetGroupcode(Rawtext);
         this.username = GetUsername(Rawtext);
         this.message = GetMessage(Rawtext);
-
     }
 
     
