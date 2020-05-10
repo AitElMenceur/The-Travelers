@@ -94,8 +94,7 @@ public class ConnectionHandler {
         } catch (IOException ioe) {
             System.out.println(ioe.getMessage());
         } catch (ClassNotFoundException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
+            System.out.println(e.getMessage());
         }
     }
 }

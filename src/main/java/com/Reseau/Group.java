@@ -26,11 +26,9 @@ public class Group {
         try {
             for (ObjectOutputStream out : writers) {
                 out.writeObject(msg);
-                //System.out.println(msg.toString());
             }
         } catch (IOException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
+            System.out.println(e.getMessage());
         }
 
     }

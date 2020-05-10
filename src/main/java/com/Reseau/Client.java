@@ -79,10 +79,10 @@ public class Client implements Runnable {
                         recieved.GetUsername() + " [" + recieved.GetGroupCode() + "] " + " >" + recieved.GetMessage());
             }
         } catch (ClassNotFoundException e) {
+            System.out.println(e.getMessage());
             // TODO Auto-generated catch block
-            e.printStackTrace();
         } catch (IOException e) {
-            // TODO Auto-generated catch block
+            System.out.println(e.getMessage());            
             e.printStackTrace();
         }
 
