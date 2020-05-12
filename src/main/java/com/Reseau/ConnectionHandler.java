@@ -6,7 +6,7 @@ import java.util.ArrayList;
 
 import com.Reseau.Interface.ConnectionHandlerIT;
 
-public class ConnectionHandler implements ConnectionHandlerIT{
+public class ConnectionHandler implements ConnectionHandlerIT {
     private Socket socket;
     private ObjectOutputStream output;
     private ObjectInputStream input;
@@ -17,11 +17,9 @@ public class ConnectionHandler implements ConnectionHandlerIT{
         this.socket = socket;
     }
 
-    
-    /** 
+    /**
      * @param groupNumber
-     * @param output
-     * Remove a group from the list 
+     * @param output      Remove a group from the list
      */
     public synchronized void remove(String groupNumber, ObjectOutputStream output) {
         for (Group p : listGroup) {
@@ -31,11 +29,9 @@ public class ConnectionHandler implements ConnectionHandlerIT{
         }
     }
 
-    
-    /** 
+    /**
      * @param groupNumber
-     * @param output
-     * Add a group from the list 
+     * @param output      Add a group from the list
      */
     public synchronized void add(String groupNumber, ObjectOutputStream output) {
         for (Group p : listGroup) {
@@ -46,49 +42,53 @@ public class ConnectionHandler implements ConnectionHandlerIT{
         }
     }
 
-    
-    /** 
+    /**
      * 
      * 
-     * Check for incoming message, and give an appropriate answer 
+     * Check for incoming message, and give an appropriate answer
      */
     public void Handle() {
         try {
-            output = new ObjectOutputStream(socket.getOutputStream()); 
-            input = new ObjectInputStream(socket.getInputStream()); 
-            while (true) {
+            boolean finish = false;
+            output = new ObjectOutputStream(socket.getOutputStream());
+            input = new ObjectInputStream(socket.getInputStream());
+            while (!finish) {
 
                 recieved = (Message) input.readObject();
                 System.out.println(recieved.toString());
                 switch (recieved.GetCommand()) {
                     case ("connect"):
-                        output.writeObject(new Message(recieved.GetUsername(), recieved.GetGroupCode(), recieved.GetCommand(),
-                        "Welcome to the server " + recieved.GetUsername()));
+                        output.writeObject(new Message(((Message) recieved).GetUsername(),
+                                ((Message) recieved).GetGroupCode(), recieved.GetCommand(),
+                                "Welcome to the server " + ((Message) recieved).GetUsername()));
                         System.out.println("Connected in port " + socket.getLocalPort());
                         break;
                     case ("join"):
-                        add(recieved.GetGroupCode(), output);
-                        output.writeObject(new Message(recieved.GetUsername(), recieved.GetGroupCode(),
-                                recieved.GetCommand(), "You join the chat " + recieved.GetGroupCode()));
+                        add(((Message) recieved).GetGroupCode(), output);
+                        output.writeObject(new Message(((Message) recieved).GetUsername(),
+                                ((Message) recieved).GetGroupCode(), recieved.GetCommand(),
+                                "You join the chat " + ((Message) recieved).GetGroupCode()));
                         break;
                     case ("leave"):
-                        remove(recieved.GetGroupCode(), output);
-                        output.writeObject(new Message(recieved.GetUsername(), recieved.GetGroupCode(),
-                                recieved.GetCommand(), "You leave the chat " + recieved.GetGroupCode()));
+                        remove(((Message) recieved).GetGroupCode(), output);
+                        output.writeObject(new Message(((Message) recieved).GetUsername(),
+                                ((Message) recieved).GetGroupCode(), recieved.GetCommand(),
+                                "You leave the chat " + ((Message) recieved).GetGroupCode()));
                         break;
                     case ("send"):
 
                         for (Group p : listGroup) {
-                            if (p.getGroupcode().equals(recieved.GetGroupCode())) {
+                            if (p.getGroupcode().equals(((Message) recieved).GetGroupCode())) {
                                 p.send((Message) recieved);
                             }
                         }
                         break;
                     case ("disconnect"):
-                        output.writeObject(new Message(recieved.GetUsername(), recieved.GetGroupCode(),
-                                recieved.GetCommand(), "bye " + recieved.GetUsername()));
-                        output.close();
-                        input.close();
+                        output.writeObject(
+                                new Message(((Message) recieved).GetUsername(), ((Message) recieved).GetGroupCode(),
+                                        recieved.GetCommand(), "bye " + ((Message) recieved).GetUsername()));
+                        output.flush();
+                        finish = true;
                         break;
 
                 }
