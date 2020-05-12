@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 public class Server extends AbstractServer {
     private String ip;
-    static ArrayList<Group> listGroup;
+    static protected ArrayList<Group> listGroup;
 
     public Server(String ip) {
         this.ip = ip;

@@ -13,8 +13,6 @@ public class MockConnectionHandler {
     }
 
     /**
-     * 
-     * 
      * Check for incoming message, and give an appropriate answer
      */
     public void SetInncomingMessage(Data msg) {
@@ -26,32 +24,27 @@ public class MockConnectionHandler {
     }
 
     public void Handle() {
-
-            System.out.println(recieved.toString());
-            switch (recieved.GetCommand()) {
-                case ("connect"):
-                send = new Message(recieved.GetUsername(), recieved.GetGroupCode(), recieved.GetCommand(),
-                            "Welcome to the server " + recieved.GetUsername());
-                    break;
-                case ("join"):
-                    send = new Message(recieved.GetUsername(), recieved.GetGroupCode(), recieved.GetCommand(),
-                            "You join the chat " + recieved.GetGroupCode());
-                    break;
-                case ("leave"):
-                    send = new Message(recieved.GetUsername(), recieved.GetGroupCode(), recieved.GetCommand(),
-                            "You leave the chat " + recieved.GetGroupCode());
-                    break;
-                case ("send"):
-                    send=recieved;
-                    break;
-                case ("disconnect"):
-                    send = new Message(recieved.GetUsername(), recieved.GetGroupCode(), recieved.GetCommand(),
-                            "bye " + recieved.GetUsername());
-
-                    break;
-
-            }
-
-        
+        System.out.println(recieved.toString());
+        switch (recieved.GetCommand()) {
+            case ("connect"):
+                send = new Message(((Message) recieved).GetUsername(), ((Message) recieved).GetGroupCode(),
+                        recieved.GetCommand(), "Welcome to the server " + ((Message) recieved).GetUsername());
+                break;
+            case ("join"):
+                send = new Message(((Message) recieved).GetUsername(), ((Message) recieved).GetGroupCode(),
+                        recieved.GetCommand(), "You join the chat " + ((Message) recieved).GetGroupCode());
+                break;
+            case ("leave"):
+                send = new Message(((Message) recieved).GetUsername(), ((Message) recieved).GetGroupCode(),
+                        recieved.GetCommand(), "You leave the chat " + ((Message) recieved).GetGroupCode());
+                break;
+            case ("send"):
+                send = recieved;
+                break;
+            case ("disconnect"):
+                send = new Message(((Message) recieved).GetUsername(), ((Message) recieved).GetGroupCode(),
+                        recieved.GetCommand(), "bye " + ((Message) recieved).GetUsername());
+                break;
+        }
     }
 }
