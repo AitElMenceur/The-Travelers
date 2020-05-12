@@ -79,10 +79,10 @@ public class Client implements Runnable {
                         recieved.GetUsername() + " [" + recieved.GetGroupCode() + "] " + " >" + recieved.GetMessage());
             }
         } catch (ClassNotFoundException e) {
-            System.out.println(e.getMessage());
             // TODO Auto-generated catch block
+            e.printStackTrace();
         } catch (IOException e) {
-            System.out.println(e.getMessage());            
+            // TODO Auto-generated catch block
             e.printStackTrace();
         }
 
@@ -91,7 +91,7 @@ public class Client implements Runnable {
     
     
     public static void main(String arg[]) {
-        int i = 6671;
+        int i = 6667;
         Client client = new Client("localhost", i, "User" + i);
         new Thread(client).start();
         client.writing();

@@ -6,6 +6,9 @@ import java.util.ArrayList;
 
 public class ConnectionHandler {
     private Socket socket;
+    private ObjectOutputStream output;
+    private ObjectInputStream input;
+    private Data recieved;
     private static ArrayList<Group> listGroup = Server.listGroup;
 
     public ConnectionHandler(Socket socket) {
@@ -41,9 +44,7 @@ public class ConnectionHandler {
         }
     }
 
-    private ObjectOutputStream output;
-    private ObjectInputStream input;
-    private Data recieved;
+    
     /** 
      * 
      * 
@@ -94,7 +95,8 @@ public class ConnectionHandler {
         } catch (IOException ioe) {
             System.out.println(ioe.getMessage());
         } catch (ClassNotFoundException e) {
-            System.out.println(e.getMessage());
+            // TODO Auto-generated catch block
+            e.printStackTrace();
         }
     }
 }

@@ -3,8 +3,13 @@ package com.Reseau;
 import java.util.ArrayList;
 
 public class Server extends AbstractServer {
-    private String ip = "localhost";
-    static ArrayList<Group> listGroup = new ArrayList<Group>();
+    private String ip;
+    static ArrayList<Group> listGroup;
+
+    public Server(String ip) {
+        this.ip = ip;
+        Server.listGroup = new ArrayList<Group>();
+    }
 
     @Override
     public void connect() {
@@ -14,5 +19,11 @@ public class Server extends AbstractServer {
             new Thread(new PortListener(ip, port)).start();
         }
 
+    }
+    public void addGroup(Group a){
+        listGroup.add(a);
+    }
+    public void removeGroup(Group a){
+        listGroup.remove(a);
     }
 }
