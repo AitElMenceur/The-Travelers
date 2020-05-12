@@ -23,11 +23,4 @@ public abstract class Data implements Serializable // must implement Serializabl
     return Command;
   }
 
-  public abstract String GetMessage();
-
-  public abstract void SetGroupCode(String next);
-
-  public abstract String GetGroupCode();
-
-  public abstract String GetUsername();
 }

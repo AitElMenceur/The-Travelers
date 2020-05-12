@@ -1,6 +1,8 @@
 package com.Reseau;
 
-public class Message extends Data {
+import com.Reseau.Interface.MessageIT;
+
+public class Message extends Data implements MessageIT {
     /**
      *
      */
