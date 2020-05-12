@@ -62,7 +62,8 @@ public class ConnectionHandler implements ConnectionHandlerIT{
                 System.out.println(recieved.toString());
                 switch (recieved.GetCommand()) {
                     case ("connect"):
-
+                        output.writeObject(new Message(recieved.GetUsername(), recieved.GetGroupCode(), recieved.GetCommand(),
+                        "Welcome to the server " + recieved.GetUsername()));
                         System.out.println("Connected in port " + socket.getLocalPort());
                         break;
                     case ("join"):

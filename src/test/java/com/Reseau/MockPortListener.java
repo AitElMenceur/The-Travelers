@@ -1,8 +1,7 @@
 package com.Reseau;
 
-import java.io.IOException;
-import java.net.ServerSocket;
-import java.net.Socket;
+import java.io.*;
+import java.net.*;
 
 import com.Reseau.Interface.PortListenerIT;
 
@@ -24,9 +23,8 @@ public class MockPortListener implements Runnable,PortListenerIT {
 	public void run() {
 		try {
 			ss = new ServerSocket(port);
-			Socket socket;
 			while (true) {
-				 socket = ss.accept();// establishes connection
+				Socket socket = ss.accept();// establishes connection
 				System.out.println("Connected as " + ip);
 			}
 			
