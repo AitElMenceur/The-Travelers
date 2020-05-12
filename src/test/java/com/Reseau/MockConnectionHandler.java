@@ -1,11 +1,8 @@
 ﻿package com.Reseau;
 
-import java.io.*;
-import java.net.*;
 import java.util.ArrayList;
 
 public class MockConnectionHandler {
-    private Socket socket;
     private Data recieved;
     private Data send;
     private static ArrayList<Group> listGroup = Server.listGroup;
