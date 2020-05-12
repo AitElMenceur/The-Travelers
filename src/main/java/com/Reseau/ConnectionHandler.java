@@ -4,7 +4,9 @@ import java.io.*;
 import java.net.*;
 import java.util.ArrayList;
 
-public class ConnectionHandler {
+import com.Reseau.Interface.ConnectionHandlerIT;
+
+public class ConnectionHandler implements ConnectionHandlerIT{
     private Socket socket;
     private ObjectOutputStream output;
     private ObjectInputStream input;

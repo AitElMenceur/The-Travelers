@@ -17,7 +17,7 @@ public class TestPortListener {
     public void Testconnect() {
         try {
             Socket socket = new Socket(ip, port);
-            assertTrue(socket.isBound());
+            assertTrue(socket.isConnected());
             socket.close();
         } catch (IOException e) {
             assertFalse("message", false);
