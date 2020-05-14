@@ -1,4 +1,4 @@
-﻿package com.Reseau;
+package com.Reseau;
 
 import com.Reseau.Interface.IConnectionHandler;
 
