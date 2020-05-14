@@ -8,19 +8,19 @@ public abstract class Data implements Serializable // must implement Serializabl
    *
    */
   private static final long serialVersionUID = 1L;
-  private String Command;
+  private String command;
 
-  public Data(String Command) {
+  public Data(String command) {
 
-    this.Command = Command;
+    this.command = command;
   }
 
   public String toString() {
-    return GetCommand();
+    return getCommand();
   }
 
-  public String GetCommand() {
-    return Command;
+  public String getCommand() {
+    return command;
   }
 
 }

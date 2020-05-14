@@ -7,10 +7,10 @@ import java.util.Set;
 
 public class Group {
     private Set<ObjectOutputStream> writers = new HashSet<>();
-    private String GroupCode;
+    private String groupCode;
 
-    public Group(String Groupcode) {
-        this.GroupCode = Groupcode;
+    public Group(String groupCode) {
+        this.groupCode = groupCode;
         this.writers = new HashSet<>();
     }
 
@@ -33,8 +33,8 @@ public class Group {
 
     }
 
-    public String getGroupcode() {
-        return GroupCode;
+    public String getGroupCode() {
+        return groupCode;
     }
 
 }

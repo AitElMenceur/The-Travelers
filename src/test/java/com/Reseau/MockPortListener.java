@@ -2,15 +2,15 @@ package com.Reseau;
 
 import java.io.*;
 import java.net.*;
+import com.Reseau.Interface.IPortListener;
 
-import com.Reseau.Interface.PortListenerIT;
 
-public class MockPortListener implements Runnable,PortListenerIT {
+public class MockPortListener implements Runnable,IPortListener {
 
 	private ServerSocket ss;
 	private int port;
 	private String ip;
-
+	private Socket socket;
 	public MockPortListener(String ip, int port) {
 		this.ip = ip;
 		this.port = port;
@@ -18,13 +18,13 @@ public class MockPortListener implements Runnable,PortListenerIT {
 	}
 	/** 
      * @param 
-	 * Create a connection for a client and a server port
+	 * Test a connection for a client and a server port.
      */
 	public void run() {
 		try {
 			ss = new ServerSocket(port);
 			while (true) {
-				Socket socket = ss.accept();// establishes connection
+				socket = ss.accept();// establishes connection
 				System.out.println("Connected as " + ip);
 			}
 			

@@ -4,14 +4,14 @@ import java.io.*;
 import java.net.*;
 import java.util.ArrayList;
 
-import com.Reseau.Interface.ConnectionHandlerIT;
+import com.Reseau.Interface.IConnectionHandler;
 
-public class ConnectionHandler implements ConnectionHandlerIT {
+public class ConnectionHandler implements IConnectionHandler {
     private Socket socket;
     private ObjectOutputStream output;
     private ObjectInputStream input;
     private Data recieved;
-    private static ArrayList<Group> listGroup = Server.listGroup;
+    private static ArrayList<Group> LIST_GROUP = Server.LIST_GROUP;
 
     public ConnectionHandler(Socket socket) {
         this.socket = socket;
@@ -22,8 +22,8 @@ public class ConnectionHandler implements ConnectionHandlerIT {
      * @param output      Remove a group from the list
      */
     public synchronized void remove(String groupNumber, ObjectOutputStream output) {
-        for (Group p : listGroup) {
-            if (p.getGroupcode().equals(groupNumber)) {
+        for (Group p : LIST_GROUP) {
+            if (p.getGroupCode().equals(groupNumber)) {
                 p.leave(output);
             }
         }
@@ -34,9 +34,9 @@ public class ConnectionHandler implements ConnectionHandlerIT {
      * @param output      Add a group from the list
      */
     public synchronized void add(String groupNumber, ObjectOutputStream output) {
-        for (Group p : listGroup) {
-            if (p.getGroupcode().equals(groupNumber)) {
-                System.out.println(p.getGroupcode() + "ok");
+        for (Group p : LIST_GROUP) {
+            if (p.getGroupCode().equals(groupNumber)) {
+                System.out.println(p.getGroupCode() + "ok");
                 p.join(output);
             }
         }
@@ -47,7 +47,7 @@ public class ConnectionHandler implements ConnectionHandlerIT {
      * 
      * Check for incoming message, and give an appropriate answer
      */
-    public void Handle() {
+    public void handle() {
         try {
             boolean finish = false;
             output = new ObjectOutputStream(socket.getOutputStream());
@@ -56,37 +56,37 @@ public class ConnectionHandler implements ConnectionHandlerIT {
 
                 recieved = (Message) input.readObject();
                 System.out.println(recieved.toString());
-                switch (recieved.GetCommand()) {
+                switch (recieved.getCommand()) {
                     case ("connect"):
-                        output.writeObject(new Message(((Message) recieved).GetUsername(),
-                                ((Message) recieved).GetGroupCode(), recieved.GetCommand(),
-                                "Welcome to the server " + ((Message) recieved).GetUsername()));
+                        output.writeObject(new Message(((Message) recieved).getUsername(),
+                                ((Message) recieved).getGroupCode(), recieved.getCommand(),
+                                "Welcome to the server " + ((Message) recieved).getUsername()));
                         System.out.println("Connected in port " + socket.getLocalPort());
                         break;
                     case ("join"):
-                        add(((Message) recieved).GetGroupCode(), output);
-                        output.writeObject(new Message(((Message) recieved).GetUsername(),
-                                ((Message) recieved).GetGroupCode(), recieved.GetCommand(),
-                                "You join the chat " + ((Message) recieved).GetGroupCode()));
+                        add(((Message) recieved).getGroupCode(), output);
+                        output.writeObject(new Message(((Message) recieved).getUsername(),
+                                ((Message) recieved).getGroupCode(), recieved.getCommand(),
+                                "You join the chat " + ((Message) recieved).getGroupCode()));
                         break;
                     case ("leave"):
-                        remove(((Message) recieved).GetGroupCode(), output);
-                        output.writeObject(new Message(((Message) recieved).GetUsername(),
-                                ((Message) recieved).GetGroupCode(), recieved.GetCommand(),
-                                "You leave the chat " + ((Message) recieved).GetGroupCode()));
+                        remove(((Message) recieved).getGroupCode(), output);
+                        output.writeObject(new Message(((Message) recieved).getUsername(),
+                                ((Message) recieved).getGroupCode(), recieved.getCommand(),
+                                "You leave the chat " + ((Message) recieved).getGroupCode()));
                         break;
                     case ("send"):
 
-                        for (Group p : listGroup) {
-                            if (p.getGroupcode().equals(((Message) recieved).GetGroupCode())) {
+                        for (Group p : LIST_GROUP) {
+                            if (p.getGroupCode().equals(((Message) recieved).getGroupCode())) {
                                 p.send((Message) recieved);
                             }
                         }
                         break;
                     case ("disconnect"):
                         output.writeObject(
-                                new Message(((Message) recieved).GetUsername(), ((Message) recieved).GetGroupCode(),
-                                        recieved.GetCommand(), "bye " + ((Message) recieved).GetUsername()));
+                                new Message(((Message) recieved).getUsername(), ((Message) recieved).getGroupCode(),
+                                        recieved.getCommand(), "bye " + ((Message) recieved).getUsername()));
                         output.flush();
                         finish = true;
                         break;

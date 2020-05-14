@@ -1,6 +1,6 @@
 package com.Reseau.Interface;
 
-public interface PortListenerIT {
+public interface IPortListener {
     public void run();
 
 }

@@ -12,12 +12,12 @@ public class TestConnectionHandler {
         Message msg = new Message("username", "groupcode", "join", "message");
         MockConnectionHandler mock = new MockConnectionHandler(msg);
         mock.SetInncomingMessage((Message) msg);
-        mock.Handle();
+        mock.handle();
         Message actual = (Message) mock.GetOutput();
-        assertEquals(expected.GetCommand(), actual.GetCommand());
-        assertEquals(expected.GetGroupCode(), actual.GetGroupCode());
-        assertEquals(expected.GetMessage(), actual.GetMessage());
-        assertEquals(expected.GetUsername(), actual.GetUsername());
+        assertEquals(expected.getCommand(), actual.getCommand());
+        assertEquals(expected.getGroupCode(), actual.getGroupCode());
+        assertEquals(expected.getMessage(), actual.getMessage());
+        assertEquals(expected.getUsername(), actual.getUsername());
     }
 
     @Test
@@ -26,12 +26,12 @@ public class TestConnectionHandler {
         Message msg = new Message("username", "groupcode", "leave", "message");
         MockConnectionHandler mock = new MockConnectionHandler(msg);
         mock.SetInncomingMessage((Message) msg);
-        mock.Handle();
+        mock.handle();
         Message actual = (Message) mock.GetOutput();
-        assertEquals(expected.GetCommand(), actual.GetCommand());
-        assertEquals(expected.GetGroupCode(), actual.GetGroupCode());
-        assertEquals(expected.GetMessage(), actual.GetMessage());
-        assertEquals(expected.GetUsername(), actual.GetUsername());
+        assertEquals(expected.getCommand(), actual.getCommand());
+        assertEquals(expected.getGroupCode(), actual.getGroupCode());
+        assertEquals(expected.getMessage(), actual.getMessage());
+        assertEquals(expected.getUsername(), actual.getUsername());
     }
 
     @Test
@@ -40,12 +40,12 @@ public class TestConnectionHandler {
         Message msg = new Message("username", "groupcode", "send", "message");
         MockConnectionHandler mock = new MockConnectionHandler(msg);
         mock.SetInncomingMessage((Message) msg);
-        mock.Handle();
+        mock.handle();
         Message actual = (Message) mock.GetOutput();
-        assertEquals(expected.GetCommand(), actual.GetCommand());
-        assertEquals(expected.GetGroupCode(), actual.GetGroupCode());
-        assertEquals(expected.GetMessage(), actual.GetMessage());
-        assertEquals(expected.GetUsername(), actual.GetUsername());
+        assertEquals(expected.getCommand(), actual.getCommand());
+        assertEquals(expected.getGroupCode(), actual.getGroupCode());
+        assertEquals(expected.getMessage(), actual.getMessage());
+        assertEquals(expected.getUsername(), actual.getUsername());
     }
 
     @Test
@@ -54,12 +54,12 @@ public class TestConnectionHandler {
         Message msg = new Message("username", "groupcode", "disconnect", "");
         MockConnectionHandler mock = new MockConnectionHandler(msg);
         mock.SetInncomingMessage((Message) msg);
-        mock.Handle();
+        mock.handle();
         Message actual = (Message) mock.GetOutput();
-        assertEquals(expected.GetCommand(), actual.GetCommand());
-        assertEquals(expected.GetGroupCode(), actual.GetGroupCode());
-        assertEquals(expected.GetMessage(), actual.GetMessage());
-        assertEquals(expected.GetUsername(), actual.GetUsername());
+        assertEquals(expected.getCommand(), actual.getCommand());
+        assertEquals(expected.getGroupCode(), actual.getGroupCode());
+        assertEquals(expected.getMessage(), actual.getMessage());
+        assertEquals(expected.getUsername(), actual.getUsername());
     }
     @Test
     public void Testconnect() {
@@ -67,12 +67,12 @@ public class TestConnectionHandler {
         Message msg = new Message("username", "groupcode", "connect", "");
         MockConnectionHandler mock = new MockConnectionHandler(msg);
         mock.SetInncomingMessage((Message) msg);
-        mock.Handle();
+        mock.handle();
         Message actual = (Message) mock.GetOutput();
-        assertEquals(expected.GetCommand(), actual.GetCommand());
-        assertEquals(expected.GetGroupCode(), actual.GetGroupCode());
-        assertEquals(expected.GetMessage(), actual.GetMessage());
-        assertEquals(expected.GetUsername(), actual.GetUsername());
+        assertEquals(expected.getCommand(), actual.getCommand());
+        assertEquals(expected.getGroupCode(), actual.getGroupCode());
+        assertEquals(expected.getMessage(), actual.getMessage());
+        assertEquals(expected.getUsername(), actual.getUsername());
     }
 
 }

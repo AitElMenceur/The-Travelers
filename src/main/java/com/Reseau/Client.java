@@ -39,12 +39,12 @@ public class Client implements Runnable {
                         message = new Message(Name, "groupcode", send_data, "");
                         System.out.println("Which Group?");
                         groupcode = scan.next();
-                        ((Message) message).SetGroupCode(groupcode);
+                        ((Message) message).setGroupCode(groupcode);
                         output.writeObject(message);
                     } else if (send_data.equalsIgnoreCase("leave")) {
                         message = new Message(Name, "groupcode", send_data, "");
                         System.out.println("Which Group?");
-                        ((Message) message).SetGroupCode(scan.next());
+                        ((Message) message).setGroupCode(scan.next());
                         output.writeObject(message);
                     } else if (send_data.equalsIgnoreCase("disconnect")) {
                         output.writeObject(new Message(Name, groupcode, "disconnect", ""));
@@ -74,8 +74,8 @@ public class Client implements Runnable {
         try {
             while (true) {
                 Data recieved = (Message) input.readObject();
-                System.out.println(((Message) recieved).GetUsername() + " [" + ((Message) recieved).GetGroupCode()
-                        + "] " + " >" + ((Message) recieved).GetMessage());
+                System.out.println(((Message) recieved).getUsername() + " [" + ((Message) recieved).getGroupCode()
+                        + "] " + " >" + ((Message) recieved).getMessage());
             }
         } catch (ClassNotFoundException e) {
             // TODO Auto-generated catch block
@@ -91,7 +91,7 @@ public class Client implements Runnable {
     }
 
     public static void main(String arg[]) {
-        int i = 6666;
+        int i = 6668;
         Client client = new Client("localhost", i, "User" + i);
         new Thread(client).start();
         client.writing();

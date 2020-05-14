@@ -1,11 +1,10 @@
 ﻿package com.Reseau;
 
-import java.util.ArrayList;
+import com.Reseau.Interface.IConnectionHandler;
 
-public class MockConnectionHandler {
+public class MockConnectionHandler implements IConnectionHandler {
     private Data recieved;
     private Data send;
-    private static ArrayList<Group> listGroup = Server.listGroup;
 
     public MockConnectionHandler(Data data) {
         this.recieved = data;
@@ -13,7 +12,8 @@ public class MockConnectionHandler {
     }
 
     /**
-     * Check for incoming message, and give an appropriate answer
+     * @param Data 
+     *Setter , replace Serializer for Test
      */
     public void SetInncomingMessage(Data msg) {
         recieved = msg;
@@ -23,27 +23,27 @@ public class MockConnectionHandler {
         return send;
     }
 
-    public void Handle() {
+    public void handle() {
         System.out.println(recieved.toString());
-        switch (recieved.GetCommand()) {
+        switch (recieved.getCommand()) {
             case ("connect"):
-                send = new Message(((Message) recieved).GetUsername(), ((Message) recieved).GetGroupCode(),
-                        recieved.GetCommand(), "Welcome to the server " + ((Message) recieved).GetUsername());
+                send = new Message(((Message) recieved).getUsername(), ((Message) recieved).getGroupCode(),
+                        recieved.getCommand(), "Welcome to the server " + ((Message) recieved).getUsername());
                 break;
             case ("join"):
-                send = new Message(((Message) recieved).GetUsername(), ((Message) recieved).GetGroupCode(),
-                        recieved.GetCommand(), "You join the chat " + ((Message) recieved).GetGroupCode());
+                send = new Message(((Message) recieved).getUsername(), ((Message) recieved).getGroupCode(),
+                        recieved.getCommand(), "You join the chat " + ((Message) recieved).getGroupCode());
                 break;
             case ("leave"):
-                send = new Message(((Message) recieved).GetUsername(), ((Message) recieved).GetGroupCode(),
-                        recieved.GetCommand(), "You leave the chat " + ((Message) recieved).GetGroupCode());
+                send = new Message(((Message) recieved).getUsername(), ((Message) recieved).getGroupCode(),
+                        recieved.getCommand(), "You leave the chat " + ((Message) recieved).getGroupCode());
                 break;
             case ("send"):
                 send = recieved;
                 break;
             case ("disconnect"):
-                send = new Message(((Message) recieved).GetUsername(), ((Message) recieved).GetGroupCode(),
-                        recieved.GetCommand(), "bye " + ((Message) recieved).GetUsername());
+                send = new Message(((Message) recieved).getUsername(), ((Message) recieved).getGroupCode(),
+                        recieved.getCommand(), "bye " + ((Message) recieved).getUsername());
                 break;
         }
     }

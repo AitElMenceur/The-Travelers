@@ -24,7 +24,7 @@ public class PortListener implements Runnable {
 			while (true) {
 				Socket socket = ss.accept();// establishes connection
 				System.out.println("Connected as " + ip);
-				new ConnectionHandler(socket).Handle();
+				new ConnectionHandler(socket).handle();
 			}
 		} catch (IOException ioe) {
 			ioe.printStackTrace();

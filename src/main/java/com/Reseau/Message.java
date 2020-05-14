@@ -1,8 +1,8 @@
 package com.Reseau;
 
-import com.Reseau.Interface.MessageIT;
+import com.Reseau.Interface.IMessage;
 
-public class Message extends Data implements MessageIT {
+public class Message extends Data implements IMessage {
     /**
      *
      */
@@ -17,18 +17,18 @@ public class Message extends Data implements MessageIT {
       this.Message=message;
     }
     public String toString() {
-        return Username+GroupCode+GetCommand()+Message;
+        return Username+GroupCode+getCommand()+Message;
       }
-    public String GetUsername(){
+    public String getUsername(){
         return Username;
     }
-    public String GetGroupCode(){
+    public String getGroupCode(){
         return GroupCode;
     }
-    public void SetGroupCode(String GC){
+    public void setGroupCode(String GC){
         GroupCode = GC;
     }
-    public String GetMessage(){
+    public String getMessage(){
         return Message;
     }
 }
