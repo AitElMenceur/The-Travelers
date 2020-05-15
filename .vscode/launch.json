@@ -9,6 +9,13 @@
             "name": "CodeLens (Launch) - ChatMain",
             "request": "launch",
             "mainClass": "com.gui.ChatMain",
+            "projectName": "The-Travelers"
+        },
+        {
+            "type": "java",
+            "name": "CodeLens (Launch) - ChatMain",
+            "request": "launch",
+            "mainClass": "com.gui.ChatMain",
             "projectName": "Reseau"
         },
         {
