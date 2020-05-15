@@ -53,7 +53,6 @@ public class ConnectionHandler implements IConnectionHandler {
             output = new ObjectOutputStream(socket.getOutputStream());
             input = new ObjectInputStream(socket.getInputStream());
             while (!finish) {
-
                 recieved = (Message) input.readObject();
                 System.out.println(recieved.toString());
                 switch (recieved.getCommand()) {
@@ -90,11 +89,12 @@ public class ConnectionHandler implements IConnectionHandler {
                         output.flush();
                         finish = true;
                         break;
-
+                    case ("create group"):
+                    break;
+                    case ("delete group"):
+                    break;
                 }
-
             }
-
         } catch (IOException ioe) {
             System.out.println(ioe.getMessage());
         } catch (ClassNotFoundException e) {

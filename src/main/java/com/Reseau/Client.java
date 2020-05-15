@@ -84,14 +84,14 @@ public class Client implements Runnable {
             System.out.println("Goodbye !");
             
         }catch (IOException e) {
-            // TODO Auto-generated catch block
+            // TODO Auto-generate
             e.printStackTrace();
         }
 
     }
 
     public static void main(String arg[]) {
-        int i = 6668;
+        int i = 6667;
         Client client = new Client("localhost", i, "User" + i);
         new Thread(client).start();
         client.writing();
