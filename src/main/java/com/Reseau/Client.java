@@ -91,7 +91,7 @@ public class Client implements Runnable {
     }
 
     public static void main(String arg[]) {
-        int i = 6667;
+        int i = 6666;
         Client client = new Client("localhost", i, "User" + i);
         new Thread(client).start();
         client.writing();
