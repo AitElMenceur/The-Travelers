@@ -6,6 +6,20 @@
     "configurations": [
         {
             "type": "java",
+            "name": "CodeLens (Launch) - Client",
+            "request": "launch",
+            "mainClass": "com.Reseau.Client.Client",
+            "projectName": "Reseau"
+        },
+        {
+            "type": "java",
+            "name": "CodeLens (Launch) - Host",
+            "request": "launch",
+            "mainClass": "com.Reseau.Server.Host",
+            "projectName": "Reseau"
+        },
+        {
+            "type": "java",
             "name": "CodeLens (Launch) - ChatMain",
             "request": "launch",
             "mainClass": "com.gui.ChatMain",
