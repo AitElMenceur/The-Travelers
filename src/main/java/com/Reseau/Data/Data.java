@@ -15,10 +15,20 @@ public abstract class Data implements Serializable // must implement Serializabl
     this.command = command;
   }
 
+  
+  /** 
+   * @return String
+   * toString implementation
+   */
   public String toString() {
     return getCommand();
   }
 
+  
+  /** 
+   * @return String
+   * Getter for command
+   */
   public String getCommand() {
     return command;
   }

@@ -16,18 +16,42 @@ public class Message extends Data implements IMessage {
       this.GroupCode=groupcode;
       this.Message=message;
     }
+    
+    /** 
+     * @return String
+     */
     public String toString() {
         return Username+GroupCode+getCommand()+Message;
       }
+    
+    /** 
+     * @return String
+     * Getter for the Username
+     */
     public String getUsername(){
         return Username;
     }
+    
+    /** 
+     * @return String
+     * Getter for the GroupCode
+     */
     public String getGroupCode(){
         return GroupCode;
     }
+    
+    /** 
+     * @param GC
+     * Setter for the Username
+     */
     public void setGroupCode(String GC){
         GroupCode = GC;
     }
+    
+    /** 
+     * @return String
+     * Getter for the Message
+     */
     public String getMessage(){
         return Message;
     }
