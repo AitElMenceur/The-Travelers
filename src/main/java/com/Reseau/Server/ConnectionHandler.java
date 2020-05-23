@@ -48,8 +48,6 @@ public class ConnectionHandler implements IConnectionHandler {
     }
 
     /**
-     * 
-     * 
      * Check for incoming message, and give an appropriate answer
      */
     public void handle() {
@@ -106,7 +104,6 @@ public class ConnectionHandler implements IConnectionHandler {
         } catch (IOException ioe) {
             System.out.println(ioe.getMessage());
         } catch (ClassNotFoundException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
     }

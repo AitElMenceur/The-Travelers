@@ -31,8 +31,91 @@ public class Client implements Runnable {
         }
     }
 
+    /** 
+     * 
+     * connect to the server
+     */
+    public void connect() {
+        try {
+            output.writeObject(new Message("", "", "connect", ""));
+        } catch (SocketTimeoutException exc) {
+            System.out.println("la");
+        } catch (UnknownHostException uhe) {
+            System.out.println(uhe.getMessage());
+        } catch (IOException ioe) {
+            System.out.println(ioe.getMessage());
+        }
+    }
+/** 
+     * 
+     * disconnect from the server
+     */
+    public void diconnect() {
+        try {
+            output.writeObject(new Message(Name, "", "disconnect", ""));
+            output.close();
+            input.close();
+        } catch (SocketTimeoutException exc) {
+            System.out.println(exc.getMessage());
+        } catch (UnknownHostException uhe) {
+            System.out.println(uhe.getMessage());
+        } catch (IOException ioe) {
+            System.out.println(ioe.getMessage());
+        }
+    }
+    
+    /** 
+     * @param Groupcode
+     * Join a group
+     */
+    public void join(String Groupcode) {
+        try {
+            output.writeObject(new Message("", "", "connect",Groupcode));
+        } catch (SocketTimeoutException exc) {
+        } catch (UnknownHostException uhe) {
+            System.out.println(uhe.getMessage());
+        } catch (IOException ioe) {
+            System.out.println(ioe.getMessage());
+        }
+    }
+    
+    /** 
+     * @param Groupcode
+     * leave a group 
+     */
+    public void leave(String Groupcode) {
+        try {
+            output.writeObject(new Message("", "", "leave",Groupcode));
+        } catch (SocketTimeoutException exc) {
+        } catch (UnknownHostException uhe) {
+            System.out.println(uhe.getMessage());
+        } catch (IOException ioe) {
+            System.out.println(ioe.getMessage());
+        }
+    }
+    
+    /** 
+     * @param Groupcode
+     * @param Name
+     * @param message
+     * Sending a message to the server
+     */
+    public void send(String Groupcode, String Name, String message ) {
+        try {
+            output.writeObject(new Message(Name, Groupcode, "send", message));
+        } catch (SocketTimeoutException exc) {
+        } catch (UnknownHostException uhe) {
+            System.out.println(uhe.getMessage());
+        } catch (IOException ioe) {
+            System.out.println(ioe.getMessage());
+        }
+    }
+
+  
+
     /**
-     * @param Send Message and command to the server
+     * @param Send Message and command to the server,
+     * @deprecated used for terminals
      */
     public void writing() {
         try {
@@ -74,7 +157,6 @@ public class Client implements Runnable {
         } catch (IOException ioe) {
             System.out.println(ioe.getMessage());
         }
-
     }
 
     @Override
@@ -88,20 +170,25 @@ public class Client implements Runnable {
         } catch (ClassNotFoundException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
-        }catch(SocketException se){
+        } catch (SocketException se) {
             System.out.println("Goodbye !");
-            
-        }catch (IOException e) {
+
+        } catch (IOException e) {
             // TODO Auto-generate
             e.printStackTrace();
         }
 
     }
 
+    
+    /** 
+     * @param arg[]
+     */
     public static void main(String arg[]) {
         int i = 6668;
         Client client = new Client("localhost", i, "User" + i);
         new Thread(client).start();
+        
         client.writing();
     }
 }

@@ -14,14 +14,29 @@ public class Group {
         this.writers = new HashSet<>();
     }
 
+    
+    /** 
+     * @param output
+     * add a client to a group
+     */
     public void join(ObjectOutputStream output) {
         writers.add(output);
     }
 
+    
+    /** 
+     * @param output
+     * remove a client from a group
+     */
     public void leave(ObjectOutputStream output) {
         writers.remove(output);
     }
 
+    
+    /** 
+     * @param msg
+     * send a message to all members of a group
+     */
     public void send(Message msg) {
         try {
             for (ObjectOutputStream out : writers) {
@@ -33,6 +48,11 @@ public class Group {
 
     }
 
+    
+    /** 
+     * @return String
+     * Getter for the groupcode
+     */
     public String getGroupCode() {
         return groupCode;
     }
