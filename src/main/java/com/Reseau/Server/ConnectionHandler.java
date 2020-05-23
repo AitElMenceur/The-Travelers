@@ -96,7 +96,7 @@ public class ConnectionHandler implements IConnectionHandler {
                         break;
                     case ("create group"):
 
-                        LIST_GROUP.add(new Group((Message) recieved).getGroupCode());
+                        LIST_GROUP.add(((Message) recieved).getGroupCode());
                     break;
                     case ("delete group"):
                         LIST_GROUP.remove(((Message) recieved).getGroupCode());
