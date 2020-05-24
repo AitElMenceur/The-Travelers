@@ -20,11 +20,15 @@ import org.w3c.dom.NodeList;
 public class XmlHandler {
 	public static void main(String[] args) {	
 		
-				Document doc = initializeXml();
+				Document doc = initializeXml("Database");
+				Document historyDoc = initializeXml("Groups");
 			
 				addUser(doc, "1", "Nassim", "MotDePasse");
 				
 				addFriend(doc, "1", "Nassim", "Marine");
+				addGroupCodeToUser(doc, "1", "Nassim"); 
+				addFriend(doc, "1", "Nassim", "karina");
+				addGroupCodeToUser(doc, "2", "Nassim"); 
 	            
 	            //DeleteUser(doc, "Nassim");
 	            
@@ -36,7 +40,7 @@ public class XmlHandler {
 
 	}
 	
-	private static Document initializeXml()
+	private static Document initializeXml(String xmlRoot)
 	{
 		DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
 		DocumentBuilder dBuilder;
@@ -45,9 +49,11 @@ public class XmlHandler {
 			 dBuilder = dbFactory.newDocumentBuilder();
 	            Document doc = dBuilder.newDocument();
 	            // add elements to Document
-	            Element rootElement = doc.createElement("Users");
+	            Element rootElement = doc.createElement(xmlRoot);
 	            // append root element to document
 	            doc.appendChild(rootElement);
+	            doc.getElementsByTagName(xmlRoot).item(0).appendChild(doc.createElement("Users")); 
+	            doc.getElementsByTagName(xmlRoot).item(0).appendChild(doc.createElement("Groups")); 
 	            return doc;
 		}catch (Exception e){
 			e.printStackTrace();
@@ -96,8 +102,11 @@ public class XmlHandler {
         // create Password element
         user.appendChild(AddElement(doc, user, "Password", Password));        
 
+        user.appendChild(doc.createElement("GroupCodes")); 
+        user.appendChild(doc.createElement("Friends")); 
         //Link the use element as a child node of the root of doc
-        doc.getFirstChild().appendChild(user);
+        doc.getElementsByTagName("Users").item(0).appendChild(user);
+       
         
         transformerXml(doc);
        
@@ -124,7 +133,8 @@ public class XmlHandler {
 			String TempString = user.getElementsByTagName("UserName").item(0).getFirstChild().getNodeValue();
 			
 			if(TempString == User) {
-				user.appendChild(friend);
+			
+				user.getElementsByTagName("Friends").item(0).appendChild(friend);
 				transformerXml(doc);
 				return true;
 			}
@@ -189,9 +199,6 @@ public class XmlHandler {
     }
     return false;
 }
-
-	
-	
 	
 	private static boolean UpdateUserName(Document doc, String OldUserName, String NewUserName) {
 		NodeList users = doc.getElementsByTagName("User");
@@ -215,6 +222,7 @@ public class XmlHandler {
 	}
 	
 	private static boolean UpdatePassword(Document doc, String UserName, String OldPassword, String NewPassword) {
+
 		NodeList users = doc.getElementsByTagName("User");
 		Element user = null;
 		
@@ -234,7 +242,52 @@ public class XmlHandler {
 		return false;
 		
 	}
-	
 
+	private static boolean addGroupCodeToUser(Document doc, String Groupcode, String UserName) {
+		Element node = doc.createElement("Keys");
+		node.appendChild(doc.createTextNode(Groupcode));
+		
+		NodeList users = doc.getElementsByTagName("User");
+		Element user = null;
+		
+				
+		for(int i = 0; i < users.getLength(); i++) { 
+			user = (Element) users.item(i);
+			String TempString = user.getElementsByTagName("UserName").item(0).getFirstChild().getNodeValue();
+			
+			if(TempString == UserName) {
+			
+				user.getElementsByTagName("GroupCodes").item(0).appendChild(node);
+				transformerXml(doc);
+				return true;
+			}
+		
+		}
+		return false;
+	}
+	
+	private static boolean AddMessage(Document doc, String Groupcode, String UserName, String message) {
+		
+		NodeList groups = doc.getElementsByTagName("Groups");
+		Element group = null;
+				
+		for(int i = 0; i < groups.getLength(); i++) { 
+			group = (Element) groups.item(i);
+			String TempString;	
+			
+			TempString = group.getElementsByTagName("GroupCode").item(0).getFirstChild().getNodeValue();
+			if(TempString == Groupcode) {
+					//DO THE CREATE GROUP FUNCTION FIRST 
+					transformerXml(doc);
+			}
+		}
+			
+	
+	}
+	//createGroup
+	//deleteMessage
+	//DeleteGroup
+	//Display 30 last messages 
+	
 }
 

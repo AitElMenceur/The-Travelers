@@ -1,7 +1,22 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<Users>
-    <User id="1">
-        <UserName>Nassim</UserName>
-        <Password>MotDePasse</Password>
-    </User>
-</Users>
+<Database>
+    <Users>
+        <User id="1">
+            <UserName>Nassim</UserName>
+            <Password>MotDePasse</Password>
+            <GroupCodes>
+                <Keys>1</Keys>
+                <Keys>2</Keys>
+            </GroupCodes>
+            <Friends>
+                <Friend id="1">
+                    <FriendName>Marine</FriendName>
+                </Friend>
+                <Friend id="1">
+                    <FriendName>karina</FriendName>
+                </Friend>
+            </Friends>
+        </User>
+    </Users>
+    <Groups/>
+</Database>
