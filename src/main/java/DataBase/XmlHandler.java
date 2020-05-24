@@ -2,7 +2,7 @@ package DataBase;
 
 
 import java.io.File;
-
+import java.nio.file.Files;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -18,8 +18,26 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 public class XmlHandler {
-	public static void main(String[] args) {
+	public static void main(String[] args) {	
 		
+				Document doc = initializeXml();
+			
+				addUser(doc, "1", "Nassim", "MotDePasse");
+				
+				addFriend(doc, "1", "Nassim", "Marine");
+	            
+	            //DeleteUser(doc, "Nassim");
+	            
+	            //UpdateUserName(doc, "Nassim", "Elie");
+	            
+	            //UpdatePassword(doc, "Nassim", "MotDePasse", "Passwd");
+	            
+	            //DeleteFriend(doc, "Nassim", "Marine");
+
+	}
+	
+	private static Document initializeXml()
+	{
 		DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
 		DocumentBuilder dBuilder;
 		
@@ -30,75 +48,89 @@ public class XmlHandler {
 	            Element rootElement = doc.createElement("Users");
 	            // append root element to document
 	            doc.appendChild(rootElement);
-
-	            // append first child element to root element
-
-	            rootElement.appendChild(createUserElement(doc, "1", "Nassim", "MotDePasse"));
-	            rootElement.appendChild(createUserElement(doc, "2", "Emeline", "MotDePasse"));
-	            
-
-
-	            // for output to file, console
-	            TransformerFactory transformerFactory = TransformerFactory.newInstance();
-	            Transformer transformer = transformerFactory.newTransformer();
-	            // for pretty print
-	            transformer.setOutputProperty(OutputKeys.INDENT, "yes");
-	            DOMSource source = new DOMSource(doc);
-	            
-	            rootElement.getElementsByTagName("User").item(0).appendChild(createFriendElement(doc, "1", "Marine"));
-	            rootElement.getElementsByTagName("User").item(0).appendChild(createFriendElement(doc, "2", "Karina"));
-
-
-
-	            // write to console or file
-	            StreamResult console = new StreamResult(System.out);
-	            StreamResult file = new StreamResult(new File("users.xml"));
-	            
-	            //DeleteUser(doc, "Emeline");
-	            
-	            //UpdateUserName(doc, "Emeline", "Elie");
-	            
-	            //UpdatePassword(doc, "Emeline", "MotDePasse", "Passwd");
-	            
-	            DeleteFriend(doc, "Nassim", "abdelkader");
-
-	            // write data
-	            transformer.transform(source, console);
-	            transformer.transform(source, file);
-	            
-			
-		}catch (Exception e) {
+	            return doc;
+		}catch (Exception e){
 			e.printStackTrace();
 		}
+		return null;
 	}
 	
-	private static Node createUserElement(Document doc, String id, String UserName, String Password) {
+	private static boolean transformerXml(Document doc) {
+		 // for output to file, console
+		try {
+        TransformerFactory transformerFactory = TransformerFactory.newInstance();
+        Transformer transformer = transformerFactory.newTransformer();
+        // for pretty print
+        transformer.setOutputProperty(OutputKeys.INDENT, "yes");
+        DOMSource source = new DOMSource(doc);
+     // write to console or file
+        
+        File TempFile = new File("users.xml");
+        
+        TempFile.createNewFile();
+       
+        StreamResult console = new StreamResult(System.out);
+        StreamResult file = new StreamResult(TempFile);
+
+        transformer.transform(source, console);
+        transformer.transform(source, file);
+
+        
+        return true;
+        }catch (Exception e) {
+        	e.printStackTrace();
+        }
+		
+		return false;
+	}
+	
+	private static boolean addUser(Document doc, String id, String UserName, String Password) {
 		Element user = doc.createElement("User");
 
         // set id attribute
         user.setAttribute("id", id);
-        
-        
 
-        // create firstName element
+        // create UserName element
         user.appendChild(AddElement(doc, user, "UserName", UserName));
 
-        // create lastName element
+        // create Password element
         user.appendChild(AddElement(doc, user, "Password", Password));        
 
-        return user;
+        //Link the use element as a child node of the root of doc
+        doc.getFirstChild().appendChild(user);
         
+        transformerXml(doc);
+       
+        //Check if the children node were added
+        if (user.hasChildNodes())
+        	return true; 
+        else 
+        	return false; 
 	}
 	
-	private static Node createFriendElement(Document doc, String id, String FriendName) {
+	private static boolean addFriend(Document doc, String id, String User, String FriendName) {
 		Element friend = doc.createElement("Friend");
 		
 		friend.setAttribute("id", id);
 		
 		friend.appendChild(AddElement(doc, friend, "FriendName", FriendName));
 		
-		return friend;
+		NodeList users = doc.getElementsByTagName("User");
+		Element user = null;
 		
+				
+		for(int i = 0; i < users.getLength(); i++) { 
+			user = (Element) users.item(i);
+			String TempString = user.getElementsByTagName("UserName").item(0).getFirstChild().getNodeValue();
+			
+			if(TempString == User) {
+				user.appendChild(friend);
+				transformerXml(doc);
+				return true;
+			}
+		
+		}
+		return false;
 	}
 	
 	private static Node AddElement(Document doc, Element element, String name, String value) {
@@ -118,6 +150,7 @@ public class XmlHandler {
 			
 			if(TempString == UserToDelete) {
 				user.getParentNode().removeChild(user);
+				transformerXml(doc);
 				return true;
 			}
 			
@@ -133,18 +166,7 @@ public class XmlHandler {
     for( int i = 0 ; i < users.getLength() ; i++) {
         user = (Element) users.item(i);
         String userTemp = user.getElementsByTagName("UserName").item(0).getFirstChild().getNodeValue();
-        // Give us the node type, so here --> User
-        //System.out.println(user.getNodeName());
-       
-        // Here we get "FriendName"
-        //System.out.println(user.getElementsByTagName("FriendName").item(0).getNodeName());
-       
-       
-        //Give us Marine and Karina. 1er item a changer pour passer d'un amis a un autre.
-        //System.out.println(user.getElementsByTagName("FriendName").item(0).getChildNodes().item(0).getNodeValue());
-       
-        //Display Friend
-        //System.out.println(user.getElementsByTagName("Friend").item(0).getNodeName());
+
        
         if(userTemp == User) {
             NodeList friends = user.getElementsByTagName("Friend");
@@ -155,6 +177,7 @@ public class XmlHandler {
                
                 if(friendTemp == FriendToDelete) {
                     friend.getParentNode().removeChild(friend);
+                    transformerXml(doc);
                     return true;
                 }
                
@@ -181,6 +204,7 @@ public class XmlHandler {
 			
 			if(TempString == OldUserName) {
 				user.getElementsByTagName("UserName").item(0).getFirstChild().setNodeValue(NewUserName);
+				transformerXml(doc);
 				return true;
 			}
 			
@@ -202,6 +226,7 @@ public class XmlHandler {
 			
 			if(TempString == OldPassword && TempUserName == UserName) {
 				user.getElementsByTagName("Password").item(0).getFirstChild().setNodeValue(NewPassword);
+				transformerXml(doc);
 				return true;
 			}
 			
