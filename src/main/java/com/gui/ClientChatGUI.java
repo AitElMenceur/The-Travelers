@@ -1,21 +1,46 @@
 package com.gui;
 import com.Reseau.Client.Client;
+
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.EventQueue;
+import java.awt.FlowLayout;
+
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.border.EmptyBorder;
-
+import javax.swing.text.AttributeSet;
+import javax.swing.text.BadLocationException;
+import javax.swing.text.PlainDocument;
+import javax.swing.text.SimpleAttributeSet;
+import javax.swing.text.StyleConstants;
+import javax.swing.text.StyledDocument;
 import javax.swing.JButton;
 import javax.swing.JTextArea;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
+import javax.swing.JApplet;
 import javax.swing.JTextField;
+import javax.swing.JTextPane;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.BoxLayout;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.awt.Font;
+import java.awt.ScrollPane;
+
+import javax.swing.JScrollBar;
+import javax.swing.ScrollPaneConstants;
+import javax.swing.DropMode;
+import javax.swing.UIManager;
+import javax.swing.border.CompoundBorder;
+import javax.swing.border.BevelBorder;
+import javax.swing.border.LineBorder;
+import javax.swing.text.BadLocationException;
 
 public class ClientChatGUI extends JFrame implements ActionListener {
 
@@ -26,9 +51,13 @@ public class ClientChatGUI extends JFrame implements ActionListener {
 	private JPanel contentPane;
 	private JTextArea usernameInputFeild;
 	private JTextField inputtextField;
+	
+
 
 	
-	JTextArea chattextArea = new JTextArea();
+	JTextPane chattextArea = new JTextPane();
+	
+	//StyledDocument doc = chattextArea.getStyledDocument();
 	/**
 	 * Create the frame.
 	 */
@@ -53,24 +82,25 @@ public class ClientChatGUI extends JFrame implements ActionListener {
 		disconnectButton.setActionCommand("disconnectButton");
 		disconnectButton.addActionListener(this);
 		
-		JTextArea contactlistArea = new JTextArea();
-		contactlistArea.setColumns(20);
-		contactlistArea.setEditable(false);
-		
-		//JTextArea chattextArea = new JTextArea();
-		chattextArea.setColumns(20);
-		chattextArea.setEditable(false);
-		chattextArea.setLineWrap(true);
-		//chattextArea.append("Me: \n");
-		//chattextArea.append(inputtextField.getText());
-		
 		inputtextField = new JTextField();
-		inputtextField.setColumns(20);
+		inputtextField.setHorizontalAlignment(SwingConstants.LEFT);
+		inputtextField.setDocument(new JTextFieldLimit(30));
+		inputtextField.addActionListener(new ActionListener(){
+			@Override
+		    public void actionPerformed(ActionEvent evt) {
+				String writtenText=inputtextField.getText();
+				inputtextField.setText(null);
+				
+				PutTextToChatTextArea("AA", getName(), writtenText );
+				clnt.send("AA", getName()/*Gets the name of the component.*/, writtenText);
+				
+			}
+		
+		});
 		
 		JButton sendButton = new JButton("send");
 		sendButton.setActionCommand("sendButton");
 		sendButton.addActionListener(this);
-		
 		
 		JTextArea groupcodeInputField = new JTextArea();
 		
@@ -85,15 +115,16 @@ public class ClientChatGUI extends JFrame implements ActionListener {
 		leaveButton.addActionListener(this);
 		
 		JLabel contactList = new JLabel("Contact  List");
+		
+		JPanel chatPanel = new JPanel();
+		
+		JPanel contactListPanel = new JPanel();
+
 		GroupLayout gl_contentPane = new GroupLayout(contentPane);
 		gl_contentPane.setHorizontalGroup(
 			gl_contentPane.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_contentPane.createSequentialGroup()
-					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
-						.addGroup(gl_contentPane.createSequentialGroup()
-							.addComponent(inputtextField, GroupLayout.PREFERRED_SIZE, 465, GroupLayout.PREFERRED_SIZE)
-							.addGap(18)
-							.addComponent(sendButton))
+					.addGroup(gl_contentPane.createParallelGroup(Alignment.TRAILING)
 						.addGroup(gl_contentPane.createSequentialGroup()
 							.addGap(37)
 							.addGroup(gl_contentPane.createParallelGroup(Alignment.TRAILING)
@@ -111,20 +142,21 @@ public class ClientChatGUI extends JFrame implements ActionListener {
 									.addComponent(joinButton, GroupLayout.DEFAULT_SIZE, 88, Short.MAX_VALUE)))
 							.addGap(7)
 							.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
-								.addComponent(disconnectButton, GroupLayout.PREFERRED_SIZE, 107, Short.MAX_VALUE)
-								.addComponent(leaveButton, GroupLayout.DEFAULT_SIZE, 107, Short.MAX_VALUE))
+								.addComponent(disconnectButton, GroupLayout.PREFERRED_SIZE, 115, Short.MAX_VALUE)
+								.addComponent(leaveButton, GroupLayout.DEFAULT_SIZE, 115, Short.MAX_VALUE))
 							.addGap(2))
-						.addGroup(gl_contentPane.createSequentialGroup()
-							.addComponent(chattextArea, GroupLayout.DEFAULT_SIZE, 552, Short.MAX_VALUE)
-							.addPreferredGap(ComponentPlacement.UNRELATED)))
-					.addGap(15)
+						.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING, false)
+							.addComponent(chatPanel, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+							.addGroup(Alignment.TRAILING, gl_contentPane.createSequentialGroup()
+								.addContainerGap()
+								.addComponent(inputtextField, GroupLayout.PREFERRED_SIZE, 465, GroupLayout.PREFERRED_SIZE)
+								.addPreferredGap(ComponentPlacement.RELATED)
+								.addComponent(sendButton))))
+					.addPreferredGap(ComponentPlacement.UNRELATED)
 					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
-						.addGroup(Alignment.TRAILING, gl_contentPane.createSequentialGroup()
-							.addComponent(contactList)
-							.addGap(116))
-						.addGroup(Alignment.TRAILING, gl_contentPane.createSequentialGroup()
-							.addComponent(contactlistArea, GroupLayout.PREFERRED_SIZE, 302, GroupLayout.PREFERRED_SIZE)
-							.addContainerGap())))
+						.addComponent(contactList)
+						.addComponent(contactListPanel, GroupLayout.PREFERRED_SIZE, 294, GroupLayout.PREFERRED_SIZE))
+					.addContainerGap())
 		);
 		gl_contentPane.setVerticalGroup(
 			gl_contentPane.createParallelGroup(Alignment.LEADING)
@@ -145,18 +177,66 @@ public class ClientChatGUI extends JFrame implements ActionListener {
 								.addComponent(joinButton)
 								.addComponent(leaveButton))
 							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(chattextArea, GroupLayout.PREFERRED_SIZE, 373, GroupLayout.PREFERRED_SIZE)
-							.addPreferredGap(ComponentPlacement.RELATED)
-							.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
-								.addComponent(inputtextField, GroupLayout.PREFERRED_SIZE, 54, GroupLayout.PREFERRED_SIZE)
-								.addComponent(sendButton)))
-						.addComponent(contactlistArea))
-					.addGap(0))
+							.addComponent(chatPanel, GroupLayout.PREFERRED_SIZE, 405, GroupLayout.PREFERRED_SIZE)
+							.addPreferredGap(ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+							.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING, false)
+								.addComponent(inputtextField)
+								.addComponent(sendButton, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+							.addGap(13))
+						.addGroup(gl_contentPane.createSequentialGroup()
+							.addComponent(contactListPanel, GroupLayout.PREFERRED_SIZE, 475, GroupLayout.PREFERRED_SIZE)
+							.addContainerGap())))
 		);
+		contactListPanel.setLayout(new BorderLayout(0, 0));
+		
+		
+		JTextArea contactlistArea = new JTextArea();
+		contactListPanel.add(contactlistArea);
+		//JScrollPane contactlistAreajsp = new JScrollPane(contactlistArea);
+		contactlistArea.setEditable(false);
+		contactlistArea.setColumns(20);
+		
+		JScrollPane contactListScrollBar = new JScrollPane(contactlistArea);
+		contactListScrollBar.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+		contactListScrollBar.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+		contactListPanel.add(contactListScrollBar, BorderLayout.CENTER);
+		chatPanel.setLayout(new BorderLayout(0, 0));
+		chatPanel.add(chattextArea);
+		
+		
+		chattextArea.setBackground(Color.YELLOW);
+		chattextArea.setEditable(false);
+		chattextArea.setForeground(Color.WHITE);
+		chattextArea.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		
+		JScrollPane scrollPane = new JScrollPane(chattextArea);
+		scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+		scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+		chatPanel.add(scrollPane, BorderLayout.CENTER);
+		//newPanel.setBounds(6,7,175,179);
 		contentPane.setLayout(gl_contentPane);
 	}
 
+	public class JTextFieldLimit extends PlainDocument {
+		  private int limit;
 
+		  JTextFieldLimit(int limit) {
+		   super();
+		   this.limit = limit;
+		   }
+
+		  public void insertString( int offset, String  str, AttributeSet attr ) throws BadLocationException {
+		    if (str == null) return;
+
+		    if ((getLength() + str.length()) <= limit) {
+		      super.insertString(offset, str, attr);
+		    }
+		  }
+		}
+/*
+ * @param e  action event for buttons	
+ * @see PutTextToChatTextArea
+ */
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
@@ -180,11 +260,11 @@ public class ClientChatGUI extends JFrame implements ActionListener {
 			System.out.print(writtenText);
 			//inputtextField.getText();
 			//inputtextField.selectAll();
-			chattextArea.append("Me: ");
-			chattextArea.append(writtenText);
+			
+			inputtextField.setText(null);
 			//System.out.print("hello2");
 			
-			//PutTextToChatTextArea("AA", getName(), writtenText );
+			PutTextToChatTextArea("AA", getName(), writtenText );
 			clnt.send("AA", getName()/*Gets the name of the component.*/, writtenText);
 			
 			break;
@@ -201,10 +281,47 @@ public class ClientChatGUI extends JFrame implements ActionListener {
 	}
 	}
 
-
-	/*private void PutTextToChatTextArea(String string, String name, String writtenText) {
+/*
+ * @param string      groupcode
+ * @param name        the user's name
+ * @param writtenText what the user types
+ * 
+ * The login user will be aligned to the left, the other side will be aligned to the right.
+ * 
+ */
+	private void PutTextToChatTextArea(String groupcode, String name, String writtenText) {
 		// TODO Auto-generated method stub
-		JTextArea chattextArea = new JTextArea();
+		String header = "";
+		StyledDocument doc = chattextArea.getStyledDocument();
+		SimpleAttributeSet attribs = new SimpleAttributeSet();
+		if (name == getName()) {
+			header = "Me : ";
+			
+			StyleConstants.setAlignment(attribs, StyleConstants.ALIGN_LEFT);
+			StyleConstants.setForeground(attribs, Color.BLUE);
+			
+			chattextArea.setParagraphAttributes(attribs, true);
+		try {
+			
+			doc.insertString(doc.getLength(), header + writtenText +"\n" , attribs);
+			}
+		catch (BadLocationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		}
+		else {
+			
+			StyleConstants.setAlignment(attribs, StyleConstants.ALIGN_RIGHT);
+			StyleConstants.setForeground(attribs, Color.GREEN);
+			chattextArea.setParagraphAttributes(attribs, true);
+			try {
+				doc.insertString(doc.getLength(),  writtenText +getName() +"\n", attribs);
+			} catch (BadLocationException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		
 	}
-	*/
 }
