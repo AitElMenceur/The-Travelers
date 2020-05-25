@@ -270,8 +270,6 @@ public class XmlHandler {
 		
 		NodeList groups = doc.getElementsByTagName("Groups");
 		Element group = null;
-		
-		
 				
 		for(int i = 0; i < groups.getLength(); i++) { 
 			group = (Element) groups.item(i);
