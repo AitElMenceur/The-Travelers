@@ -265,7 +265,7 @@ public class XmlHandler {
 		}
 		return false;
 	}
-	/**
+	
 	private static boolean AddMessage(Document doc, String Groupcode, String UserName, String message) {
 		
 		NodeList groups = doc.getElementsByTagName("Groups");
@@ -286,7 +286,7 @@ public class XmlHandler {
 			
 	
 	}
-	**/
+	
 	//createGroup
 	//deleteMessage
 	//DeleteGroup
