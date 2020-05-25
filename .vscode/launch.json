@@ -9,6 +9,20 @@
             "name": "CodeLens (Launch) - Client",
             "request": "launch",
             "mainClass": "com.Reseau.Client.Client",
+            "projectName": "The-Travelers"
+        },
+        {
+            "type": "java",
+            "name": "CodeLens (Launch) - Host",
+            "request": "launch",
+            "mainClass": "com.Reseau.Server.Host",
+            "projectName": "The-Travelers"
+        },
+        {
+            "type": "java",
+            "name": "CodeLens (Launch) - Client",
+            "request": "launch",
+            "mainClass": "com.Reseau.Client.Client",
             "projectName": "Reseau"
         },
         {

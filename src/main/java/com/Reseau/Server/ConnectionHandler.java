@@ -2,7 +2,7 @@
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
+import java.io.ObjectOutputStream; 
 import java.net.Socket;
 import java.util.ArrayList;
 
@@ -57,7 +57,7 @@ public class ConnectionHandler implements IConnectionHandler {
             input = new ObjectInputStream(socket.getInputStream());
             while (!finish) {
                 recieved = (Message) input.readObject();
-                System.out.println(recieved.toString());
+                System.out.println(recieved.toString()); 
                 switch (recieved.getCommand()) {
                     case ("connect"):
                         output.writeObject(new Message(((Message) recieved).getUsername(),
@@ -93,8 +93,11 @@ public class ConnectionHandler implements IConnectionHandler {
                         finish = true;
                         break;
                     case ("create group"):
+
+                        LIST_GROUP.add(((Message) recieved).getGroupCode());
                     break;
                     case ("delete group"):
+                        LIST_GROUP.remove(((Message) recieved).getGroupCode());
                     break;
                 }
             }

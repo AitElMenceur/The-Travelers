@@ -1,5 +1,6 @@
 ﻿package com.Reseau.Client;
 
+import java.awt.EventQueue;//added by Rebecca
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -9,7 +10,11 @@ import java.net.SocketTimeoutException;
 import java.net.UnknownHostException;
 import java.util.Scanner;
 
+import javax.swing.JDialog;
+
 import com.Reseau.Data.Message;
+import com.gui.ClientChatGUI;
+import com.gui.LogInGUI;
 import com.Reseau.Data.Data;
 
 public class Client implements Runnable {
@@ -186,6 +191,15 @@ public class Client implements Runnable {
      */
     public static void main(String arg[]) {
         int i = 6668;
+        //added by Rebecca
+        try {
+			LogInGUI dialog = new LogInGUI();
+			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+			dialog.setVisible(true);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+        //end
         Client client = new Client("localhost", i, "User" + i);
         new Thread(client).start();
         
