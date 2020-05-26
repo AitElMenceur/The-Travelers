@@ -24,12 +24,34 @@ public class XmlHandler {
 				Document historyDoc = initializeXml("Groups");
 			
 				addUser(doc, "1", "Nassim", "MotDePasse");
+				addUser(doc, "2", "Karina", "Passwd");
 				
-				addFriend(doc, "1", "Nassim", "Marine");
+				addFriend(doc, "Nassim", "Marine");
 				addGroupCodeToUser(doc, "1", "Nassim"); 
-				addFriend(doc, "1", "Nassim", "karina");
+				addFriend(doc, "Nassim", "karina");
 				addGroupCodeToUser(doc, "2", "Nassim"); 
-	            
+				createGroup(doc, "1");
+				createGroup(doc, "2");
+				
+				AddMessage(doc, "2", "Nassim", "Salam les amis");
+				AddMessage(doc, "2", "Marine", "Et Languet ton moman");
+
+				//deleteMessage(doc, "2", "Marine", "Languet ton moman");
+				
+				//String[][] history = displayHistory(doc, "2", 4); 
+				
+				String[] listUsers = ListFriend(doc, "Nassim");
+				
+				for(int i = 0; i<listUsers.length; i++) {
+					System.out.println(listUsers[i]);
+					
+				}
+				
+				
+				
+				//deleteGroup(doc, "2", "Nassim"); 
+
+
 	            //DeleteUser(doc, "Nassim");
 	            
 	            //UpdateUserName(doc, "Nassim", "Elie");
@@ -37,6 +59,9 @@ public class XmlHandler {
 	            //UpdatePassword(doc, "Nassim", "MotDePasse", "Passwd");
 	            
 	            //DeleteFriend(doc, "Nassim", "Marine");
+	            //DeleteFriend(doc, "Nassim", "karina");
+
+				
 
 	}
 	
@@ -117,12 +142,8 @@ public class XmlHandler {
         	return false; 
 	}
 	
-	private static boolean addFriend(Document doc, String id, String User, String FriendName) {
+	private static boolean addFriend(Document doc, String User, String FriendName) {
 		Element friend = doc.createElement("Friend");
-		
-		friend.setAttribute("id", id);
-		
-		friend.appendChild(AddElement(doc, friend, "FriendName", FriendName));
 		
 		NodeList users = doc.getElementsByTagName("User");
 		Element user = null;
@@ -134,7 +155,7 @@ public class XmlHandler {
 			
 			if(TempString == User) {
 			
-				user.getElementsByTagName("Friends").item(0).appendChild(friend);
+				user.getElementsByTagName("Friends").item(0).appendChild(AddElement(doc, friend, "FriendName", FriendName));
 				transformerXml(doc);
 				return true;
 			}
@@ -179,11 +200,11 @@ public class XmlHandler {
 
        
         if(userTemp == User) {
-            NodeList friends = user.getElementsByTagName("Friend");
+            NodeList friends = user.getElementsByTagName("FriendName");
            
             for( int j = 0 ; j < friends.getLength() ; j++ ) {
                 Element friend = (Element) friends.item(j);
-                String friendTemp = friend.getElementsByTagName("FriendName").item(0).getFirstChild().getNodeValue();
+                String friendTemp = friend.getFirstChild().getNodeValue();
                
                 if(friendTemp == FriendToDelete) {
                     friend.getParentNode().removeChild(friend);
@@ -268,27 +289,196 @@ public class XmlHandler {
 	
 	private static boolean AddMessage(Document doc, String Groupcode, String UserName, String message) {
 		
-		NodeList groups = doc.getElementsByTagName("Groups");
-		Element group = null;
+		NodeList group = doc.getElementsByTagName("Group");
+		Element groupcode = null;
 				
-		for(int i = 0; i < groups.getLength(); i++) { 
-			group = (Element) groups.item(i);
+		for(int i = 0; i < group.getLength(); i++) { 
+			groupcode = (Element) group.item(i);
 			String TempString;	
 			
-			TempString = group.getElementsByTagName("GroupCode").item(0).getFirstChild().getNodeValue();
+			TempString = groupcode.getElementsByTagName("Groupcode").item(0).getFirstChild().getNodeValue();
 			if(TempString == Groupcode) {
-					//DO THE CREATE GROUP FUNCTION FIRST 
-					transformerXml(doc);
+				
+				Element user = doc.createElement("UserName");
+				user.appendChild(doc.createTextNode(UserName));
+				groupcode.appendChild(user); 
+	
+				Element text = doc.createElement("Message");
+		        text.appendChild(doc.createTextNode(message));        
+		        groupcode.appendChild(text);
+		        
+				transformerXml(doc);
+				return true;
 			}
 		}
+		return false;
 			
-	
 	}
 	
-	//createGroup
-	//deleteMessage
-	//DeleteGroup
-	//Display 30 last messages 
+	private static boolean createGroup(Document doc, String Groupcode) {
+		Element group = doc.createElement("Group");
+
+        // create group element
+        group.appendChild(AddElement(doc, group, "Groupcode", Groupcode));        
+
+        //Link the use element as a child node of the root of doc
+        doc.getElementsByTagName("Groups").item(0).appendChild(group);
+        
+        transformerXml(doc);
+       
+        //Check if the children node were added
+        if (group.hasChildNodes())
+        	return true; 
+        else 
+        	return false; 
+				
+	}
 	
+	private static boolean deleteMessage(Document doc, String Groupcode, String UserName, String message) {
+		NodeList group = doc.getElementsByTagName("Group");
+		Element groupcode = null;
+				
+		for(int i = 0; i < group.getLength(); i++) { 
+			groupcode = (Element) group.item(i);
+			String TempString;	
+			
+			TempString = groupcode.getElementsByTagName("Groupcode").item(0).getFirstChild().getNodeValue();
+			if(TempString == Groupcode) {
+				
+				NodeList UserNames = doc.getElementsByTagName("UserName");
+				Element user = null;
+				
+				for(int j=0; j<UserNames.getLength(); j++) {
+					
+					user = (Element) UserNames.item(j);
+					TempString = user.getFirstChild().getNodeValue();
+					
+					if(TempString == UserName) {
+						
+						NodeList MessageList = doc.getElementsByTagName("Message");
+						Element TempMessage = null;
+						
+						for(int k=0; k<MessageList.getLength(); k++) {
+							TempMessage = (Element) MessageList.item(k);
+							TempString = TempMessage.getFirstChild().getNodeValue();
+
+							if(TempString == message) {
+			                    TempMessage.getParentNode().removeChild(TempMessage);
+			                    user.getParentNode().removeChild(user);
+								transformerXml(doc);
+								return true;
+							}
+						}
+					}
+				}
+			}
+		}
+		
+		return false;
+	}
+	
+	private static boolean deleteGroup(Document doc, String Groupcode, String UserName) {
+		NodeList users = doc.getElementsByTagName("User");
+		Element user = null;
+				
+		for(int i = 0; i < users.getLength(); i++) { 
+			user = (Element) users.item(i);
+			String TempString = user.getElementsByTagName("UserName").item(0).getFirstChild().getNodeValue();
+			
+			if(TempString == UserName) {
+				NodeList GroupeCodes = doc.getElementsByTagName("Keys");
+				Element groupcode = null;
+				
+				for(int k=0; k<GroupeCodes.getLength(); k++) {
+					groupcode = (Element) GroupeCodes.item(k);
+					TempString = groupcode.getFirstChild().getNodeValue();
+
+					if(TempString == Groupcode) {
+	                    groupcode.getParentNode().removeChild(groupcode);
+						transformerXml(doc);
+						return true;
+					}
+				}
+				
+			}
+			
+			
+		}
+		return false;
+	}
+	
+
+	private static String[][] displayHistory(Document doc, String Groupcode, int numberOfMessages) {
+		
+		String[][] history = new String[numberOfMessages][2];
+		NodeList group = doc.getElementsByTagName("Group");
+		Element groupcode = null;
+				
+		for(int i = 0; i < group.getLength(); i++) { 
+			groupcode = (Element) group.item(i);
+			String TempString;	
+			
+			TempString = groupcode.getElementsByTagName("Groupcode").item(0).getFirstChild().getNodeValue();
+			if(TempString == Groupcode) {		
+				int stringCapacity = 0 ; 
+				
+				for( int j = groupcode.getChildNodes().getLength()-1 ; stringCapacity < numberOfMessages && j >=1; j--) {
+				
+					
+					history[stringCapacity][0] = groupcode.getChildNodes().item(j).getFirstChild().getNodeValue();
+					
+					history[stringCapacity][1] = groupcode.getChildNodes().item(--j).getFirstChild().getNodeValue();
+					
+					stringCapacity++; 
+					
+				}
+			}
+		}
+		return history; 
+	}
+	
+	private static String[] ListUser(Document doc) {
+		
+		NodeList users = doc.getElementsByTagName("User");
+		Element user = null;
+		String[] usersList = new String[users.getLength()];
+		
+		for(int i=0; i<users.getLength(); i++) {
+			user = (Element) users.item(i);
+			usersList[i] = user.getElementsByTagName("UserName").item(0).getFirstChild().getNodeValue();
+		}
+		
+		return usersList;
+	}
+
+	private static String[] ListFriend(Document doc, String UserName) {
+
+		NodeList users = doc.getElementsByTagName("User");
+		Element user = null;
+				
+		for(int i = 0; i < users.getLength(); i++) { 
+			user = (Element) users.item(i);
+			String TempString = user.getElementsByTagName("UserName").item(0).getFirstChild().getNodeValue();
+			
+			if(TempString == UserName) {
+			NodeList friends = user.getElementsByTagName("Friends").item(0).getChildNodes(); 
+				Element friend = null;
+				String[] ListFriend = new String[friends.getLength()]; 
+
+				for(int j=0; j < friends.getLength(); j++) {
+					
+					friend = (Element) friends.item(j);
+					ListFriend[j] = friend.getFirstChild().getNodeValue();
+					
+				}
+				return ListFriend;
+			}
+		
+		}
+		return null;
+		
+	}
+	//Checker Connection 
+	//Verification addUser que le user n'existe pas déjà
 }
 
