@@ -560,8 +560,7 @@ public class XmlHandler {
         }
         return false;
     }
-	//-->Connexion (check le username et le mot de passe lors de la connexion)
-	//UserChecker avec une liste d'users
+	//fonctions nécessaires toutes faites
 	
 	
 }
