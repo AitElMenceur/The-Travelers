@@ -78,7 +78,8 @@ public class ConnectionHandler implements IConnectionHandler {
                                 "You leave the chat " + ((Message) recieved).getGroupCode()));
                         break;
                     case ("send"):
-
+                    output.writeObject(LIST_GROUP);
+                    ArrayList lis = (ArrayList) zinput.readObject();
                         for (Group p : LIST_GROUP) {
                             if (p.getGroupCode().equals(((Message) recieved).getGroupCode())) {
                                 p.send((Message) recieved);
