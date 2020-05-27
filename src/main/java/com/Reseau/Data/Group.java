@@ -57,4 +57,8 @@ public class Group {
         return groupCode;
     }
 
+    public String toString() {
+        return groupCode;
+    }
+
 }
