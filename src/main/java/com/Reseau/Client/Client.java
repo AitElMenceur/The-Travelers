@@ -4,10 +4,13 @@ import java.awt.EventQueue;//added by Rebecca
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.lang.reflect.Array;
 import java.net.Socket;
 import java.net.SocketException;
 import java.net.SocketTimeoutException;
 import java.net.UnknownHostException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 import javax.swing.JDialog;
@@ -16,6 +19,7 @@ import com.Reseau.Data.Message;
 import com.gui.ClientChatGUI;
 import com.gui.LogInGUI;
 import com.Reseau.Data.Data;
+import com.Reseau.Data.Group;
 
 public class Client implements Runnable {
     private String Name;
@@ -36,7 +40,30 @@ public class Client implements Runnable {
         }
     }
 
-    /** 
+    public void createGroup(String groupCode) {
+
+        Message message = new Message(Name, "groupcode", groupCode, "");
+        try {
+            output.writeObject(message);
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+    }
+
+    public void deleteGroup(String groupCode) {
+
+        Message message = new Message(Name, "groupcode", groupCode, "");
+        try {
+            output.writeObject(message);
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+
+    }
+
+    /**
      * 
      * connect to the server
      */
@@ -51,7 +78,8 @@ public class Client implements Runnable {
             System.out.println(ioe.getMessage());
         }
     }
-/** 
+
+    /**
      * 
      * disconnect from the server
      */
@@ -68,14 +96,13 @@ public class Client implements Runnable {
             System.out.println(ioe.getMessage());
         }
     }
-    
-    /** 
-     * @param Groupcode
-     * Join a group
+
+    /**
+     * @param Groupcode Join a group
      */
     public void join(String Groupcode) {
         try {
-            output.writeObject(new Message("", "", "connect",Groupcode));
+            output.writeObject(new Message("", "", "connect", Groupcode));
         } catch (SocketTimeoutException exc) {
         } catch (UnknownHostException uhe) {
             System.out.println(uhe.getMessage());
@@ -83,14 +110,13 @@ public class Client implements Runnable {
             System.out.println(ioe.getMessage());
         }
     }
-    
-    /** 
-     * @param Groupcode
-     * leave a group 
+
+    /**
+     * @param Groupcode leave a group
      */
     public void leave(String Groupcode) {
         try {
-            output.writeObject(new Message("", "", "leave",Groupcode));
+            output.writeObject(new Message("", "", "leave", Groupcode));
         } catch (SocketTimeoutException exc) {
         } catch (UnknownHostException uhe) {
             System.out.println(uhe.getMessage());
@@ -98,14 +124,13 @@ public class Client implements Runnable {
             System.out.println(ioe.getMessage());
         }
     }
-    
-    /** 
+
+    /**
      * @param Groupcode
      * @param Name
-     * @param message
-     * Sending a message to the server
+     * @param message   Sending a message to the server
      */
-    public void send(String Groupcode, String Name, String message ) {
+    public void send(String Groupcode, String Name, String message) {
         try {
             output.writeObject(new Message(Name, Groupcode, "send", message));
         } catch (SocketTimeoutException exc) {
@@ -116,13 +141,11 @@ public class Client implements Runnable {
         }
     }
 
-  
-
     /**
      * @param Send Message and command to the server,
      * @deprecated used for terminals
      */
-    public void writing() {
+    public void writing() throws ClassNotFoundException {
         try {
             Scanner scan = new Scanner(System.in);
             String groupcode = null;
@@ -132,6 +155,11 @@ public class Client implements Runnable {
                 if (send_data != null) {
                     Data message;
                     if (send_data.equalsIgnoreCase("join")) {
+                        ArrayList<Group> list = (ArrayList<Group>) input.readObject();
+                        for (Group group : list) {
+                            group.toString();
+                        }
+
                         message = new Message(Name, "groupcode", send_data, "");
                         System.out.println("Which Group?");
                         groupcode = scan.next();
@@ -148,6 +176,18 @@ public class Client implements Runnable {
                         output.close();
                         input.close();
                         return;
+
+                    } else if (send_data.equalsIgnoreCase("create group")) {
+                        message = new Message(Name, "groupcode", send_data, "");
+                        System.out.println("Which Group?");
+                        ((Message) message).setGroupCode(scan.next());
+                        output.writeObject(message);
+                    } else if (send_data.equalsIgnoreCase("delete group")) {
+                        message = new Message(Name, "groupcode", send_data, "");
+                        System.out.println("Which Group?");
+                        ((Message) message).setGroupCode(scan.next());
+                        output.writeObject(message);
+
                     } else {
                         message = new Message(Name, groupcode, "send", send_data);
                         output.writeObject(message);
@@ -185,24 +225,25 @@ public class Client implements Runnable {
 
     }
 
-    
-    /** 
+    /**
      * @param arg[]
      */
     public static void main(String arg[]) {
         int i = 6668;
-        //added by Rebecca
-        try {
-			LogInGUI dialog = new LogInGUI();
-			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-			dialog.setVisible(true);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-        //end
+        // added by Rebecca
+        /*
+         * try { LogInGUI dialog = new LogInGUI();
+         * dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+         * dialog.setVisible(true); } catch (Exception e) { e.printStackTrace(); } //end
+         */
         Client client = new Client("localhost", i, "User" + i);
         new Thread(client).start();
-        
-        client.writing();
+
+        try {
+            client.writing();
+        } catch (ClassNotFoundException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
     }
 }
