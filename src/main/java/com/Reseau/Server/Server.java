@@ -21,6 +21,7 @@ public class Server extends AbstractServer {
         }
 
     }
+    
     public void addGroup(Group a){
         LIST_GROUP.add(a);
     }
