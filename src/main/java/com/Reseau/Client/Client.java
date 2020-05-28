@@ -40,6 +40,9 @@ public class Client implements Runnable {
         }
     }
 
+    /**
+     * @param groupCode Create a new group in the server
+     */
     public void createGroup(String groupCode) {
 
         Message message = new Message(Name, "groupcode", groupCode, "");
@@ -51,6 +54,9 @@ public class Client implements Runnable {
         }
     }
 
+    /**
+     * @param groupCode delete group from the server
+     */
     public void deleteGroup(String groupCode) {
 
         Message message = new Message(Name, "groupcode", groupCode, "");
@@ -155,11 +161,10 @@ public class Client implements Runnable {
                 if (send_data != null) {
                     Data message;
                     if (send_data.equalsIgnoreCase("join")) {
-                        ArrayList<Group> list = (ArrayList<Group>) input.readObject();
-                        for (Group group : list) {
-                            group.toString();
-                        }
-
+                        
+                          ArrayList<Group> list = (ArrayList<Group>) input.readObject();
+                           for (Group group : list) { group.toString(); }
+                         
                         message = new Message(Name, "groupcode", send_data, "");
                         System.out.println("Which Group?");
                         groupcode = scan.next();
@@ -245,5 +250,8 @@ public class Client implements Runnable {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
+      
+        
+        
     }
 }
