@@ -244,6 +244,7 @@ public class Client implements Runnable {
             } catch (ClassNotFoundException e) {
             } catch (SocketException se) {
                 System.out.println("Goodbye !");
+                return;
 
             } catch (IOException e) {
                 // TODO Auto-generate
