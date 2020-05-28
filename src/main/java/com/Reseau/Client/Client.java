@@ -16,12 +16,8 @@ import java.util.Scanner;
 import javax.swing.JDialog;
 
 import com.Reseau.Data.Message;
-<<<<<<< HEAD
 import com.Reseau.Data.User;
-import com.gui.ClientChatGUI;
 import com.gui.LogInGUI;
-=======
->>>>>>> 8c20bb013b16fe0706dcc19ef40082607f00ea71
 import com.Reseau.Data.Data;
 import com.Reseau.Data.Group;
 
