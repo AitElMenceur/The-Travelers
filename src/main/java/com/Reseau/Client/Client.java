@@ -12,6 +12,7 @@ import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+import java.util.concurrent.TimeUnit;
 
 import javax.swing.JDialog;
 
@@ -27,6 +28,7 @@ public class Client implements Runnable {
     private String send_data = null;
     private ObjectOutputStream output;
     private ObjectInputStream input;
+    private ArrayList<Group> list;
 
     public Client(String ip, int port, String nom) {
         this.Name = nom;
@@ -108,12 +110,22 @@ public class Client implements Runnable {
      */
     public void join(String Groupcode) {
         try {
-            output.writeObject(new Message("", "", "connect", Groupcode));
-        } catch (SocketTimeoutException exc) {
-        } catch (UnknownHostException uhe) {
-            System.out.println(uhe.getMessage());
-        } catch (IOException ioe) {
-            System.out.println(ioe.getMessage());
+            output.writeObject(new Message(Name, "", "display list", ""));
+
+            TimeUnit.MILLISECONDS.sleep(100);
+
+            for (Group group : list) {
+                System.out.println(group.toString());
+            }
+            System.out.println("Which Group?");
+
+            output.writeObject(new Message(Name, Groupcode, "join", ""));
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
         }
     }
 
@@ -164,17 +176,19 @@ public class Client implements Runnable {
                     if (send_data.equalsIgnoreCase("join")) {
                         output.writeObject(new Message(Name, "", "display list", ""));
                         try {
-                            ArrayList<Group> list = (ArrayList<Group>) input.readObject();
-
-                            for (Group group : list) {
-                                System.out.println(group.toString());
-                            }
-                        } catch (ClassNotFoundException e) {
+                            TimeUnit.MILLISECONDS.sleep(100);
+                        } catch (InterruptedException e) {
+                            // TODO Auto-generated catch block
+                            e.printStackTrace();
+                        }
+                        for (Group group : list) {
+                            System.out.println(group.toString());
                         }
                         System.out.println("Which Group?");
-                        output.writeObject(new Message(Name, "groupcode", groupcode, ""));
+                        groupcode = scan.next();
+                        output.writeObject(new Message(Name, groupcode, "join", ""));
                     } else if (send_data.equalsIgnoreCase("leave")) {
-                        message = new Message(Name, "groupcode", send_data, "");
+                        message = new Message(Name, "", send_data, "");
                         System.out.println("Which Group?");
                         ((Message) message).setGroupCode(scan.next());
                         output.writeObject(message);
@@ -217,14 +231,20 @@ public class Client implements Runnable {
     public void run() {
         while (true) {
             try {
+                Object recieved = input.readObject();
+                if (recieved instanceof ArrayList<?>) {
+                    list = (ArrayList<Group>) recieved;
 
-                Data recieved = (Message) input.readObject();
-                System.out.println(((Message) recieved).getUsername() + " [" + ((Message) recieved).getGroupCode()
-                        + "] " + " >" + ((Message) recieved).getMessage());
+                } else if (recieved instanceof Message) {
+                    recieved = (Message) recieved;
+                    System.out.println(((Message) recieved).getUsername() + " [" + ((Message) recieved).getGroupCode()
+                            + "] " + " >" + ((Message) recieved).getMessage());
+                }
 
             } catch (ClassNotFoundException e) {
             } catch (SocketException se) {
                 System.out.println("Goodbye !");
+                return;
 
             } catch (IOException e) {
                 // TODO Auto-generate
