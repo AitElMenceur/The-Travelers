@@ -232,8 +232,9 @@ public class Client implements Runnable {
             }
         }
     }
-
-    public static class Globals{
+    
+        // to delete 
+        public static class Globals{
         	public static String UserName = "";
         	public static String Passwd = "";
         	//public static String[] Chatters = {"Rebecca", "Nassim", "Marine"};
@@ -250,17 +251,19 @@ public class Client implements Runnable {
         	public static String CurrentGroup;
         }
     
+
     /** 
      * @param arg[]
      */
     public static void main(String arg[]) {
     	 int i = 6668;
          // added by Rebecca
-         /*
-          * try { LogInGUI dialog = new LogInGUI();
-          * dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-          * dialog.setVisible(true); } catch (Exception e) { e.printStackTrace(); } //end
+         
+           /* try { LogInGUI dialog = new LogInGUI();
+            dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+            dialog.setVisible(true); } catch (Exception e) { e.printStackTrace(); } //end
           */
+
          Client client = new Client("localhost", i, "User" + i);
          new Thread(client).start();
 
