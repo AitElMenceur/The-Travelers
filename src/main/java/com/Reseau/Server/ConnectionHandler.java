@@ -55,7 +55,7 @@ public class ConnectionHandler implements IConnectionHandler {
     public void handle() {
         try {
             boolean finish = false;
-            boolean isConnected = true;
+            boolean isConnected = false;
             output = new ObjectOutputStream(socket.getOutputStream());
             input = new ObjectInputStream(socket.getInputStream());
             while (!finish) {
@@ -72,7 +72,7 @@ public class ConnectionHandler implements IConnectionHandler {
                         break;
                     case ("join"):
                         if (isConnected){
-                            output.writeObject(LIST_GROUP);
+                            //output.writeObject(LIST_GROUP);
                         add(((Message) recieved).getGroupCode(), output);
                         output.writeObject(new Message(((Message) recieved).getUsername(),
                                 ((Message) recieved).getGroupCode(), recieved.getCommand(),

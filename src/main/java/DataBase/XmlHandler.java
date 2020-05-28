@@ -3,6 +3,9 @@ package DataBase;
 
 import java.io.File;
 import java.nio.file.Files;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -25,10 +28,11 @@ public class XmlHandler {
 			
 				addUser(doc, "1", "Nassim", "MotDePasse");
 				addUser(doc, "2", "Karina", "Passwd");
+				addUser(doc, "3", "Emeline", "Mahmoud");
 				
 				addFriend(doc, "Nassim", "Marine");
 				addGroupCodeToUser(doc, "1", "Nassim"); 
-				addFriend(doc, "Nassim", "karina");
+				addFriend(doc, "Nassim", "Karina");
 				addGroupCodeToUser(doc, "2", "Nassim"); 
 				createGroup(doc, "1");
 				createGroup(doc, "2");
@@ -38,19 +42,11 @@ public class XmlHandler {
 
 				//deleteMessage(doc, "2", "Marine", "Languet ton moman");
 				
-				//String[][] history = displayHistory(doc, "2", 4); 
+				String[][] history = displayHistory(doc, "2", 4); 
 				
-				String[] listUsers = ListFriend(doc, "Nassim");
-				
-				for(int i = 0; i<listUsers.length; i++) {
-					System.out.println(listUsers[i]);
-					
-				}
-				
-				
+				String[] listUsers = ListFriend(doc, "Nassim");		
 				
 				//deleteGroup(doc, "2", "Nassim"); 
-
 
 	            //DeleteUser(doc, "Nassim");
 	            
@@ -61,7 +57,11 @@ public class XmlHandler {
 	            //DeleteFriend(doc, "Nassim", "Marine");
 	            //DeleteFriend(doc, "Nassim", "karina");
 
-				
+				String[] list = ListOfGroupsOfAUser(doc, "Nassim");
+	               
+                for(int i = 0 ; i < list.length; i++) {
+                    System.out.println(list[i]);
+                }
 
 	}
 	
@@ -478,7 +478,90 @@ public class XmlHandler {
 		return null;
 		
 	}
-	//Checker Connection 
-	//Verification addUser que le user n'existe pas déjà
+	
+	public static String[] ListOfGroupsOfAUser(Document doc, String UserName) {
+        String[] ListOfGroups;
+       
+        NodeList users = doc.getElementsByTagName("User");
+        Element user = null;
+       
+        for(int i = 0; i < users.getLength(); i++) {
+            user = (Element) users.item(i);
+            String TempString = user.getElementsByTagName("UserName").item(0).getFirstChild().getNodeValue();
+           
+            if(TempString == UserName) {
+           
+                NodeList groups = user.getElementsByTagName("GroupCodes").item(0).getChildNodes();
+                Element group = null;
+                ListOfGroups = new String[groups.getLength()];
+                for(int j = 0 ; j < groups.getLength(); j++) {       
+                    group = (Element) groups.item(j);
+                   
+                    ListOfGroups[j] = group.getFirstChild().getNodeValue();            
+                }
+               
+                return ListOfGroups;
+            }
+       
+        }
+       
+        return null;    
+       
+    }
+	
+	public static String[] ListOfUsersInGroup(Document doc, String GroupCode) {
+	        List<String> DynamicList = new ArrayList<>();
+	       
+	        NodeList users = doc.getElementsByTagName("User");
+	        Element user = null;
+	       
+	        //We go through our nodelist of users
+	        for(int i = 0; i < users.getLength(); i++) {
+	            user = (Element) users.item(i);
+	            String TempString = user.getElementsByTagName("UserName").item(0).getFirstChild().getNodeValue();
+	           
+	            //We get the groups in which the user is in
+	            String[] GroupCodesList = ListOfGroupsOfAUser(doc, TempString);
+	           
+	            if(InTheList(GroupCodesList, GroupCode)) {
+	                DynamicList.add(TempString);
+	            }
+	               
+	        }
+	        String[] ListOfUsersInGroup = DynamicList.toArray(new String[0]);
+	       
+	       
+	        return ListOfUsersInGroup;
+	    }
+	   
+	private static boolean InTheList(String[] list, String value) {
+	       
+	        for(int i = 0; i < list.length; i++) {
+	            if( list[i] == value ) {
+	                return true;
+	            }
+	        }
+	        return false;
+	    }
+	
+	private static boolean CheckingLogins(Document doc , String UserName, String Password) {
+        Element user = null;
+        NodeList users = doc.getElementsByTagName("User");
+       
+        for(int i = 0; i < users.getLength() ; i++) {
+            user = (Element) users.item(i);
+            String TempString = user.getElementsByTagName("UserName").item(0).getFirstChild().getNodeValue();
+           
+            if(TempString == UserName) {
+                if(user.getElementsByTagName("Password").item(0).getFirstChild().getNodeValue() == Password)
+                        return true;
+            }
+           
+        }
+        return false;
+    }
+	//fonctions nécessaires toutes faites
+	
+	
 }
 

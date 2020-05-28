@@ -1,6 +1,9 @@
 package com.gui;
 
 import com.Reseau.Client.Client;
+import com.Reseau.Client.Client.Globals;
+import com.Reseau.Client.*;
+
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
 import java.awt.FlowLayout;
@@ -16,6 +19,11 @@ import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.JTextField;
 import javax.swing.JPasswordField;
+import java.awt.Color;
+import javax.swing.SwingConstants;
+import java.awt.Font;
+import javax.swing.LayoutStyle.ComponentPlacement;
+
 
 public class LogInGUI extends JDialog implements ActionListener{
 
@@ -25,44 +33,46 @@ public class LogInGUI extends JDialog implements ActionListener{
 	private static final long serialVersionUID = 1L;
 	private final JPanel contentPanel = new JPanel();
 	private JPanel buttonPane;
-	private JLabel lblNewLabel;
-	private JTextField textField;
+	private JLabel NameLabel;
+	private JTextField NameTextField;
 	private JPasswordField passwordField;
 
-	/**
-	 * Launch the application.
-	 */
-	/*public static void main(String[] args) {
-		try {
-			LogInGUI dialog = new LogInGUI();
-			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-			dialog.setVisible(true);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}*/
+	
+	JLabel WarningMessageLabel = new JLabel("");
+
 
 	/**
 	 * Create the dialog.
 	 */
 	public LogInGUI() {
+		setTitle("The-Travelers");
 		setBounds(100, 100, 450, 300);
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		{
 			buttonPane = new JPanel();
 			buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
 			{
-				JButton loginButton = new JButton("login");
-				loginButton.setActionCommand("loginButton");
-				loginButton.addActionListener(this);
-				buttonPane.add(loginButton);
-				getRootPane().setDefaultButton(loginButton);
-			}
-			{
-				JButton cancelButton = new JButton("Cancel");
-				cancelButton.setActionCommand("cancelButton");
-				cancelButton.addActionListener(this);
-				buttonPane.add(cancelButton);
+				{
+					JButton cancelButton = new JButton("Cancel");
+					cancelButton.setActionCommand("cancelButton");
+					cancelButton.addActionListener(this);
+					
+					JButton loginButton = new JButton("Login");
+					loginButton.setHorizontalAlignment(SwingConstants.LEFT);
+					loginButton.setActionCommand("loginButton");
+					loginButton.addActionListener(this);
+					buttonPane.add(loginButton);
+					getRootPane().setDefaultButton(loginButton);
+					
+					JButton btnNew = new JButton("New");
+					btnNew.setActionCommand("NewButton");
+					btnNew.addActionListener(this);
+					
+					btnNew.setHorizontalAlignment(SwingConstants.LEFT);
+					
+					buttonPane.add(btnNew);
+					buttonPane.add(cancelButton);
+				}
 			}
 		}
 		GroupLayout groupLayout = new GroupLayout(getContentPane());
@@ -78,79 +88,121 @@ public class LogInGUI extends JDialog implements ActionListener{
 					.addComponent(buttonPane, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
 		);
 		{
-			lblNewLabel = new JLabel("Name");
+			NameLabel = new JLabel("Name");
+			NameLabel.setFont(new Font("Tahoma", Font.BOLD, 20));
 		}
-		JLabel lblNewLabel_1 = new JLabel("Password");
+		JLabel PasswordLabel = new JLabel("Password");
+		PasswordLabel.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 20));
 		
-		textField = new JTextField();
-		textField.setColumns(10);
+		NameTextField = new JTextField();
+		NameTextField.setColumns(10);
 		
 		passwordField = new JPasswordField();
 		
-		JLabel lblNewLabel_2 = new JLabel("Login");
+		JLabel LoginLabel = new JLabel("Login");
+		LoginLabel.setFont(new Font("Tahoma", Font.BOLD, 30));
+		
+		//JLabel WarningMessageLabel = new JLabel("Warning");
+		WarningMessageLabel.setFont(new Font("Tahoma", Font.BOLD, 16));
+		WarningMessageLabel.setForeground(Color.RED);
 		GroupLayout gl_contentPanel = new GroupLayout(contentPanel);
 		gl_contentPanel.setHorizontalGroup(
 			gl_contentPanel.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_contentPanel.createSequentialGroup()
+					.addGap(183)
+					.addComponent(LoginLabel, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+					.addGap(196))
+				.addGroup(gl_contentPanel.createSequentialGroup()
 					.addContainerGap()
 					.addGroup(gl_contentPanel.createParallelGroup(Alignment.LEADING)
-						.addComponent(lblNewLabel)
-						.addComponent(lblNewLabel_1))
+						.addComponent(NameLabel)
+						.addComponent(PasswordLabel))
 					.addGap(22)
 					.addGroup(gl_contentPanel.createParallelGroup(Alignment.LEADING)
-						.addComponent(passwordField)
-						.addComponent(textField, GroupLayout.PREFERRED_SIZE, 223, GroupLayout.PREFERRED_SIZE))
-					.addContainerGap(91, Short.MAX_VALUE))
-				.addGroup(gl_contentPanel.createSequentialGroup()
-					.addGap(183)
-					.addComponent(lblNewLabel_2, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-					.addGap(196))
+						.addComponent(WarningMessageLabel)
+						.addComponent(NameTextField, GroupLayout.PREFERRED_SIZE, 223, GroupLayout.PREFERRED_SIZE)
+						.addComponent(passwordField, 223, 223, 223))
+					.addContainerGap(105, Short.MAX_VALUE))
 		);
 		gl_contentPanel.setVerticalGroup(
 			gl_contentPanel.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_contentPanel.createSequentialGroup()
 					.addContainerGap()
-					.addComponent(lblNewLabel_2)
+					.addComponent(LoginLabel)
 					.addGap(20)
 					.addGroup(gl_contentPanel.createParallelGroup(Alignment.LEADING)
-						.addComponent(textField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 						.addGroup(gl_contentPanel.createSequentialGroup()
-							.addComponent(lblNewLabel)
-							.addGap(42)
+							.addComponent(NameTextField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+							.addPreferredGap(ComponentPlacement.UNRELATED)
 							.addGroup(gl_contentPanel.createParallelGroup(Alignment.BASELINE)
-								.addComponent(lblNewLabel_1)
-								.addComponent(passwordField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))))
-					.addContainerGap(57, Short.MAX_VALUE))
+								.addComponent(passwordField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+								.addComponent(PasswordLabel)))
+						.addComponent(NameLabel))
+					.addPreferredGap(ComponentPlacement.RELATED, 17, Short.MAX_VALUE)
+					.addComponent(WarningMessageLabel)
+					.addContainerGap())
 		);
 		contentPanel.setLayout(gl_contentPanel);
 		getContentPane().setLayout(groupLayout);
 	}
 
+	@SuppressWarnings("deprecation")
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
 		switch(e.getActionCommand()) {
 		case "loginButton" :
-			//System.out.print("bonjour");
-			//clnt.login();
+			int login = 1;
+			Globals.UserName = NameTextField.getText();
+			Globals.Passwd = passwordField.getText();
+			if(Globals.UserName.length() != 0 && Globals.Passwd.length() != 0) {
+				//login = clnt.connect();  
+				//Please return an integer back*****
+				login = 1;//delete this line after "connect" function has modified...
+			}
+			
+			if(login == 1) {
+				WarningMessageLabel.setText(" ");
+			
 	        EventQueue.invokeLater(new Runnable() {
 				public void run() {
 					try {
-						ClientChatGUI frame = new ClientChatGUI();
+						ChatGUI frame = new ChatGUI();
 						frame.setVisible(true);
 					} catch (Exception e) {
 						e.printStackTrace();
 					}
 				}
-			});
-			//ClientChatGUI clientchatGUI = new ClientChatGUI();
-			//clientchatGUI.setVisible(true);
-		break;
+			}); 
+			}
+		else {//login = false
+			WarningMessageLabel.setText("Login Failed");
+			
+		}
+			break;
+			
 		case "cancelButton" :
-			//System.out.print("Good");
-			//clnt.cancel();
 			System.exit(0);
 			break;
+		
+		case "NewButton" :
+			 EventQueue.invokeLater(new Runnable() {
+					public void run() {
+						try {
+							Globals.UserName = NameTextField.getText();
+							Globals.Passwd = passwordField.getText();
+							RegisterGUI frame= new RegisterGUI();
+							frame.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+							frame.setVisible(true);
+						} catch (Exception e) {
+							e.printStackTrace();
+						}
+					}
+				});
+			 //needs to be modified
+			//needs a New to call*****
+			 //clnt.New();
+			 break;
 		}
 	}
 		
