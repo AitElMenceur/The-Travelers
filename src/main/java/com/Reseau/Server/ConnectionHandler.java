@@ -2,10 +2,9 @@
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream; 
+import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.util.ArrayList;
-
 
 import com.Reseau.Data.*;
 
@@ -47,8 +46,6 @@ public class ConnectionHandler implements IConnectionHandler {
         }
     }
 
-
-
     /**
      * Check for incoming message, and give an appropriate answer
      */
@@ -60,61 +57,63 @@ public class ConnectionHandler implements IConnectionHandler {
             input = new ObjectInputStream(socket.getInputStream());
             while (!finish) {
                 recieved = (Message) input.readObject();
-                System.out.println(recieved.toString()); 
+                System.out.println(recieved.toString());
                 switch (recieved.getCommand()) {
                     case ("connect"):
-                        recieved = (User) input.readObject();
-                        output.writeObject(new Message(((Message) recieved).getUsername(),
-                                ((Message) recieved).getGroupCode(), recieved.getCommand(),
-                                "Welcome to the server " + ((Message) recieved).getUsername()));
+                        User user = (User) input.readObject();
+                        output.writeObject(new Message(user.getUsername(),
+                            "", user.getCommand(),"Welcome to the server " + user.getUsername()));
                         System.out.println("Connected in port " + socket.getLocalPort());
 
                         break;
-                    case ("join"):
-                        if (isConnected){
+                        case("display list"):
                             output.writeObject(LIST_GROUP);
-                        add(((Message) recieved).getGroupCode(), output);
-                        output.writeObject(new Message(((Message) recieved).getUsername(),
-                                ((Message) recieved).getGroupCode(), recieved.getCommand(),
-                                "You join the chat " + ((Message) recieved).getGroupCode()));
-                        }
+                            break;
+                    case ("join"):
+                        if (isConnected) {
+                            
+                            add(((Message) recieved).getGroupCode(), output);
+                            output.writeObject(new Message(((Message) recieved).getUsername(),
+                                    ((Message) recieved).getGroupCode(), recieved.getCommand(),
+                                    "You join the chat " + ((Message) recieved).getGroupCode()));
+                        }else{System.out.println("No");}
                         break;
                     case ("leave"):
-                        if (isConnected){
-                        remove(((Message) recieved).getGroupCode(), output);
-                        output.writeObject(new Message(((Message) recieved).getUsername(),
-                                ((Message) recieved).getGroupCode(), recieved.getCommand(),
-                                "You leave the chat " + ((Message) recieved).getGroupCode()));
+                        if (isConnected) {
+                            remove(((Message) recieved).getGroupCode(), output);
+                            output.writeObject(new Message(((Message) recieved).getUsername(),
+                                    ((Message) recieved).getGroupCode(), recieved.getCommand(),
+                                    "You leave the chat " + ((Message) recieved).getGroupCode()));
                         }
                         break;
                     case ("send"):
-                    output.writeObject(LIST_GROUP);
-                    ArrayList lis = (ArrayList) input.readObject();
+
+                        ArrayList list = (ArrayList) input.readObject();
                         for (Group p : LIST_GROUP) {
                             if (p.getGroupCode().equals(((Message) recieved).getGroupCode())) {
                                 p.send((Message) recieved);
                             }
-                        }}
+                        }
                         break;
                     case ("disconnect"):
-                        if (isConnected){
-                        output.writeObject(
-                                new Message(((Message) recieved).getUsername(), ((Message) recieved).getGroupCode(),
-                                        recieved.getCommand(), "bye " + ((Message) recieved).getUsername()));
-                        output.flush();
-                        finish = true;
+                        if (isConnected) {
+                            output.writeObject(
+                                    new Message(((Message) recieved).getUsername(), ((Message) recieved).getGroupCode(),
+                                            recieved.getCommand(), "bye " + ((Message) recieved).getUsername()));
+                            output.flush();
+                            finish = true;
                         }
                         break;
                     case ("create group"):
-                    if (isConnected){      
-                     LIST_GROUP.add(new Group(((Message) recieved).getGroupCode()));
-                    break;
-                    }
+                        if (isConnected) {
+                            LIST_GROUP.add(new Group(((Message) recieved).getGroupCode()));
+                            break;
+                        }
                     case ("delete group"):
-                    if (isConnected){
-                        LIST_GROUP.remove(((Message) recieved).getGroupCode());
-                    }
-                    break;
+                        if (isConnected) {
+                            LIST_GROUP.remove(((Message) recieved).getGroupCode());
+                        }
+                        break;
                 }
             }
         } catch (IOException ioe) {

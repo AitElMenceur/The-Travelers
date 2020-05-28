@@ -16,6 +16,7 @@ import java.util.Scanner;
 import javax.swing.JDialog;
 
 import com.Reseau.Data.Message;
+import com.Reseau.Data.User;
 import com.gui.ClientChatGUI;
 import com.gui.LogInGUI;
 import com.Reseau.Data.Data;
@@ -145,26 +146,28 @@ public class Client implements Runnable {
      * @param Send Message and command to the server,
      * @deprecated used for terminals
      */
-    public void writing() throws ClassNotFoundException {
+    public void writing() {
         try {
             Scanner scan = new Scanner(System.in);
             String groupcode = null;
             output.writeObject(new Message("", "", "connect", ""));
+            output.writeObject(new User("", ""));
             while (true) {
                 send_data = scan.nextLine();
                 if (send_data != null) {
                     Data message;
                     if (send_data.equalsIgnoreCase("join")) {
-                        ArrayList<Group> list = (ArrayList<Group>) input.readObject();
-                        for (Group group : list) {
-                            group.toString();
-                        }
+                        output.writeObject(new Message(Name, "", "display list", ""));
+                        try {
+                            ArrayList<Group> list = (ArrayList<Group>) input.readObject();
 
-                        message = new Message(Name, "groupcode", send_data, "");
+                            for (Group group : list) {
+                                System.out.println(group.toString());
+                            }
+                        } catch (ClassNotFoundException e) {
+                        }
                         System.out.println("Which Group?");
-                        groupcode = scan.next();
-                        ((Message) message).setGroupCode(groupcode);
-                        output.writeObject(message);
+                        output.writeObject(new Message(Name, "groupcode", groupcode, ""));
                     } else if (send_data.equalsIgnoreCase("leave")) {
                         message = new Message(Name, "groupcode", send_data, "");
                         System.out.println("Which Group?");
@@ -194,6 +197,7 @@ public class Client implements Runnable {
                     }
                     send_data = null;
                 }
+
             }
         } catch (SocketTimeoutException exc) {
             System.out.println("la");
@@ -206,23 +210,22 @@ public class Client implements Runnable {
 
     @Override
     public void run() {
-        try {
-            while (true) {
+        while (true) {
+            try {
+
                 Data recieved = (Message) input.readObject();
                 System.out.println(((Message) recieved).getUsername() + " [" + ((Message) recieved).getGroupCode()
                         + "] " + " >" + ((Message) recieved).getMessage());
+
+            } catch (ClassNotFoundException e) {
+            } catch (SocketException se) {
+                System.out.println("Goodbye !");
+
+            } catch (IOException e) {
+                // TODO Auto-generate
+                e.printStackTrace();
             }
-        } catch (ClassNotFoundException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        } catch (SocketException se) {
-            System.out.println("Goodbye !");
-
-        } catch (IOException e) {
-            // TODO Auto-generate
-            e.printStackTrace();
         }
-
     }
 
     /**
@@ -239,11 +242,7 @@ public class Client implements Runnable {
         Client client = new Client("localhost", i, "User" + i);
         new Thread(client).start();
 
-        try {
-            client.writing();
-        } catch (ClassNotFoundException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
+        client.writing();
+
     }
 }

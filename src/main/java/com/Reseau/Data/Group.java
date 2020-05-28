@@ -2,10 +2,11 @@ package com.Reseau.Data;
 
 import java.io.IOException;
 import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
-public class Group {
+public class Group implements Serializable{
     private Set<ObjectOutputStream> writers = new HashSet<>();
     private String groupCode;
 
