@@ -16,9 +16,12 @@ import java.util.Scanner;
 import javax.swing.JDialog;
 
 import com.Reseau.Data.Message;
+<<<<<<< HEAD
 import com.Reseau.Data.User;
 import com.gui.ClientChatGUI;
 import com.gui.LogInGUI;
+=======
+>>>>>>> 8c20bb013b16fe0706dcc19ef40082607f00ea71
 import com.Reseau.Data.Data;
 import com.Reseau.Data.Group;
 
@@ -41,6 +44,9 @@ public class Client implements Runnable {
         }
     }
 
+    /**
+     * @param groupCode Create a new group in the server
+     */
     public void createGroup(String groupCode) {
 
         Message message = new Message(Name, "groupcode", groupCode, "");
@@ -52,6 +58,9 @@ public class Client implements Runnable {
         }
     }
 
+    /**
+     * @param groupCode delete group from the server
+     */
     public void deleteGroup(String groupCode) {
 
         Message message = new Message(Name, "groupcode", groupCode, "");
@@ -228,19 +237,36 @@ public class Client implements Runnable {
         }
     }
 
-    /**
+    public static class Globals{
+        	public static String UserName = "";
+        	public static String Passwd = "";
+        	//public static String[] Chatters = {"Rebecca", "Nassim", "Marine"};
+        	public static String[] Chatters = {};
+        	//public static int totalChatters = 0;
+        	//public static String[] Freinds = {"Nassim", "Marine", "Karina", "Ilyes"};
+        	//public static int totalFreinds = 4;
+        	//public static String[] Users = {"Clara", "Meta", "Stella", "Neils"};
+        	//public static int totalUsers = 4;
+        	//public static String[] GroupMembers = {"Marine", "Nassim",};
+        	//public static int totalgroupMembers = 2;
+        	public static String[] GroupCode = {"AA", "BB", "CC"};
+        	//public static int totalgroupCode = 3; 
+        	public static String CurrentGroup;
+        }
+    
+    /** 
      * @param arg[]
      */
     public static void main(String arg[]) {
-        int i = 6668;
-        // added by Rebecca
-        /*
-         * try { LogInGUI dialog = new LogInGUI();
-         * dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-         * dialog.setVisible(true); } catch (Exception e) { e.printStackTrace(); } //end
-         */
-        Client client = new Client("localhost", i, "User" + i);
-        new Thread(client).start();
+    	 int i = 6668;
+         // added by Rebecca
+         /*
+          * try { LogInGUI dialog = new LogInGUI();
+          * dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+          * dialog.setVisible(true); } catch (Exception e) { e.printStackTrace(); } //end
+          */
+         Client client = new Client("localhost", i, "User" + i);
+         new Thread(client).start();
 
         client.writing();
 

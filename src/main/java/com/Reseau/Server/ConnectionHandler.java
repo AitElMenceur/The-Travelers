@@ -52,7 +52,7 @@ public class ConnectionHandler implements IConnectionHandler {
     public void handle() {
         try {
             boolean finish = false;
-            boolean isConnected = true;
+            boolean isConnected = false;
             output = new ObjectOutputStream(socket.getOutputStream());
             input = new ObjectInputStream(socket.getInputStream());
             while (!finish) {
