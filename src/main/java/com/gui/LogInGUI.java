@@ -2,9 +2,6 @@ package com.gui;
 
 import com.Reseau.Client.Client;
 import com.Reseau.Client.Client.Globals;
-import com.Reseau.Client.*;
-
-import java.awt.BorderLayout;
 import java.awt.EventQueue;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;

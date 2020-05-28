@@ -16,8 +16,6 @@ import java.util.Scanner;
 import javax.swing.JDialog;
 
 import com.Reseau.Data.Message;
-import com.gui.ClientChatGUI;
-import com.gui.LogInGUI;
 import com.Reseau.Data.Data;
 import com.Reseau.Data.Group;
 
@@ -261,7 +259,6 @@ public class Client implements Runnable {
          Client client = new Client("localhost", i, "User" + i);
          new Thread(client).start();
 
-<<<<<<< HEAD
         try {
             client.writing();
         } catch (ClassNotFoundException e) {
@@ -272,13 +269,4 @@ public class Client implements Runnable {
         
         
     }
-=======
-         try {
-             client.writing();
-         } catch (ClassNotFoundException e) {
-             // TODO Auto-generated catch block
-             e.printStackTrace();
-         }
-     }
->>>>>>> 31beb2192268ab891075f0b978dccd88a0867571
 }

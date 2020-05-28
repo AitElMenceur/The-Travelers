@@ -27,23 +27,22 @@ public class RegisterGUI extends JDialog {
 	private final JPanel contentPanel = new JPanel();
 	private JPanel buttonPane;
 	private JLabel userAccountLabel;
-	private JTextField NametextField;
-	private JTextField PasswordtextField;
+	private final JTextField NametextField;
+	private final JTextField PasswordtextField;
 
-	String UserName="", Password="", OldUserName="", NewUserName="", OldPassword="", NewPassword="";
+	String UserName = "", Password = "", OldUserName = "", NewUserName = "", OldPassword = "", NewPassword = "";
 
 	/**
 	 * Create the dialog.
 	 */
-	
+
 	JButton UpdateButton = new JButton("Update");
 	JButton DeleteButton = new JButton("Delete");
-	
-	
+
 	public RegisterGUI() {
 		setBounds(100, 100, 450, 300);
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
-		JLabel RegisterWarningMessage = new JLabel("");
+		final JLabel RegisterWarningMessage = new JLabel("");
 		RegisterWarningMessage.setForeground(Color.RED);
 		{
 			userAccountLabel = new JLabel("User Account");
@@ -52,167 +51,152 @@ public class RegisterGUI extends JDialog {
 		{
 			buttonPane = new JPanel();
 			buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
-			
-			
-			JButton RegisterButton = new JButton("Register");
+
+			final JButton RegisterButton = new JButton("Register");
 			RegisterButton.setActionCommand("RegisterButton");
-			RegisterButton.addActionListener(new ActionListener(){
-			     public void actionPerformed(ActionEvent e){  
-			    	 RegisterWarningMessage.setText("");
-			    	 UserName = NametextField.getText() ;
-					 Password = PasswordtextField.getText();
-					 
-					if((UserName.length() == 0)||( Password.length() == 0)){
-							RegisterWarningMessage.setForeground(Color.RED);
-							RegisterWarningMessage.setText("Please fill in your Name and Password!");
-					 }
-					 else {
-						 
-						 /*
+			RegisterButton.addActionListener(new ActionListener() {
+				public void actionPerformed(final ActionEvent e) {
+					RegisterWarningMessage.setText("");
+					UserName = NametextField.getText();
+					Password = PasswordtextField.getText();
+
+					if ((UserName.length() == 0) || (Password.length() == 0)) {
+						RegisterWarningMessage.setForeground(Color.RED);
+						RegisterWarningMessage.setText("Please fill in your Name and Password!");
+					} else {
+
+						/*
 						 * need to be fixed*****
 						 * 
 						 */
-						 int rtn = 1 ;
-						//doc = ;
-						//id = ;
-						 
-						 //
-						//rtn = clnt.addUser(doc, id, UserName, Password);
-						 
-						 if(rtn == 1) {
-							 RegisterWarningMessage.setForeground(Color.GREEN);
-							 RegisterWarningMessage.setText("Register Succceeded!");
-						 }
-						 else {
-							 RegisterWarningMessage.setForeground(Color.RED);
-							 RegisterWarningMessage.setText("Register Failed!");
-						 }
-			        }    
-			     }
-			 });
+						final int rtn = 1;
+						// doc = ;
+						// id = ;
+
+						//
+						// rtn = clnt.addUser(doc, id, UserName, Password);
+
+						if (rtn == 1) {
+							RegisterWarningMessage.setForeground(Color.GREEN);
+							RegisterWarningMessage.setText("Register Succceeded!");
+						} else {
+							RegisterWarningMessage.setForeground(Color.RED);
+							RegisterWarningMessage.setText("Register Failed!");
+						}
+					}
+				}
+			});
 
 			buttonPane.add(RegisterButton);
 			getRootPane().setDefaultButton(RegisterButton);
-			
-			//JButton UpdateButton = new JButton("Update");
+
+			// JButton UpdateButton = new JButton("Update");
 			UpdateButton.setActionCommand("UpdateButton");
-			UpdateButton.addActionListener((new ActionListener(){
-			     public void actionPerformed(ActionEvent e){  
+			UpdateButton.addActionListener((new ActionListener() {
+				public void actionPerformed(final ActionEvent e) {
 					UserName = NametextField.getText();
 					OldUserName = Globals.UserName;
 					NewUserName = UserName;
-				  	OldPassword = Globals.Passwd;
-				 
+					OldPassword = Globals.Passwd;
+
 					NewPassword = PasswordtextField.getText();
 					RegisterWarningMessage.setText("");
-					if(NewUserName.length() == 0 || NewPassword.length() == 0) {
+					if (NewUserName.length() == 0 || NewPassword.length() == 0) {
 						RegisterWarningMessage.setForeground(Color.RED);
 						RegisterWarningMessage.setText("Please check your User Name and Password!");
-					}
-					else {
-					
-					int rtn1 =1, rtn2 = 1;
-					/*
-					 * need to be fixed*****
-					 * 
-					 */
-					//doc = ;
-					//id = ;
-					//rtn1= clnt.UpdateUserNamme(doc, OldUserName, NewUserName);
-					//rtn2 = clnt.UpdatePassword(doc, UserName, OldPassword, NewPassword);
-					if(rtn1 == 1 && rtn2 == 1) {
-						RegisterWarningMessage.setForeground(Color.GREEN);
-						 RegisterWarningMessage.setText("Update Succceeded!");
-						 Globals.UserName = NewUserName;
-						 Globals.Passwd = NewPassword;
-						 }
-					else if(rtn1 != 1 && rtn2 ==1) {
-						RegisterWarningMessage.setForeground(Color.RED);
-						RegisterWarningMessage.setText("Please check your User Name!");
-					}
-					else if(rtn1== 1 && rtn2 != 1) {
-						RegisterWarningMessage.setForeground(Color.RED);
-						RegisterWarningMessage.setText("Please check your Password!");
-					}
-					else {
-						RegisterWarningMessage.setForeground(Color.RED);
-						 RegisterWarningMessage.setText("Please check your User Name and Password!");
-						 }
-			        }    
-			     }
-			 }));
-			buttonPane.add(UpdateButton);
-				
-			DeleteButton.setActionCommand("DeleteButton");
-			DeleteButton.addActionListener((new ActionListener(){
-			     public void actionPerformed(ActionEvent e){  
-			    	 /*
-			    	  *  must use login name to delete, or the user may delete others account!!
-			    	  */
-			    	 UserName = Globals.UserName;
-			    	 Password = Globals.Passwd;
-			    	 RegisterWarningMessage.setText("");
-			    	 if(UserName.length() == 0 || Password.length() == 0) {
-			    		 	RegisterWarningMessage.setForeground(Color.RED);
-							RegisterWarningMessage.setText("Please check your User Name and Password!");
-						}
-						else {
-						
-			    	 int rtn =1;
-			    	 	/*
+					} else {
+
+						final int rtn1 = 1, rtn2 = 1;
+						/*
 						 * need to be fixed*****
 						 * 
 						 */
-						//id = ;
-						 //rtn = clnt.DeleteUser(doc, UserToDelete);
-			    	 if(rtn == 1) {
-			    		 RegisterWarningMessage.setForeground(new Color(0, 255, 0));
-			    		 RegisterWarningMessage.setText("User Deleted!");
-					 }
-					 else {
-						 RegisterWarningMessage.setForeground(Color.RED);
-						 RegisterWarningMessage.setText("User Delete Failed!");
-					 }
-			        }    
-			     }
-			 }));
+						// doc = ;
+						// id = ;
+						// rtn1= clnt.UpdateUserNamme(doc, OldUserName, NewUserName);
+						// rtn2 = clnt.UpdatePassword(doc, UserName, OldPassword, NewPassword);
+						if (rtn1 == 1 && rtn2 == 1) {
+							RegisterWarningMessage.setForeground(Color.GREEN);
+							RegisterWarningMessage.setText("Update Succceeded!");
+							Globals.UserName = NewUserName;
+							Globals.Passwd = NewPassword;
+						} else if (rtn1 != 1 && rtn2 == 1) {
+							RegisterWarningMessage.setForeground(Color.RED);
+							RegisterWarningMessage.setText("Please check your User Name!");
+						} else if (rtn1 == 1 && rtn2 != 1) {
+							RegisterWarningMessage.setForeground(Color.RED);
+							RegisterWarningMessage.setText("Please check your Password!");
+						} else {
+							RegisterWarningMessage.setForeground(Color.RED);
+							RegisterWarningMessage.setText("Please check your User Name and Password!");
+						}
+					}
+				}
+			}));
+			buttonPane.add(UpdateButton);
+
+			DeleteButton.setActionCommand("DeleteButton");
+			DeleteButton.addActionListener((new ActionListener() {
+				public void actionPerformed(final ActionEvent e) {
+					/*
+					 * must use login name to delete, or the user may delete others account!!
+					 */
+					UserName = Globals.UserName;
+					Password = Globals.Passwd;
+					RegisterWarningMessage.setText("");
+					if (UserName.length() == 0 || Password.length() == 0) {
+						RegisterWarningMessage.setForeground(Color.RED);
+						RegisterWarningMessage.setText("Please check your User Name and Password!");
+					} else {
+
+						final int rtn = 1;
+						/*
+						 * need to be fixed*****
+						 * 
+						 */
+						// id = ;
+						// rtn = clnt.DeleteUser(doc, UserToDelete);
+						if (rtn == 1) {
+							RegisterWarningMessage.setForeground(new Color(0, 255, 0));
+							RegisterWarningMessage.setText("User Deleted!");
+						} else {
+							RegisterWarningMessage.setForeground(Color.RED);
+							RegisterWarningMessage.setText("User Delete Failed!");
+						}
+					}
+				}
+			}));
 			buttonPane.add(DeleteButton);
 		}
-		GroupLayout groupLayout = new GroupLayout(getContentPane());
-		groupLayout.setHorizontalGroup(
-			groupLayout.createParallelGroup(Alignment.LEADING)
+		final GroupLayout groupLayout = new GroupLayout(getContentPane());
+		groupLayout.setHorizontalGroup(groupLayout.createParallelGroup(Alignment.LEADING)
 				.addComponent(contentPanel, GroupLayout.PREFERRED_SIZE, 428, GroupLayout.PREFERRED_SIZE)
-				.addComponent(buttonPane, GroupLayout.PREFERRED_SIZE, 428, GroupLayout.PREFERRED_SIZE)
-		);
-		groupLayout.setVerticalGroup(
-			groupLayout.createParallelGroup(Alignment.LEADING)
+				.addComponent(buttonPane, GroupLayout.PREFERRED_SIZE, 428, GroupLayout.PREFERRED_SIZE));
+		groupLayout.setVerticalGroup(groupLayout.createParallelGroup(Alignment.LEADING)
 				.addGroup(groupLayout.createSequentialGroup()
-					.addComponent(contentPanel, GroupLayout.PREFERRED_SIZE, 205, GroupLayout.PREFERRED_SIZE)
-					.addComponent(buttonPane, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-		);
-		
-		JLabel RegisterPasswordLabel = new JLabel("Password");
+						.addComponent(contentPanel, GroupLayout.PREFERRED_SIZE, 205, GroupLayout.PREFERRED_SIZE)
+						.addComponent(buttonPane, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE,
+								GroupLayout.PREFERRED_SIZE)));
+
+		final JLabel RegisterPasswordLabel = new JLabel("Password");
 		RegisterPasswordLabel.setFont(new Font("Tahoma", Font.BOLD, 20));
-		
-		
+
 		NametextField = new JTextField();
 		NametextField.setColumns(10);
 		NametextField.setText(Globals.UserName);
-		if(Globals.UserName.length()== 0) {
+		if (Globals.UserName.length() == 0) {
 			UpdateButton.setEnabled(false);
 			DeleteButton.setEnabled(false);
 		}
 
-		
-		JLabel RegisterNewNameLabel = new JLabel("Name");
+		final JLabel RegisterNewNameLabel = new JLabel("Name");
 		RegisterNewNameLabel.setFont(new Font("Tahoma", Font.BOLD, 20));
-		
+
 		PasswordtextField = new JTextField();
 		PasswordtextField.setColumns(10);
 		PasswordtextField.setText(Globals.Passwd);
-		
-		
-		GroupLayout gl_contentPanel = new GroupLayout(contentPanel);
+
+		final GroupLayout gl_contentPanel = new GroupLayout(contentPanel);
 		gl_contentPanel.setHorizontalGroup(
 			gl_contentPanel.createParallelGroup(Alignment.TRAILING)
 				.addGroup(gl_contentPanel.createSequentialGroup()
