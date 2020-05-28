@@ -65,7 +65,7 @@ public class XmlHandler {
 
 	}
 	
-	private static Document initializeXml(String xmlRoot)
+	public static Document initializeXml(String xmlRoot)
 	{
 		DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
 		DocumentBuilder dBuilder;
@@ -86,7 +86,7 @@ public class XmlHandler {
 		return null;
 	}
 	
-	private static boolean transformerXml(Document doc) {
+	public static boolean transformerXml(Document doc) {
 		 // for output to file, console
 		try {
         TransformerFactory transformerFactory = TransformerFactory.newInstance();
@@ -115,7 +115,7 @@ public class XmlHandler {
 		return false;
 	}
 	
-	private static boolean addUser(Document doc, String id, String UserName, String Password) {
+	public static boolean addUser(Document doc, String id, String UserName, String Password) {
 		Element user = doc.createElement("User");
 
         // set id attribute
@@ -142,7 +142,7 @@ public class XmlHandler {
         	return false; 
 	}
 	
-	private static boolean addFriend(Document doc, String User, String FriendName) {
+	public static boolean addFriend(Document doc, String User, String FriendName) {
 		Element friend = doc.createElement("Friend");
 		
 		NodeList users = doc.getElementsByTagName("User");
@@ -164,13 +164,13 @@ public class XmlHandler {
 		return false;
 	}
 	
-	private static Node AddElement(Document doc, Element element, String name, String value) {
+	public static Node AddElement(Document doc, Element element, String name, String value) {
 		Element node = doc.createElement(name);
 		node.appendChild(doc.createTextNode(value));
 		return node;
 	}
 	
-	private static boolean DeleteUser(Document doc, String UserToDelete) {
+	public static boolean DeleteUser(Document doc, String UserToDelete) {
 		NodeList users = doc.getElementsByTagName("User");
 		Element user = null;
 		
@@ -190,7 +190,7 @@ public class XmlHandler {
 		return false;
 	}
 	
-    private static boolean DeleteFriend(Document doc, String User, String FriendToDelete) {
+    public static boolean DeleteFriend(Document doc, String User, String FriendToDelete) {
     NodeList users = doc.getElementsByTagName("User");
     Element user = null;
    
@@ -221,7 +221,7 @@ public class XmlHandler {
     return false;
 }
 	
-	private static boolean UpdateUserName(Document doc, String OldUserName, String NewUserName) {
+	public static boolean UpdateUserName(Document doc, String OldUserName, String NewUserName) {
 		NodeList users = doc.getElementsByTagName("User");
 		Element user = null;
 		
@@ -242,7 +242,7 @@ public class XmlHandler {
 		
 	}
 	
-	private static boolean UpdatePassword(Document doc, String UserName, String OldPassword, String NewPassword) {
+	public static boolean UpdatePassword(Document doc, String UserName, String OldPassword, String NewPassword) {
 
 		NodeList users = doc.getElementsByTagName("User");
 		Element user = null;
@@ -264,7 +264,7 @@ public class XmlHandler {
 		
 	}
 
-	private static boolean addGroupCodeToUser(Document doc, String Groupcode, String UserName) {
+	public static boolean addGroupCodeToUser(Document doc, String Groupcode, String UserName) {
 		Element node = doc.createElement("Keys");
 		node.appendChild(doc.createTextNode(Groupcode));
 		
@@ -287,7 +287,7 @@ public class XmlHandler {
 		return false;
 	}
 	
-	private static boolean AddMessage(Document doc, String Groupcode, String UserName, String message) {
+	public static boolean AddMessage(Document doc, String Groupcode, String UserName, String message) {
 		
 		NodeList group = doc.getElementsByTagName("Group");
 		Element groupcode = null;
@@ -315,7 +315,7 @@ public class XmlHandler {
 			
 	}
 	
-	private static boolean createGroup(Document doc, String Groupcode) {
+	public static boolean createGroup(Document doc, String Groupcode) {
 		Element group = doc.createElement("Group");
 
         // create group element
@@ -334,7 +334,7 @@ public class XmlHandler {
 				
 	}
 	
-	private static boolean deleteMessage(Document doc, String Groupcode, String UserName, String message) {
+	public static boolean deleteMessage(Document doc, String Groupcode, String UserName, String message) {
 		NodeList group = doc.getElementsByTagName("Group");
 		Element groupcode = null;
 				
@@ -377,7 +377,7 @@ public class XmlHandler {
 		return false;
 	}
 	
-	private static boolean deleteGroup(Document doc, String Groupcode, String UserName) {
+	public static boolean deleteGroup(Document doc, String Groupcode, String UserName) {
 		NodeList users = doc.getElementsByTagName("User");
 		Element user = null;
 				
@@ -408,7 +408,7 @@ public class XmlHandler {
 	}
 	
 
-	private static String[][] displayHistory(Document doc, String Groupcode, int numberOfMessages) {
+	public static String[][] displayHistory(Document doc, String Groupcode, int numberOfMessages) {
 		
 		String[][] history = new String[numberOfMessages][2];
 		NodeList group = doc.getElementsByTagName("Group");
@@ -437,7 +437,7 @@ public class XmlHandler {
 		return history; 
 	}
 	
-	private static String[] ListUser(Document doc) {
+	public static String[] ListUser(Document doc) {
 		
 		NodeList users = doc.getElementsByTagName("User");
 		Element user = null;
@@ -451,7 +451,7 @@ public class XmlHandler {
 		return usersList;
 	}
 
-	private static String[] ListFriend(Document doc, String UserName) {
+	public static String[] ListFriend(Document doc, String UserName) {
 
 		NodeList users = doc.getElementsByTagName("User");
 		Element user = null;
@@ -534,7 +534,7 @@ public class XmlHandler {
 	        return ListOfUsersInGroup;
 	    }
 	   
-	private static boolean InTheList(String[] list, String value) {
+	public static boolean InTheList(String[] list, String value) {
 	       
 	        for(int i = 0; i < list.length; i++) {
 	            if( list[i] == value ) {
@@ -544,7 +544,7 @@ public class XmlHandler {
 	        return false;
 	    }
 	
-	private static boolean CheckingLogins(Document doc , String UserName, String Password) {
+	public static boolean CheckingLogins(Document doc , String UserName, String Password) {
         Element user = null;
         NodeList users = doc.getElementsByTagName("User");
        
