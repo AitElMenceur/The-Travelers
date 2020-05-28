@@ -52,7 +52,7 @@ public class ConnectionHandler implements IConnectionHandler {
     public void handle() {
         try {
             boolean finish = false;
-            boolean isConnected = false;
+            boolean isConnected = true;
             output = new ObjectOutputStream(socket.getOutputStream());
             input = new ObjectInputStream(socket.getInputStream());
             while (!finish) {
@@ -87,8 +87,6 @@ public class ConnectionHandler implements IConnectionHandler {
                         }
                         break;
                     case ("send"):
-
-                        ArrayList list = (ArrayList) input.readObject();
                         for (Group p : LIST_GROUP) {
                             if (p.getGroupCode().equals(((Message) recieved).getGroupCode())) {
                                 p.send((Message) recieved);
@@ -107,11 +105,17 @@ public class ConnectionHandler implements IConnectionHandler {
                     case ("create group"):
                         if (isConnected) {
                             LIST_GROUP.add(new Group(((Message) recieved).getGroupCode()));
+                            output.writeObject(
+                                    new Message(((Message) recieved).getUsername(), ((Message) recieved).getGroupCode(),
+                                            recieved.getCommand(), "Group " + ((Message) recieved).getGroupCode()+" has been created"));
                             break;
                         }
                     case ("delete group"):
                         if (isConnected) {
                             LIST_GROUP.remove(((Message) recieved).getGroupCode());
+                            output.writeObject(
+                                    new Message(((Message) recieved).getUsername(), ((Message) recieved).getGroupCode(),
+                                            recieved.getCommand(), "Group " + ((Message) recieved).getGroupCode()+" has been deleted"));
                         }
                         break;
                 }
