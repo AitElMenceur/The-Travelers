@@ -554,7 +554,23 @@ public class XmlHandler {
 	       
 	        return ListOfUsersInGroup;
 	    }
-	   
+	
+	public static String[] listOfGroups() {
+		
+		NodeList groups = doc.getElementsByTagName("Groups");
+		Element currentGroupCode = null;
+		String[] listOfAllGroups = new String[groups.getLength()];
+
+		
+		for(int i=0; i<groups.getLength(); i++) {
+			currentGroupCode = (Element) groups.item(i);
+			
+			listOfAllGroups[i] = currentGroupCode.getElementsByTagName("GroupCode").item(0).getFirstChild().getNodeValue();
+		}
+		
+		return listOfAllGroups;
+	}
+	
 	public static boolean inTheList(String[] list, String value) {
 	       
 	        for(int i = 0; i < list.length; i++) {
