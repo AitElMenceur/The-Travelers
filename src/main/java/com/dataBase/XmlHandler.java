@@ -22,11 +22,10 @@ import org.w3c.dom.NodeList;
 
 public class XmlHandler {
 	private static Document doc;
-	private static final String filepath = "src/main/java/com/dataBase/users.xml";
+	private static final String filepath = "users.xml";
 
 	public XmlHandler(String XmlName) {
 		doc = initializeXml(XmlName);
-		addUser("0", "test", "test");
 	}
 	
 	public static Document getDocument() {
@@ -45,6 +44,26 @@ public class XmlHandler {
 		try {
 			 dBuilder = dbFactory.newDocumentBuilder();
 	            Document doc = dBuilder.parse(filepath);
+	            // add elements to Document
+	            /*Element rootElement = doc.createElement(xmlRoot);
+	            // append root element to document
+	            doc.appendChild(rootElement);
+	            doc.getElementsByTagName(xmlRoot).item(0).appendChild(doc.createElement("Users")); 
+	            doc.getElementsByTagName(xmlRoot).item(0).appendChild(doc.createElement("Groups")); */
+	            return doc;
+		}catch (Exception e){
+			e.printStackTrace();
+		}
+		return null;
+	}
+	public static Document newXml(String xmlRoot)
+	{
+		DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
+		DocumentBuilder dBuilder;
+		
+		try {
+			 dBuilder = dbFactory.newDocumentBuilder();
+	            Document doc = dBuilder.newDocument();
 	            // add elements to Document
 	            Element rootElement = doc.createElement(xmlRoot);
 	            // append root element to document
