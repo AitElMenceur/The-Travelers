@@ -21,48 +21,14 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 public class XmlHandler {
-	public static void main(String[] args) {	
-		
-				Document doc = initializeXml("Database");
-				Document historyDoc = initializeXml("Groups");
-			
-				addUser(doc, "1", "Nassim", "MotDePasse");
-				addUser(doc, "2", "Karina", "Passwd");
-				addUser(doc, "3", "Emeline", "Mahmoud");
-				
-				addFriend(doc, "Nassim", "Marine");
-				addGroupCodeToUser(doc, "1", "Nassim"); 
-				addFriend(doc, "Nassim", "Karina");
-				addGroupCodeToUser(doc, "2", "Nassim"); 
-				createGroup(doc, "1");
-				createGroup(doc, "2");
-				
-				AddMessage(doc, "2", "Nassim", "Salam les amis");
-				AddMessage(doc, "2", "Marine", "Et Languet ton moman");
-
-				//deleteMessage(doc, "2", "Marine", "Languet ton moman");
-				
-				String[][] history = displayHistory(doc, "2", 4); 
-				
-				String[] listUsers = ListFriend(doc, "Nassim");		
-				
-				//deleteGroup(doc, "2", "Nassim"); 
-
-	            //DeleteUser(doc, "Nassim");
-	            
-	            //UpdateUserName(doc, "Nassim", "Elie");
-	            
-	            //UpdatePassword(doc, "Nassim", "MotDePasse", "Passwd");
-	            
-	            //DeleteFriend(doc, "Nassim", "Marine");
-	            //DeleteFriend(doc, "Nassim", "karina");
-
-				String[] list = ListOfGroupsOfAUser(doc, "Nassim");
-	               
-                for(int i = 0 ; i < list.length; i++) {
-                    System.out.println(list[i]);
-                }
-
+	private static Document doc; 
+	
+	public XmlHandler(String XmlName) {
+		doc = initializeXml(XmlName);
+	}
+	
+	public static Document getDocument() {
+		return doc;
 	}
 	
 	public static Document initializeXml(String xmlRoot)
@@ -86,7 +52,7 @@ public class XmlHandler {
 		return null;
 	}
 	
-	public static boolean transformerXml(Document doc) {
+	public static boolean transformerXml() {
 		 // for output to file, console
 		try {
         TransformerFactory transformerFactory = TransformerFactory.newInstance();
@@ -100,10 +66,8 @@ public class XmlHandler {
         
         TempFile.createNewFile();
        
-        StreamResult console = new StreamResult(System.out);
         StreamResult file = new StreamResult(TempFile);
 
-        transformer.transform(source, console);
         transformer.transform(source, file);
 
         
@@ -115,17 +79,17 @@ public class XmlHandler {
 		return false;
 	}
 	
-	public static boolean addUser(Document doc, String id, String UserName, String Password) {
+	public static boolean addUser(String id, String UserName, String Password) {
 		Element user = doc.createElement("User");
 
         // set id attribute
         user.setAttribute("id", id);
 
         // create UserName element
-        user.appendChild(AddElement(doc, user, "UserName", UserName));
+        user.appendChild(addElement(user, "UserName", UserName));
 
         // create Password element
-        user.appendChild(AddElement(doc, user, "Password", Password));        
+        user.appendChild(addElement(user, "Password", Password));        
 
         user.appendChild(doc.createElement("GroupCodes")); 
         user.appendChild(doc.createElement("Friends")); 
@@ -133,7 +97,7 @@ public class XmlHandler {
         doc.getElementsByTagName("Users").item(0).appendChild(user);
        
         
-        transformerXml(doc);
+        transformerXml();
        
         //Check if the children node were added
         if (user.hasChildNodes())
@@ -142,7 +106,7 @@ public class XmlHandler {
         	return false; 
 	}
 	
-	public static boolean addFriend(Document doc, String User, String FriendName) {
+	public static boolean addFriend(String User, String FriendName) {
 		Element friend = doc.createElement("Friend");
 		
 		NodeList users = doc.getElementsByTagName("User");
@@ -155,8 +119,8 @@ public class XmlHandler {
 			
 			if(TempString == User) {
 			
-				user.getElementsByTagName("Friends").item(0).appendChild(AddElement(doc, friend, "FriendName", FriendName));
-				transformerXml(doc);
+				user.getElementsByTagName("Friends").item(0).appendChild(addElement(friend, "FriendName", FriendName));
+				transformerXml();
 				return true;
 			}
 		
@@ -164,13 +128,13 @@ public class XmlHandler {
 		return false;
 	}
 	
-	public static Node AddElement(Document doc, Element element, String name, String value) {
+	public static Node addElement(Element element, String name, String value) {
 		Element node = doc.createElement(name);
 		node.appendChild(doc.createTextNode(value));
 		return node;
 	}
 	
-	public static boolean DeleteUser(Document doc, String UserToDelete) {
+	public static boolean deleteUser(String UserToDelete) {
 		NodeList users = doc.getElementsByTagName("User");
 		Element user = null;
 		
@@ -181,7 +145,7 @@ public class XmlHandler {
 			
 			if(TempString == UserToDelete) {
 				user.getParentNode().removeChild(user);
-				transformerXml(doc);
+				transformerXml();
 				return true;
 			}
 			
@@ -190,7 +154,7 @@ public class XmlHandler {
 		return false;
 	}
 	
-    public static boolean DeleteFriend(Document doc, String User, String FriendToDelete) {
+    public static boolean deleteFriend(String User, String FriendToDelete) {
     NodeList users = doc.getElementsByTagName("User");
     Element user = null;
    
@@ -208,7 +172,7 @@ public class XmlHandler {
                
                 if(friendTemp == FriendToDelete) {
                     friend.getParentNode().removeChild(friend);
-                    transformerXml(doc);
+                    transformerXml();
                     return true;
                 }
                
@@ -221,7 +185,7 @@ public class XmlHandler {
     return false;
 }
 	
-	public static boolean UpdateUserName(Document doc, String OldUserName, String NewUserName) {
+	public static boolean updateUserName(String OldUserName, String NewUserName) {
 		NodeList users = doc.getElementsByTagName("User");
 		Element user = null;
 		
@@ -232,7 +196,7 @@ public class XmlHandler {
 			
 			if(TempString == OldUserName) {
 				user.getElementsByTagName("UserName").item(0).getFirstChild().setNodeValue(NewUserName);
-				transformerXml(doc);
+				transformerXml();
 				return true;
 			}
 			
@@ -242,7 +206,7 @@ public class XmlHandler {
 		
 	}
 	
-	public static boolean UpdatePassword(Document doc, String UserName, String OldPassword, String NewPassword) {
+	public static boolean updatePassword(String UserName, String OldPassword, String NewPassword) {
 
 		NodeList users = doc.getElementsByTagName("User");
 		Element user = null;
@@ -255,7 +219,7 @@ public class XmlHandler {
 			
 			if(TempString == OldPassword && TempUserName == UserName) {
 				user.getElementsByTagName("Password").item(0).getFirstChild().setNodeValue(NewPassword);
-				transformerXml(doc);
+				transformerXml();
 				return true;
 			}
 			
@@ -264,7 +228,7 @@ public class XmlHandler {
 		
 	}
 
-	public static boolean addGroupCodeToUser(Document doc, String Groupcode, String UserName) {
+	public static boolean addGroupCodeToUser(String Groupcode, String UserName) {
 		Element node = doc.createElement("Keys");
 		node.appendChild(doc.createTextNode(Groupcode));
 		
@@ -279,7 +243,7 @@ public class XmlHandler {
 			if(TempString == UserName) {
 			
 				user.getElementsByTagName("GroupCodes").item(0).appendChild(node);
-				transformerXml(doc);
+				transformerXml();
 				return true;
 			}
 		
@@ -287,7 +251,7 @@ public class XmlHandler {
 		return false;
 	}
 	
-	public static boolean AddMessage(Document doc, String Groupcode, String UserName, String message) {
+	public static boolean addMessage(String Groupcode, String UserName, String message) {
 		
 		NodeList group = doc.getElementsByTagName("Group");
 		Element groupcode = null;
@@ -307,7 +271,7 @@ public class XmlHandler {
 		        text.appendChild(doc.createTextNode(message));        
 		        groupcode.appendChild(text);
 		        
-				transformerXml(doc);
+				transformerXml();
 				return true;
 			}
 		}
@@ -315,16 +279,16 @@ public class XmlHandler {
 			
 	}
 	
-	public static boolean createGroup(Document doc, String Groupcode) {
+	public static boolean createGroup(String Groupcode) {
 		Element group = doc.createElement("Group");
 
         // create group element
-        group.appendChild(AddElement(doc, group, "Groupcode", Groupcode));        
+        group.appendChild(addElement(group, "Groupcode", Groupcode));        
 
         //Link the use element as a child node of the root of doc
         doc.getElementsByTagName("Groups").item(0).appendChild(group);
         
-        transformerXml(doc);
+        transformerXml();
        
         //Check if the children node were added
         if (group.hasChildNodes())
@@ -334,7 +298,7 @@ public class XmlHandler {
 				
 	}
 	
-	public static boolean deleteMessage(Document doc, String Groupcode, String UserName, String message) {
+	public static boolean deleteMessage(String Groupcode, String UserName, String message) {
 		NodeList group = doc.getElementsByTagName("Group");
 		Element groupcode = null;
 				
@@ -365,7 +329,7 @@ public class XmlHandler {
 							if(TempString == message) {
 			                    TempMessage.getParentNode().removeChild(TempMessage);
 			                    user.getParentNode().removeChild(user);
-								transformerXml(doc);
+								transformerXml();
 								return true;
 							}
 						}
@@ -377,7 +341,7 @@ public class XmlHandler {
 		return false;
 	}
 	
-	public static boolean deleteGroup(Document doc, String Groupcode, String UserName) {
+	public static boolean deleteGroup(String Groupcode, String UserName) {
 		NodeList users = doc.getElementsByTagName("User");
 		Element user = null;
 				
@@ -395,7 +359,7 @@ public class XmlHandler {
 
 					if(TempString == Groupcode) {
 	                    groupcode.getParentNode().removeChild(groupcode);
-						transformerXml(doc);
+						transformerXml();
 						return true;
 					}
 				}
@@ -408,7 +372,7 @@ public class XmlHandler {
 	}
 	
 
-	public static String[][] displayHistory(Document doc, String Groupcode, int numberOfMessages) {
+	public static String[][] displayHistory(String Groupcode, int numberOfMessages) {
 		
 		String[][] history = new String[numberOfMessages][2];
 		NodeList group = doc.getElementsByTagName("Group");
@@ -437,7 +401,7 @@ public class XmlHandler {
 		return history; 
 	}
 	
-	public static String[] ListUser(Document doc) {
+	public static String[] listUser() {
 		
 		NodeList users = doc.getElementsByTagName("User");
 		Element user = null;
@@ -451,7 +415,7 @@ public class XmlHandler {
 		return usersList;
 	}
 
-	public static String[] ListFriend(Document doc, String UserName) {
+	public static String[] listFriend(String UserName) {
 
 		NodeList users = doc.getElementsByTagName("User");
 		Element user = null;
@@ -479,7 +443,7 @@ public class XmlHandler {
 		
 	}
 	
-	public static String[] ListOfGroupsOfAUser(Document doc, String UserName) {
+	public static String[] listOfGroupsOfAUser(String UserName) {
         String[] ListOfGroups;
        
         NodeList users = doc.getElementsByTagName("User");
@@ -509,7 +473,7 @@ public class XmlHandler {
        
     }
 	
-	public static String[] ListOfUsersInGroup(Document doc, String GroupCode) {
+	public static String[] listOfUsersInGroup(String GroupCode) {
 	        List<String> DynamicList = new ArrayList<>();
 	       
 	        NodeList users = doc.getElementsByTagName("User");
@@ -521,9 +485,9 @@ public class XmlHandler {
 	            String TempString = user.getElementsByTagName("UserName").item(0).getFirstChild().getNodeValue();
 	           
 	            //We get the groups in which the user is in
-	            String[] GroupCodesList = ListOfGroupsOfAUser(doc, TempString);
+	            String[] GroupCodesList = listOfGroupsOfAUser(TempString);
 	           
-	            if(InTheList(GroupCodesList, GroupCode)) {
+	            if(inTheList(GroupCodesList, GroupCode)) {
 	                DynamicList.add(TempString);
 	            }
 	               
@@ -534,7 +498,7 @@ public class XmlHandler {
 	        return ListOfUsersInGroup;
 	    }
 	   
-	public static boolean InTheList(String[] list, String value) {
+	public static boolean inTheList(String[] list, String value) {
 	       
 	        for(int i = 0; i < list.length; i++) {
 	            if( list[i] == value ) {
@@ -544,7 +508,7 @@ public class XmlHandler {
 	        return false;
 	    }
 	
-	public static boolean CheckingLogins(Document doc , String UserName, String Password) {
+	public static boolean checkingLogins(Document doc , String UserName, String Password) {
         Element user = null;
         NodeList users = doc.getElementsByTagName("User");
        
