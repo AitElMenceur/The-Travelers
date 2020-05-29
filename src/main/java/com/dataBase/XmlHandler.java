@@ -382,7 +382,7 @@ public class XmlHandler {
 		return false;
 	}
 	
-	public static boolean deleteGroup(String Groupcode, String UserName) {
+	public static boolean deleteGroupcodeOfAUser(String Groupcode, String UserName) {
 		NodeList users = doc.getElementsByTagName("User");
 		Element user = null;
 				
@@ -412,6 +412,23 @@ public class XmlHandler {
 		return false;
 	}
 	
+	 public static boolean deleteGroup(String Groupcode) {
+	        NodeList group = doc.getElementsByTagName("Group");
+	        Element groupcode = null;
+	       
+	        for(int i=0; i<group.getLength(); i++) {
+	            groupcode = (Element) group.item(i);
+	            String tempString = groupcode.getElementsByTagName("Groupcode").item(0).getFirstChild().getNodeValue();
+	           
+	            if(tempString.equals(Groupcode)) {
+	                groupcode.getParentNode().removeChild(groupcode);
+	                
+	            }
+	        }
+	       
+	        return false;
+	    }
+
 	public static String[][] displayHistory(String Groupcode, int numberOfMessages) {
 		
 		String[][] history = new String[numberOfMessages][2];
