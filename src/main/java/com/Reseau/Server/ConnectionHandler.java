@@ -60,7 +60,7 @@ public class ConnectionHandler implements IConnectionHandler {
      * Check for incoming message, and give an appropriate answer
      */
     public void handle() {
-        xmlHandler=new XmlHandler();
+        xmlHandler=new XmlHandler("Database");
         try {
             boolean finish = false;
             boolean isConnected = true;
