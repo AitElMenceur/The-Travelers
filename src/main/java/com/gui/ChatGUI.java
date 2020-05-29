@@ -452,6 +452,7 @@ public class ChatGUI extends JFrame implements ActionListener {
 	}
 	}
 
+
 /*
  * @param string      groupcode
  * @param name        the user's name
@@ -460,7 +461,7 @@ public class ChatGUI extends JFrame implements ActionListener {
  * The login user will be aligned to the left, the other side will be aligned to the right.
  * 
  */
-	private void PutTextToChatTextArea(String groupcode, String name, String writtenText) {
+	public void PutTextToChatTextArea(String groupcode, String name, String writtenText) {
 		// TODO Auto-generated method stub
 		if(writtenText.length() == 0) {
 			return;
@@ -496,9 +497,10 @@ public class ChatGUI extends JFrame implements ActionListener {
 				e.printStackTrace();
 			}
 		}
-		}
+	}
+	}
 	
-	public static String[] removeItemFromArray(String[] input, String item) {
+/*	public static String[] removeItemFromArray(String[] input, String item) {
 	    if (input == null) {
 	        return null;
 	    } else if (input.length <= 0) {
@@ -534,4 +536,4 @@ public class ChatGUI extends JFrame implements ActionListener {
 		
 		
 	}
-}
+*/	
