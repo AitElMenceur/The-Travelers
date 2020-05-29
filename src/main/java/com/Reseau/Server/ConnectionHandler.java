@@ -102,6 +102,7 @@ public class ConnectionHandler implements IConnectionHandler {
                             output.writeObject(new Message(((Message) recieved).getUsername(),
                                     ((Message) recieved).getGroupCode(), recieved.getCommand(),
                                     "You leave the chat " + ((Message) recieved).getGroupCode()));
+                                    XmlHandler.deleteGroup(((Message) recieved).getGroupCode(), ((Message) recieved).getUsername());
                         }
                         break;
                     case ("send"):
@@ -131,7 +132,7 @@ public class ConnectionHandler implements IConnectionHandler {
                         }
                     case ("create user"):
                         user = (User) input.readObject();
-                        XmlHandler.addUser("id", user.getUsername(), user.getPassword());
+                        XmlHandler.addUser( user.getUsername(), user.getPassword());
                         break;
                     case ("delete user"):
                         user = (User) input.readObject();
@@ -139,11 +140,12 @@ public class ConnectionHandler implements IConnectionHandler {
                         break;
                     case ("delete group"):
                         if (isConnected) {
+                            
                             LIST_GROUP.remove(((Message) recieved).getGroupCode());
                             output.writeObject(new Message(((Message) recieved).getUsername(),
                                     ((Message) recieved).getGroupCode(), recieved.getCommand(),
                                     "Group " + ((Message) recieved).getGroupCode() + " has been deleted"));
-                            XmlHandler.deleteGroup(((Message) recieved).getGroupCode(), ((Message) recieved).getUsername());
+                            
                         }
                         break;
                 }

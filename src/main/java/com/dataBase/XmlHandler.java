@@ -104,13 +104,13 @@ public class XmlHandler {
 		return false;
 	}
 	
-	public static boolean addUser(String id, String UserName, String Password) {
+	public static boolean addUser( String UserName, String Password) {
 		Element user = doc.createElement("User");
 		
 
 		int setId = getLength();
         // set id attribute
-        user.setAttribute(String.valueOf(setId), id);
+        user.setAttribute("id", String.valueOf(setId));
 
         // create UserName element
         user.appendChild(addElement(user, "UserName", UserName));
