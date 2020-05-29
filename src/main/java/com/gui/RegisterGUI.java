@@ -38,12 +38,12 @@ public class RegisterGUI extends JDialog {
 	
 	JButton UpdateButton = new JButton("Update");
 	JButton DeleteButton = new JButton("Delete");
+	JLabel RegisterWarningMessage = new JLabel("");
 	
 	
 	public RegisterGUI() {
 		setBounds(100, 100, 450, 300);
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
-		JLabel RegisterWarningMessage = new JLabel("");
 		RegisterWarningMessage.setForeground(Color.RED);
 		{
 			userAccountLabel = new JLabel("User Account");

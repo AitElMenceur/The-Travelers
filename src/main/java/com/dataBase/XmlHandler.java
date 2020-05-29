@@ -108,8 +108,9 @@ public class XmlHandler {
 		Element user = doc.createElement("User");
 		
 
+		int setId = getLength();
         // set id attribute
-        user.setAttribute("id", id);
+        user.setAttribute(String.valueOf(setId), id);
 
         // create UserName element
         user.appendChild(addElement(user, "UserName", UserName));
@@ -132,6 +133,20 @@ public class XmlHandler {
         	return false; 
 	}
 	
+	public static int getLength() {
+		 if (doc.getElementsByTagName("Users").getLength() != 0) {
+		 return doc.getElementsByTagName("Users").getLength();
+		 }
+		 if (doc.getElementsByTagName("Users").getLength() != 0) {
+		 return doc.getElementsByTagName("Users").getLength();
+		 }
+		 if (doc.getElementsByTagName("Users").getLength() != 0) {
+		 return doc.getElementsByTagName("Users").getLength();
+		 } else {
+		 return 0;
+		 }
+		 }
+
 	public static boolean addFriend(String User, String FriendName) {
 		Element friend = doc.createElement("Friend");
 		
@@ -397,7 +412,6 @@ public class XmlHandler {
 		return false;
 	}
 	
-
 	public static String[][] displayHistory(String Groupcode, int numberOfMessages) {
 		
 		String[][] history = new String[numberOfMessages][2];
