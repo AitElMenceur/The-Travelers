@@ -1,7 +1,10 @@
 package com.gui;
 
 import com.Reseau.Client.Client;
-import com.Reseau.Client.Client.Globals;
+//import com.Reseau.Client.Client.Globals;
+import com.Reseau.Client.*;
+
+import java.awt.BorderLayout;
 import java.awt.EventQueue;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
@@ -21,11 +24,14 @@ import javax.swing.SwingConstants;
 import java.awt.Font;
 import javax.swing.LayoutStyle.ComponentPlacement;
 
+/*
+ * @author Rebecca
+ */
 
 public class LogInGUI extends JDialog implements ActionListener{
 
-	int i = 6668;
-	Client clnt = new Client("localhost", i, "User"+i);
+	//int i = 6668;
+	//Client clnt = new Client("localhost", i, "User"+i);
 	
 	private static final long serialVersionUID = 1L;
 	private final JPanel contentPanel = new JPanel();
@@ -36,7 +42,19 @@ public class LogInGUI extends JDialog implements ActionListener{
 
 	
 	JLabel WarningMessageLabel = new JLabel("");
+	
+	 
 
+	public static void main(String arg[]) {
+        // added by Rebecca
+        
+          try { 
+        	  LogInGUI dialog = new LogInGUI();
+          dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+          dialog.setVisible(true);
+          } catch (Exception e) { e.printStackTrace(); } //end
+         
+    }
 
 	/**
 	 * Create the dialog.
@@ -99,7 +117,7 @@ public class LogInGUI extends JDialog implements ActionListener{
 		JLabel LoginLabel = new JLabel("Login");
 		LoginLabel.setFont(new Font("Tahoma", Font.BOLD, 30));
 		
-		//JLabel WarningMessageLabel = new JLabel("Warning");
+		
 		WarningMessageLabel.setFont(new Font("Tahoma", Font.BOLD, 16));
 		WarningMessageLabel.setForeground(Color.RED);
 		GroupLayout gl_contentPanel = new GroupLayout(contentPanel);
@@ -153,6 +171,7 @@ public class LogInGUI extends JDialog implements ActionListener{
 			Globals.UserName = NameTextField.getText();
 			Globals.Passwd = passwordField.getText();
 			if(Globals.UserName.length() != 0 && Globals.Passwd.length() != 0) {
+				//*****needs to be modified
 				//login = clnt.connect();  
 				//Please return an integer back*****
 				login = 1;//delete this line after "connect" function has modified...
@@ -196,11 +215,11 @@ public class LogInGUI extends JDialog implements ActionListener{
 						}
 					}
 				});
-			 //needs to be modified
-			//needs a New to call*****
-			 //clnt.New();
+			
 			 break;
 		}
 	}
+	
 		
 }
+

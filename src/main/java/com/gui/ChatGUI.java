@@ -1,7 +1,7 @@
 package com.gui;
 import com.gui.LogInGUI;
 import com.Reseau.Client.Client;
-import com.Reseau.Client.Client.Globals;
+import com.gui.Globals;
 import com.gui.*;
 
 import java.awt.BorderLayout;
@@ -137,7 +137,7 @@ public class ChatGUI extends JFrame implements ActionListener {
 	    	 public void popupMenuWillBecomeVisible(PopupMenuEvent e) {
 	    		 
 	    		 // call needed*****
-	            	//Globals.GroupCode[] = clnt.getgroupcode;
+	            //Globals.GroupCode[] = clnt.getgroupcode;
 	    		 comboBox.removeAllItems();
 	    		 for(int i=0;i<Globals.GroupCode.length; i++) {
 	            		comboBox.addItem(Globals.GroupCode[i]);
@@ -273,12 +273,12 @@ public class ChatGUI extends JFrame implements ActionListener {
 		String GroupCode = "AA";
 		int numberOfMessages = 2;
 		String[][] Historymessages = {{"hello","Rebecca"},{"okay","Karina"}};
-		//should be modified*****
+		//need be modified*****
 		//HistoryMessages = displayHistory(doc, GroupCode, numbaerOfMessages);   
 		for( int i=0; i<numberOfMessages; i++) {
 			PutTextToChatTextArea(GroupCode, Historymessages[i][1], Historymessages[i][0] );
 		}
-		//should be modified...
+		
 	}
 
 	public class JTextFieldLimit extends PlainDocument {
@@ -306,11 +306,11 @@ public class ChatGUI extends JFrame implements ActionListener {
 		// TODO Auto-generated method stub
 
 		switch(e.getActionCommand()) {
-		case "contactorButton" :
-			//Need to be modified*****
+		//case "contactorButton" :
+			//Need to be modified
 			//clnt.contactor();
 			
-		break;
+		//break;
 		case "disconnectButton" :
 			//need to be modified*****
 			//clnt.diconnect();
@@ -377,7 +377,7 @@ public class ChatGUI extends JFrame implements ActionListener {
 			 /*
 			  * if join succeeded, a bunch of user names should be put into Globals.Chattes.
 			  */
-			//need to be modified*****
+			 //need to be modified*****
 			 //Globals.Chatters[]= clnt.join((String)comboBox.getSelectedItem());
 			
 			break;
