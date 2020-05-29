@@ -49,6 +49,32 @@ public class Client implements Runnable {
         }
     }
 
+    public void updatePassword(String username, String np, String op) {
+        try {
+
+            Message message = new Message(username, op, "update password", np);
+
+            output.writeObject(message);
+
+        } catch (IOException e) {
+
+            e.printStackTrace();
+        }
+    }
+
+    public void updateUsername(String username, String nu, String op) {
+        try {
+
+            Message message = new Message(username, op, "update password", nu);
+
+            output.writeObject(message);
+
+        } catch (IOException e) {
+
+            e.printStackTrace();
+        }
+    }
+
     /**
      * @param groupCode delete group from the server
      */
@@ -64,11 +90,9 @@ public class Client implements Runnable {
 
     }
 
-    
-    /** 
+    /**
      * @param Username
-     * @param Password
-     * Send a request to create a user
+     * @param Password Send a request to create a user
      */
     public void createUser(String Username, String Password) {
         try {
@@ -83,14 +107,12 @@ public class Client implements Runnable {
 
     }
 
-    
-    /** 
-     * @param username
-     * Send a request to delete a user
+    /**
+     * @param username Send a request to delete a user
      */
     public void deleteUser(String username) {
         try {
-            Message message = new Message(user.getUsername(),"", "delete user", "");
+            Message message = new Message(user.getUsername(), "", "delete user", "");
 
             output.writeObject(message);
             output.writeObject(new User(username, ""));
@@ -109,7 +131,7 @@ public class Client implements Runnable {
         try {
             output.writeObject(new Message(Username, "", "connect", ""));
             output.writeObject(new User(Username, Password));
-            user= new User(Username, Password);
+            user = new User(Username, Password);
         } catch (SocketTimeoutException exc) {
             System.out.println("la");
         } catch (UnknownHostException uhe) {
@@ -225,7 +247,7 @@ public class Client implements Runnable {
                         try {
                             TimeUnit.MILLISECONDS.sleep(100);
                         } catch (InterruptedException e) {
-                
+
                             e.printStackTrace();
                         }
                         for (Group group : list) {
@@ -256,9 +278,9 @@ public class Client implements Runnable {
                         output.writeObject(message);
 
                     } else if (send_data.equalsIgnoreCase("delete group")) {
-                        
+
                         System.out.println("Which Group?");
-                        groupcode=scan.next();
+                        groupcode = scan.next();
                         message = new Message(user.getUsername(), groupcode, send_data, "");
                         output.writeObject(message);
 
@@ -274,7 +296,7 @@ public class Client implements Runnable {
 
                             output.writeObject(user);
                         } catch (IOException e) {
-                
+
                             e.printStackTrace();
                         }
                     } else if (send_data.equalsIgnoreCase("delete user")) {
@@ -289,11 +311,45 @@ public class Client implements Runnable {
 
                             output.writeObject(user);
                         } catch (IOException e) {
-                
+
                             e.printStackTrace();
                         }
 
-                    } else {
+                    } else if (send_data.equalsIgnoreCase("update password")) {
+                        try {
+                            System.out.println("Which User?");
+                            String username = scan.next();
+                            System.out.println("new password?");
+                            String np = scan.next();
+                            System.out.println("old password?");
+                            String op = scan.next();
+                            message = new Message(username, op, "update password", np);
+
+                            output.writeObject(message);
+
+                        } catch (IOException e) {
+
+                            e.printStackTrace();
+                        }
+                    } else if (send_data.equalsIgnoreCase("update username")) {
+                        try {
+                            System.out.println("Which User?");
+                            String username = scan.next();
+                            System.out.println("new username?");
+                            String nu = scan.next();
+                            System.out.println("old password?");
+                            String op = scan.next();
+                            message = new Message(username, op, "update password", nu);
+
+                            output.writeObject(message);
+
+                        } catch (IOException e) {
+
+                            e.printStackTrace();
+                        }
+                    }
+
+                    else {
                         message = new Message(user.getUsername(), groupcode, "send", send_data);
                         output.writeObject(message);
                     }

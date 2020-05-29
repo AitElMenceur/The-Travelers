@@ -256,8 +256,9 @@ public class XmlHandler {
 		for(int i = 0; i < users.getLength(); i++) { 
 			user = (Element) users.item(i);
 			String TempString = user.getElementsByTagName("Password").item(0).getFirstChild().getNodeValue();
-			String TempUserName = user.getElementsByTagName("UserName").item(0).getFirstChild().getNodeValue();
 			
+			String TempUserName = user.getElementsByTagName("UserName").item(0).getFirstChild().getNodeValue();
+			System.out.println(TempString+"="+OldPassword+TempUserName+NewPassword);
 			if(TempString.equals(OldPassword)  && TempUserName.equals(UserName) ) {
 				user.getElementsByTagName("Password").item(0).getFirstChild().setNodeValue(NewPassword);
 				transformerXml();

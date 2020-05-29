@@ -83,6 +83,28 @@ public class ConnectionHandler implements IConnectionHandler {
                             isConnected = false;
                         }
                         break;
+                    case ("update password"):
+                        if (XmlHandler.updatePassword(((Message) recieved).getUsername(),
+                                ((Message) recieved).getGroupCode(), ((Message) recieved).getMessage())) {
+                            output.writeObject(new Message("server", "", "", "Done"));
+                            isConnected = false;
+                        } else {
+                            output.writeObject(new Message("server", "", "", "Error"));
+                        }
+
+                        break;
+                    case ("update username"):
+                        if (XmlHandler.checkingLogins(XmlHandler.getDocument(), ((Message) recieved).getUsername(),
+                                ((Message) recieved).getCommand()))
+                            if (XmlHandler.updateUserName(((Message) recieved).getUsername(),
+                                    ((Message) recieved).getMessage())) {
+                                output.writeObject(new Message("server", "", "", "Done"));
+                                isConnected = false;
+                            } else {
+                                output.writeObject(new Message("server", "", "", "Error"));
+                            }
+
+                        break;
                     case ("display list"):
                         output.writeObject(LIST_GROUP);
                         break;
