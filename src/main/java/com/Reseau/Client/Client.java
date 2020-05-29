@@ -12,6 +12,7 @@ import java.util.Scanner;
 import java.util.concurrent.TimeUnit;
 import com.Reseau.Data.Message;
 import com.Reseau.Data.User;
+import com.dataBase.XmlHandler;
 import com.Reseau.Data.Data;
 import com.Reseau.Data.Group;
 
@@ -21,7 +22,7 @@ public class Client implements Runnable {
     private String send_data = null;
     private ObjectOutputStream output;
     private ObjectInputStream input;
-    private ArrayList<Group> list;
+    public ArrayList<Group> list;
 
     public Client(String ip, int port) {
         this.user = new User("Username", "Password");
@@ -64,7 +65,7 @@ public class Client implements Runnable {
 
     }
 
-    public void CreateUser(String Username, String Password) {
+    public void createUser(String Username, String Password) {
         try {
             Message message = new Message(user.getUsername(), "username", "create user", "");
             output.writeObject(message);
@@ -96,7 +97,7 @@ public class Client implements Runnable {
      */
     public void connect(String Username, String Password) {
         try {
-            output.writeObject(new Message("", "", "connect", ""));
+            output.writeObject(new Message(Username, "", "connect", ""));
             output.writeObject(new User(Username, Password));
             user= new User(Username, Password);
         } catch (SocketTimeoutException exc) {

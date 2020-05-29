@@ -18,7 +18,6 @@ public class ConnectionHandler implements IConnectionHandler {
     private Data recieved;
     private static ArrayList<Group> LIST_GROUP = Server.LIST_GROUP;
     private static ArrayList<User> LIST_USER = Server.LIST_USER;
-    private XmlHandler xmlHandler;
 
     public ConnectionHandler(Socket socket) {
         this.socket = socket;
@@ -57,7 +56,7 @@ public class ConnectionHandler implements IConnectionHandler {
      * Check for incoming message, and give an appropriate answer
      */
     public void handle() {
-        xmlHandler = new XmlHandler("Database");
+        new XmlHandler("Database");
         try {
             boolean finish = false;
             boolean isConnected = true;
@@ -68,6 +67,7 @@ public class ConnectionHandler implements IConnectionHandler {
                 System.out.println(recieved.toString());
                 switch (recieved.getCommand()) {
                     case ("connect"):
+
                         User user = (User) input.readObject();
                         if (XmlHandler.checkingLogins(XmlHandler.getDocument(), user.getUsername(),
                                 user.getPassword())) {
@@ -75,6 +75,9 @@ public class ConnectionHandler implements IConnectionHandler {
                             output.writeObject(new Message(user.getUsername(), "", user.getCommand(),
                                     "Welcome to the server " + user.getUsername()));
                             System.out.println("Connected in port " + socket.getLocalPort());
+                            for (String grp : XmlHandler.listOfGroupsOfAUser(user.getUsername())) {
+                                addGroup(grp, output);
+                            }
                         } else {
                             output.writeObject(
                                     new Message(user.getUsername(), "", user.getCommand(), "Wrong password"));
@@ -91,7 +94,8 @@ public class ConnectionHandler implements IConnectionHandler {
                             output.writeObject(new Message(((Message) recieved).getUsername(),
                                     ((Message) recieved).getGroupCode(), recieved.getCommand(),
                                     "You join the chat " + ((Message) recieved).getGroupCode()));
-                                XmlHandler.addGroupCodeToUser(((Message) recieved).getGroupCode(), ((Message) recieved).getUsername());
+                            XmlHandler.addGroupCodeToUser(((Message) recieved).getGroupCode(),
+                                    ((Message) recieved).getUsername());
                         } else {
                             System.out.println("No");
                         }
@@ -102,7 +106,8 @@ public class ConnectionHandler implements IConnectionHandler {
                             output.writeObject(new Message(((Message) recieved).getUsername(),
                                     ((Message) recieved).getGroupCode(), recieved.getCommand(),
                                     "You leave the chat " + ((Message) recieved).getGroupCode()));
-                                    XmlHandler.deleteGroup(((Message) recieved).getGroupCode(), ((Message) recieved).getUsername());
+                            XmlHandler.deleteGroupcodeOfAUser(((Message) recieved).getGroupCode(),
+                                    ((Message) recieved).getUsername());
                         }
                         break;
                     case ("send"):
@@ -110,6 +115,8 @@ public class ConnectionHandler implements IConnectionHandler {
                             if (p.getGroupCode().equals(((Message) recieved).getGroupCode())) {
                                 p.send((Message) recieved);
                             }
+                            XmlHandler.addMessage(((Message) recieved).getGroupCode(),
+                                    ((Message) recieved).getUsername(), ((Message) recieved).getMessage());
                         }
                         break;
                     case ("disconnect"):
@@ -132,7 +139,7 @@ public class ConnectionHandler implements IConnectionHandler {
                         }
                     case ("create user"):
                         user = (User) input.readObject();
-                        XmlHandler.addUser( user.getUsername(), user.getPassword());
+                        XmlHandler.addUser(user.getUsername(), user.getPassword());
                         break;
                     case ("delete user"):
                         user = (User) input.readObject();
@@ -140,12 +147,13 @@ public class ConnectionHandler implements IConnectionHandler {
                         break;
                     case ("delete group"):
                         if (isConnected) {
-                            
+
                             LIST_GROUP.remove(((Message) recieved).getGroupCode());
                             output.writeObject(new Message(((Message) recieved).getUsername(),
                                     ((Message) recieved).getGroupCode(), recieved.getCommand(),
                                     "Group " + ((Message) recieved).getGroupCode() + " has been deleted"));
-                            
+                            XmlHandler.deleteGroup(((Message) recieved).getGroupCode());
+
                         }
                         break;
                 }
