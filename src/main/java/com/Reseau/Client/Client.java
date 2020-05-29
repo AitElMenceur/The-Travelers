@@ -107,6 +107,7 @@ public class Client implements Runnable {
             System.out.println(uhe.getMessage());
         } catch (IOException ioe) {
             System.out.println(ioe.getMessage());
+
         }
     }
 
@@ -190,8 +191,6 @@ public class Client implements Runnable {
         try {
             Scanner scan = new Scanner(System.in);
             String groupcode = null;
-            output.writeObject(new Message("", "", "connect", ""));
-            output.writeObject(new User("", ""));
             while (true) {
                 send_data = scan.nextLine();
                 if (send_data != null) {
