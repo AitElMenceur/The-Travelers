@@ -7,7 +7,6 @@ import java.net.Socket;
 import java.util.ArrayList;
 
 import com.Reseau.Data.*;
-import com.Reseau.Client.*;
 import com.Reseau.Interface.IConnectionHandler;
 import com.dataBase.XmlHandler;
 

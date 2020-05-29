@@ -12,7 +12,6 @@ import java.util.Scanner;
 import java.util.concurrent.TimeUnit;
 import com.Reseau.Data.Message;
 import com.Reseau.Data.User;
-import com.dataBase.XmlHandler;
 import com.Reseau.Data.Data;
 import com.Reseau.Data.Group;
 
@@ -45,7 +44,7 @@ public class Client implements Runnable {
         try {
             output.writeObject(message);
         } catch (IOException e) {
-            // TODO Auto-generated catch block
+
             e.printStackTrace();
         }
     }
@@ -59,12 +58,18 @@ public class Client implements Runnable {
         try {
             output.writeObject(message);
         } catch (IOException e) {
-            // TODO Auto-generated catch block
+
             e.printStackTrace();
         }
 
     }
 
+    
+    /** 
+     * @param Username
+     * @param Password
+     * Send a request to create a user
+     */
     public void createUser(String Username, String Password) {
         try {
             Message message = new Message(user.getUsername(), "username", "create user", "");
@@ -72,12 +77,17 @@ public class Client implements Runnable {
             User user = new User(Username, Password);
             output.writeObject(user);
         } catch (IOException e) {
-            // TODO Auto-generated catch block
+
             e.printStackTrace();
         }
 
     }
 
+    
+    /** 
+     * @param username
+     * Send a request to delete a user
+     */
     public void deleteUser(String username) {
         try {
             Message message = new Message(user.getUsername(),"", "delete user", "");
@@ -85,7 +95,7 @@ public class Client implements Runnable {
             output.writeObject(message);
             output.writeObject(new User(username, ""));
         } catch (IOException e) {
-            // TODO Auto-generated catch block
+
             e.printStackTrace();
         }
 
@@ -143,10 +153,10 @@ public class Client implements Runnable {
             System.out.println("Which Group?");
             output.writeObject(new Message(user.getUsername(), Groupcode, "join", ""));
         } catch (IOException e) {
-            // TODO Auto-generated catch block
+
             e.printStackTrace();
         } catch (InterruptedException e) {
-            // TODO Auto-generated catch block
+
             e.printStackTrace();
         }
     }
@@ -215,7 +225,7 @@ public class Client implements Runnable {
                         try {
                             TimeUnit.MILLISECONDS.sleep(100);
                         } catch (InterruptedException e) {
-                            // TODO Auto-generated catch block
+                
                             e.printStackTrace();
                         }
                         for (Group group : list) {
@@ -264,7 +274,7 @@ public class Client implements Runnable {
 
                             output.writeObject(user);
                         } catch (IOException e) {
-                            // TODO Auto-generated catch block
+                
                             e.printStackTrace();
                         }
                     } else if (send_data.equalsIgnoreCase("delete user")) {
@@ -279,7 +289,7 @@ public class Client implements Runnable {
 
                             output.writeObject(user);
                         } catch (IOException e) {
-                            // TODO Auto-generated catch block
+                
                             e.printStackTrace();
                         }
 
@@ -320,7 +330,6 @@ public class Client implements Runnable {
                 return;
 
             } catch (IOException e) {
-                // TODO Auto-generate
                 e.printStackTrace();
             }
         }
