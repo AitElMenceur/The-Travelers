@@ -44,12 +44,6 @@ public class XmlHandler {
 		try {
 			 dBuilder = dbFactory.newDocumentBuilder();
 	            Document doc = dBuilder.parse(filepath);
-	            // add elements to Document
-	            /*Element rootElement = doc.createElement(xmlRoot);
-	            // append root element to document
-	            doc.appendChild(rootElement);
-	            doc.getElementsByTagName(xmlRoot).item(0).appendChild(doc.createElement("Users")); 
-	            doc.getElementsByTagName(xmlRoot).item(0).appendChild(doc.createElement("Groups")); */
 	            return doc;
 		}catch (Exception e){
 			e.printStackTrace();
@@ -557,7 +551,6 @@ public class XmlHandler {
 	    }
 	
 	public static String[] listOfGroups() {
-		
 		NodeList groups = doc.getElementsByTagName("Groups");
 		Element currentGroupCode = null;
 		String[] listOfAllGroups = new String[groups.getLength()];
@@ -566,7 +559,7 @@ public class XmlHandler {
 		for(int i=0; i<groups.getLength(); i++) {
 			currentGroupCode = (Element) groups.item(i);
 			
-			listOfAllGroups[i] = currentGroupCode.getElementsByTagName("GroupCode").item(0).getFirstChild().getNodeValue();
+			listOfAllGroups[i] = currentGroupCode.getElementsByTagName("Groupcode").item(0).getFirstChild().getNodeValue();
 		}
 		
 		return listOfAllGroups;

@@ -17,6 +17,7 @@ public class ConnectionHandler implements IConnectionHandler {
     private Data recieved;
     private static ArrayList<Group> LIST_GROUP = Server.LIST_GROUP;
     private static ArrayList<User> LIST_USER = Server.LIST_USER;
+    
 
     public ConnectionHandler(Socket socket) {
         this.socket = socket;
@@ -55,7 +56,7 @@ public class ConnectionHandler implements IConnectionHandler {
      * Check for incoming message, and give an appropriate answer
      */
     public void handle() {
-        new XmlHandler("Database");
+        
         try {
             boolean finish = false;
             boolean isConnected = true;

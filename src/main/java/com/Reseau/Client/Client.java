@@ -222,8 +222,6 @@ public class Client implements Runnable {
         try {
             Scanner scan = new Scanner(System.in);
             String groupcode = null;
-            output.writeObject(new Message("", "", "connect", ""));
-            output.writeObject(new User("", ""));
             while (true) {
                 send_data = scan.nextLine();
                 if (send_data != null) {
@@ -377,8 +375,8 @@ public class Client implements Runnable {
                     System.out.println(((Message) recieved).getUsername() + " [" + ((Message) recieved).getGroupCode()
                             + "] " + " >" + ((Message) recieved).getMessage());
                     // added by Rebecca 05292020
-                    chatgui.PutTextToChatTextArea(((Message) recieved).getGroupCode(),
-                            ((Message) recieved).getUsername(), ((Message) recieved).getMessage());
+                 //   chatgui.PutTextToChatTextArea(((Message) recieved).getGroupCode(),
+                     //       ((Message) recieved).getUsername(), ((Message) recieved).getMessage());
                 }
 
             } catch (ClassNotFoundException e) {

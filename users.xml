@@ -1,88 +1,62 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
 <Database>
-                        
-    
-    
-    
-    
-    
+
+
     <Users>
-                                                
-        
-        
-        
-        
+
+
         <User id="0">
-                                                                        
-            
-            
-            
-            
+
+
             <UserName>test</UserName>
-                                                                        
-            
-            
-            
-            
+
+
             <Password>test</Password>
-                                                                        
-            
-            
-            
-            
-            <GroupCodes/>
-                                                                        
-            
-            
-            
-            
-            <Friends/>
-                                                                    
-        
-        
-        
-        
+
+
+            <GroupCodes />
+
+
+            <Friends />
+
+
         </User>
-                                            
-        
-    
-    
-    
-        
+
+
         <User id="1">
-                        
+
             <UserName>Ilyes</UserName>
-                        
+
             <Password>456</Password>
-                        
-            <GroupCodes/>
-                        
-            <Friends/>
-                    
+
+            <GroupCodes />
+
+            <Friends />
+
         </User>
-            
+
     </Users>
-                        
-    
-    
-    
-    
+
+
     <Groups>
-                        
-        
+
+
         <Group>
-                                    
-            
+
+
             <Groupcode>FF</Groupcode>
-                                
-        
+
+
         </Group>
-                    
-    
+        <Group>
+
+
+            <Groupcode>FF</Groupcode>
+
+
+        </Group>
+
     </Groups>
-                    
-
-
 
 
 </Database>
