@@ -21,8 +21,9 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 public class XmlHandler {
-	private static Document doc; 
-	
+	private static Document doc;
+	private static final String filepath = "src/main/java/com/dataBase/users.xml";
+
 	public XmlHandler(String XmlName) {
 		doc = initializeXml(XmlName);
 		addUser("0", "test", "test");
@@ -30,6 +31,10 @@ public class XmlHandler {
 	
 	public static Document getDocument() {
 		return doc;
+	}
+
+	public static String getFilepath() {
+		return filepath;
 	}
 	
 	public static Document initializeXml(String xmlRoot)
@@ -39,7 +44,7 @@ public class XmlHandler {
 		
 		try {
 			 dBuilder = dbFactory.newDocumentBuilder();
-	            Document doc = dBuilder.newDocument();
+	            Document doc = dBuilder.parse(filepath);
 	            // add elements to Document
 	            Element rootElement = doc.createElement(xmlRoot);
 	            // append root element to document
