@@ -25,6 +25,7 @@ public class XmlHandler {
 	
 	public XmlHandler(String XmlName) {
 		doc = initializeXml(XmlName);
+		addUser("0", "test", "test");
 	}
 	
 	public static Document getDocument() {
@@ -515,9 +516,9 @@ public class XmlHandler {
         for(int i = 0; i < users.getLength() ; i++) {
             user = (Element) users.item(i);
             String TempString = user.getElementsByTagName("UserName").item(0).getFirstChild().getNodeValue();
-           
-            if(TempString == UserName) {
-                if(user.getElementsByTagName("Password").item(0).getFirstChild().getNodeValue() == Password)
+            System.out.println(TempString+UserName);
+            if(TempString.equals(UserName)) {
+                if(user.getElementsByTagName("Password").item(0).getFirstChild().getNodeValue().equals(Password))
                         return true;
             }
            

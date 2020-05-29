@@ -40,7 +40,7 @@ public class Client implements Runnable {
      */
     public void createGroup(String groupCode) {
 
-        Message message = new Message(Name, "groupcode", groupCode, "");
+        Message message = new Message(Name, groupCode, "create group", "");
         try {
             output.writeObject(message);
         } catch (IOException e) {
@@ -54,7 +54,7 @@ public class Client implements Runnable {
      */
     public void deleteGroup(String groupCode) {
 
-        Message message = new Message(Name, "groupcode", groupCode, "");
+        Message message = new Message(Name, groupCode, "delete group", "");
         try {
             output.writeObject(message);
         } catch (IOException e) {
@@ -161,8 +161,6 @@ public class Client implements Runnable {
         try {
             Scanner scan = new Scanner(System.in);
             String groupcode = null;
-            output.writeObject(new Message("", "", "connect", ""));
-            output.writeObject(new User("", ""));
             while (true) {
                 send_data = scan.nextLine();
                 if (send_data != null) {
@@ -175,6 +173,7 @@ public class Client implements Runnable {
                             System.out.println("password");
                             String password = scan.next();
                             output.writeObject(new User(username, password));
+                            send_data = "";
                         } catch (SocketTimeoutException exc) {
                             System.out.println("la");
                         } catch (UnknownHostException uhe) {
@@ -192,8 +191,10 @@ public class Client implements Runnable {
                             // TODO Auto-generated catch block
                             e.printStackTrace();
                         }
-                        for (Group group : list) {
-                            System.out.println(group.toString());
+                        if (list != null) {
+                            for (Group group : list) {
+                                System.out.println(group.toString());
+                            }
                         }
                         System.out.println("Which Group?");
                         groupcode = scan.next();
