@@ -7,8 +7,8 @@ import java.net.Socket;
 import java.util.ArrayList;
 
 import com.Reseau.Data.*;
-
 import com.Reseau.Interface.IConnectionHandler;
+import com.dataBase.XmlHandler;
 
 public class ConnectionHandler implements IConnectionHandler {
     private Socket socket;
@@ -16,6 +16,7 @@ public class ConnectionHandler implements IConnectionHandler {
     private ObjectInputStream input;
     private Data recieved;
     private static ArrayList<Group> LIST_GROUP = Server.LIST_GROUP;
+    private XmlHandler xmlHandler;
 
     public ConnectionHandler(Socket socket) {
         this.socket = socket;
@@ -50,6 +51,7 @@ public class ConnectionHandler implements IConnectionHandler {
      * Check for incoming message, and give an appropriate answer
      */
     public void handle() {
+        xmlHandler=new XmlHandler();
         try {
             boolean finish = false;
             boolean isConnected = true;
@@ -60,11 +62,17 @@ public class ConnectionHandler implements IConnectionHandler {
                 System.out.println(recieved.toString());
                 switch (recieved.getCommand()) {
                     case ("connect"):
-                        User user = (User) input.readObject();
-                        output.writeObject(new Message(user.getUsername(),
-                            "", user.getCommand(),"Welcome to the server " + user.getUsername()));
-                        System.out.println("Connected in port " + socket.getLocalPort());
-
+                        // User user = (User) input.readObject();
+                        // if(xmlHandler.CheckingLogins(doc, user.getUsername(), user.getPassword())){
+                        //     isConnected = true;
+                        //     output.writeObject(new Message(user.getUsername(),
+                        //     "", user.getCommand(),"Welcome to the server " + user.getUsername()));
+                        // System.out.println("Connected in port " + socket.getLocalPort());
+                        // }else{
+                        //     output.writeObject(new Message(user.getUsername(),
+                        //     "", user.getCommand(),"Wrong password"));
+                        //     isConnected = false;
+                        // }                     
                         break;
                         case("display list"):
                             output.writeObject(LIST_GROUP);
