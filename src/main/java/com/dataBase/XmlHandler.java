@@ -106,6 +106,7 @@ public class XmlHandler {
 	
 	public static boolean addUser(String id, String UserName, String Password) {
 		Element user = doc.createElement("User");
+		
 
         // set id attribute
         user.setAttribute("id", id);
@@ -142,7 +143,7 @@ public class XmlHandler {
 			user = (Element) users.item(i);
 			String TempString = user.getElementsByTagName("UserName").item(0).getFirstChild().getNodeValue();
 			
-			if(TempString == User) {
+			if(TempString.equals(User) ) {
 			
 				user.getElementsByTagName("Friends").item(0).appendChild(addElement(friend, "FriendName", FriendName));
 				transformerXml();
@@ -168,7 +169,7 @@ public class XmlHandler {
 			user = (Element) users.item(i);
 			String TempString = user.getElementsByTagName("UserName").item(0).getFirstChild().getNodeValue();
 			
-			if(TempString == UserToDelete) {
+			if(TempString.equals(UserToDelete)) {
 				user.getParentNode().removeChild(user);
 				transformerXml();
 				return true;
@@ -188,14 +189,14 @@ public class XmlHandler {
         String userTemp = user.getElementsByTagName("UserName").item(0).getFirstChild().getNodeValue();
 
        
-        if(userTemp == User) {
+        if(userTemp.equals(User) ) {
             NodeList friends = user.getElementsByTagName("FriendName");
            
             for( int j = 0 ; j < friends.getLength() ; j++ ) {
                 Element friend = (Element) friends.item(j);
                 String friendTemp = friend.getFirstChild().getNodeValue();
                
-                if(friendTemp == FriendToDelete) {
+                if(friendTemp.equals(FriendToDelete) ) {
                     friend.getParentNode().removeChild(friend);
                     transformerXml();
                     return true;
@@ -219,7 +220,7 @@ public class XmlHandler {
 			user = (Element) users.item(i);
 			String TempString = user.getElementsByTagName("UserName").item(0).getFirstChild().getNodeValue();
 			
-			if(TempString == OldUserName) {
+			if(TempString.equals(OldUserName) ) {
 				user.getElementsByTagName("UserName").item(0).getFirstChild().setNodeValue(NewUserName);
 				transformerXml();
 				return true;
@@ -242,7 +243,7 @@ public class XmlHandler {
 			String TempString = user.getElementsByTagName("Password").item(0).getFirstChild().getNodeValue();
 			String TempUserName = user.getElementsByTagName("UserName").item(0).getFirstChild().getNodeValue();
 			
-			if(TempString == OldPassword && TempUserName == UserName) {
+			if(TempString.equals(OldPassword)  && TempUserName.equals(UserName) ) {
 				user.getElementsByTagName("Password").item(0).getFirstChild().setNodeValue(NewPassword);
 				transformerXml();
 				return true;
@@ -265,7 +266,7 @@ public class XmlHandler {
 			user = (Element) users.item(i);
 			String TempString = user.getElementsByTagName("UserName").item(0).getFirstChild().getNodeValue();
 			
-			if(TempString == UserName) {
+			if(TempString.equals(UserName) ) {
 			
 				user.getElementsByTagName("GroupCodes").item(0).appendChild(node);
 				transformerXml();
@@ -286,7 +287,7 @@ public class XmlHandler {
 			String TempString;	
 			
 			TempString = groupcode.getElementsByTagName("Groupcode").item(0).getFirstChild().getNodeValue();
-			if(TempString == Groupcode) {
+			if(TempString.equals(Groupcode)) {
 				
 				Element user = doc.createElement("UserName");
 				user.appendChild(doc.createTextNode(UserName));
@@ -332,7 +333,7 @@ public class XmlHandler {
 			String TempString;	
 			
 			TempString = groupcode.getElementsByTagName("Groupcode").item(0).getFirstChild().getNodeValue();
-			if(TempString == Groupcode) {
+			if(TempString.equals(Groupcode)  ) {
 				
 				NodeList UserNames = doc.getElementsByTagName("UserName");
 				Element user = null;
@@ -342,7 +343,7 @@ public class XmlHandler {
 					user = (Element) UserNames.item(j);
 					TempString = user.getFirstChild().getNodeValue();
 					
-					if(TempString == UserName) {
+					if(TempString.equals(UserName)) {
 						
 						NodeList MessageList = doc.getElementsByTagName("Message");
 						Element TempMessage = null;
@@ -351,7 +352,7 @@ public class XmlHandler {
 							TempMessage = (Element) MessageList.item(k);
 							TempString = TempMessage.getFirstChild().getNodeValue();
 
-							if(TempString == message) {
+							if(TempString.equals(message)) {
 			                    TempMessage.getParentNode().removeChild(TempMessage);
 			                    user.getParentNode().removeChild(user);
 								transformerXml();
@@ -374,7 +375,7 @@ public class XmlHandler {
 			user = (Element) users.item(i);
 			String TempString = user.getElementsByTagName("UserName").item(0).getFirstChild().getNodeValue();
 			
-			if(TempString == UserName) {
+			if(TempString.equals(UserName) ) {
 				NodeList GroupeCodes = doc.getElementsByTagName("Keys");
 				Element groupcode = null;
 				
@@ -382,7 +383,7 @@ public class XmlHandler {
 					groupcode = (Element) GroupeCodes.item(k);
 					TempString = groupcode.getFirstChild().getNodeValue();
 
-					if(TempString == Groupcode) {
+					if(TempString.equals(Groupcode) ) {
 	                    groupcode.getParentNode().removeChild(groupcode);
 						transformerXml();
 						return true;
@@ -408,7 +409,7 @@ public class XmlHandler {
 			String TempString;	
 			
 			TempString = groupcode.getElementsByTagName("Groupcode").item(0).getFirstChild().getNodeValue();
-			if(TempString == Groupcode) {		
+			if(TempString.equals(Groupcode) ) {		
 				int stringCapacity = 0 ; 
 				
 				for( int j = groupcode.getChildNodes().getLength()-1 ; stringCapacity < numberOfMessages && j >=1; j--) {
@@ -449,7 +450,7 @@ public class XmlHandler {
 			user = (Element) users.item(i);
 			String TempString = user.getElementsByTagName("UserName").item(0).getFirstChild().getNodeValue();
 			
-			if(TempString == UserName) {
+			if(TempString.equals(UserName) ) {
 			NodeList friends = user.getElementsByTagName("Friends").item(0).getChildNodes(); 
 				Element friend = null;
 				String[] ListFriend = new String[friends.getLength()]; 
@@ -478,7 +479,7 @@ public class XmlHandler {
             user = (Element) users.item(i);
             String TempString = user.getElementsByTagName("UserName").item(0).getFirstChild().getNodeValue();
            
-            if(TempString == UserName) {
+            if(TempString.equals(UserName)) {
            
                 NodeList groups = user.getElementsByTagName("GroupCodes").item(0).getChildNodes();
                 Element group = null;

@@ -10,6 +10,8 @@ import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.concurrent.TimeUnit;
+import java.util.jar.Attributes.Name;
+
 import com.Reseau.Data.Message;
 import com.Reseau.Data.User;
 import com.Reseau.Data.Data;
@@ -40,7 +42,7 @@ public class Client implements Runnable {
      */
     public void createGroup(String groupCode) {
 
-        Message message = new Message(Name, "groupcode", groupCode, "");
+        Message message = new Message(Name, groupCode, "create group", "");
         try {
             output.writeObject(message);
         } catch (IOException e) {
@@ -54,7 +56,7 @@ public class Client implements Runnable {
      */
     public void deleteGroup(String groupCode) {
 
-        Message message = new Message(Name, "groupcode", groupCode, "");
+        Message message = new Message(Name, groupCode, "create group", "");
         try {
             output.writeObject(message);
         } catch (IOException e) {
@@ -64,12 +66,12 @@ public class Client implements Runnable {
 
     }
 
-
-    public void CreateUser(String username) {
-
-        Message message = new Message(Name, "username", username, "");
+    public void CreateUser(String Username, String Password) {
         try {
+            Message message = new Message(Name, "username", "create user", "");
             output.writeObject(message);
+            User user = new User(Username, Password);
+            output.writeObject(user);
         } catch (IOException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
@@ -78,20 +80,17 @@ public class Client implements Runnable {
     }
 
     public void deleteUser(String username) {
-
-        Message message = new Message(Name, "username", username, "");
         try {
+            Message message = new Message("", "", "delete user", "");
+
             output.writeObject(message);
+            output.writeObject(new User(username, ""));
         } catch (IOException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
 
     }
-
-
-
-
 
     /**
      * 
@@ -142,7 +141,6 @@ public class Client implements Runnable {
                 System.out.println(group.toString());
             }
             System.out.println("Which Group?");
-
             output.writeObject(new Message(Name, Groupcode, "join", ""));
         } catch (IOException e) {
             // TODO Auto-generated catch block
@@ -226,11 +224,13 @@ public class Client implements Runnable {
                         System.out.println("Which Group?");
                         groupcode = scan.next();
                         output.writeObject(new Message(Name, groupcode, "join", ""));
+
                     } else if (send_data.equalsIgnoreCase("leave")) {
                         message = new Message(Name, "", send_data, "");
                         System.out.println("Which Group?");
                         ((Message) message).setGroupCode(scan.next());
                         output.writeObject(message);
+
                     } else if (send_data.equalsIgnoreCase("disconnect")) {
                         output.writeObject(new Message(Name, groupcode, "disconnect", ""));
                         scan.close();
@@ -239,15 +239,48 @@ public class Client implements Runnable {
                         return;
 
                     } else if (send_data.equalsIgnoreCase("create group")) {
+
                         message = new Message(Name, "groupcode", send_data, "");
                         System.out.println("Which Group?");
                         ((Message) message).setGroupCode(scan.next());
                         output.writeObject(message);
+
                     } else if (send_data.equalsIgnoreCase("delete group")) {
                         message = new Message(Name, "groupcode", send_data, "");
                         System.out.println("Which Group?");
                         ((Message) message).setGroupCode(scan.next());
                         output.writeObject(message);
+
+                    } else if (send_data.equalsIgnoreCase("create user")) {
+                        try {
+                            message = new Message(Name, "username", "create user", "");
+                            output.writeObject(message);
+                            System.out.println("Which User?");
+                            String username = scan.next();
+                            System.out.println("Which Password?");
+                            String password = scan.next();
+                            User user = new User(username, password);
+
+                            output.writeObject(user);
+                        } catch (IOException e) {
+                            // TODO Auto-generated catch block
+                            e.printStackTrace();
+                        }
+                    } else if (send_data.equalsIgnoreCase("delete user")) {
+                        try {
+                            message = new Message("", "", "delete user", "");
+                            output.writeObject(message);
+                            System.out.println("Which User?");
+                            String username = scan.next();
+                            System.out.println("Which Password?");
+                            String password = scan.next();
+                            User user = new User(username, password);
+
+                            output.writeObject(user);
+                        } catch (IOException e) {
+                            // TODO Auto-generated catch block
+                            e.printStackTrace();
+                        }
 
                     } else {
                         message = new Message(Name, groupcode, "send", send_data);
