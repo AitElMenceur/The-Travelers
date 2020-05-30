@@ -199,7 +199,7 @@ public class Client implements Runnable {
     public boolean connect(String Username, String Password) {
         try {
             output.writeObject(new Message("", "", "connect", ""));
-
+            TimeUnit.MILLISECONDS.sleep(100);
             output.writeObject(new User(Username, Password));
             user = new User(Username, Password);
 
@@ -445,9 +445,9 @@ public class Client implements Runnable {
                     System.out.println(((Message) recieved).getUsername() + " [" + ((Message) recieved).getGroupCode()
                             + "] " + " >" + ((Message) recieved).getMessage());
                     // added by Rebecca 05292020
-                    ChatGUI chatgui = new ChatGUI();
+                   /* ChatGUI chatgui = new ChatGUI();
                     chatgui.PutTextToChatTextArea(((Message) recieved).getGroupCode(),
-                            ((Message) recieved).getUsername(), ((Message) recieved).getMessage());
+                            ((Message) recieved).getUsername(), ((Message) recieved).getMessage());*/
 
                 }
 

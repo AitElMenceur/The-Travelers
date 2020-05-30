@@ -58,9 +58,8 @@ public class XmlHandler {
 	            Document doc = dBuilder.parse(filepath);
 	            return doc;
 		}catch (Exception e){
-			e.printStackTrace();
+			return newXml("Database");
 		}
-		return null;
 	}
 	
 	/** 

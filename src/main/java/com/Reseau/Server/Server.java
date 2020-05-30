@@ -10,25 +10,28 @@ public class Server extends AbstractServer {
     private String ip;
     static protected ArrayList<Group> LIST_GROUP;
     static protected ArrayList<User> LIST_USER;
+
     public Server(String ip) {
         new XmlHandler("Database");
         this.ip = ip;
-        Server.LIST_GROUP=initializeGroup();
-        
+        try {
+            Server.LIST_GROUP = initializeGroup();
+        } catch (NullPointerException e) {
+            Server.LIST_GROUP = new ArrayList<Group>();
+
+        }
         Server.LIST_USER = new ArrayList<User>();
     }
-    
+
     private ArrayList<Group> initializeGroup() {
-        ArrayList<Group> list =new ArrayList<Group>();
-        for(String g: XmlHandler.listOfGroups()){
-            
+        ArrayList<Group> list = new ArrayList<Group>();
+        for (String g : XmlHandler.listOfGroups()) {
+
             list.add(new Group(g));
         }
         return list;
-       
-    }
 
-    
+    }
 
     @Override
     public void connect() {
@@ -38,19 +41,20 @@ public class Server extends AbstractServer {
         }
 
     }
-    
-    public void addGroup(Group a){
+
+    public void addGroup(Group a) {
         LIST_GROUP.add(a);
     }
-    public void removeGroup(Group a){
+
+    public void removeGroup(Group a) {
         LIST_GROUP.remove(a);
     }
 
-
-    public void addUser(User user){
+    public void addUser(User user) {
         LIST_USER.add(user);
     }
-    public void removeUser(User user){
+
+    public void removeUser(User user) {
         LIST_USER.remove(user);
     }
 }
