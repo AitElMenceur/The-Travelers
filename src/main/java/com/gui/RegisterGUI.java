@@ -31,16 +31,12 @@ public class RegisterGUI extends JDialog {
 	private JTextField NametextField;
 	private JTextField PasswordtextField;
 
-	private String UserName="", Password="", OldUserName="", NewUserName="", OldPassword="", NewPassword="";
+	private String UserName="", Password="", OldUserName="", NewUserName="";
+	char[] NewPassword ;
+	char[] OldPassword ;
 	private JButton UpdateButton = new JButton("Update");
 	private JButton DeleteButton = new JButton("Delete");
 	private JLabel RegisterWarningMessage = new JLabel("");
-	int i = 6668;
-	//Client clnt = new Client("localhost", i, "User"+i);
-	Client clnt = new Client("localhost", i);
-	/**
-	 * Create the dialog.
-	 */
 	
 	public RegisterGUI() {
 		setBounds(100, 100, 450, 300);
@@ -70,7 +66,7 @@ public class RegisterGUI extends JDialog {
 					 else {
 						boolean rtn = true;
 						//*****needs to be modified
-						rtn = clnt.createUser(UserName, Password);
+						rtn = Globals.clnt.createUser(UserName, Password);
 						 
 						 if(rtn) {
 							 RegisterWarningMessage.setForeground(Color.GREEN);
@@ -96,10 +92,10 @@ public class RegisterGUI extends JDialog {
 					NewUserName = UserName;
 				  	OldPassword = Globals.Passwd;
 				 
-					NewPassword = PasswordtextField.getText();
+					NewPassword = PasswordtextField.getText().toCharArray();
 					RegisterWarningMessage.setText("");
 					if(
-							NewUserName.length() == 0 || NewPassword.length() == 0) {
+							NewUserName.length() == 0 || NewPassword.length == 0) {
 							RegisterWarningMessage.setForeground(Color.RED);
 							RegisterWarningMessage.setText("Please check your User Name and Password!");
 					}
@@ -107,8 +103,8 @@ public class RegisterGUI extends JDialog {
 					
 					boolean rtn1 =true, rtn2 = true;
 					//*****needs to be modified
-					rtn1 = clnt.updateUsername(OldUserName, NewUserName, OldPassword);
-					rtn2 = clnt.updatePassword(UserName, OldPassword, NewPassword);
+					rtn1 = Globals.clnt.updateUsername(OldUserName, NewUserName, OldPassword.toString());
+					rtn2 = Globals.clnt.updatePassword(UserName, OldPassword.toString(), NewPassword.toString());
 					
 					if(rtn1 && rtn2) {
 						RegisterWarningMessage.setForeground(Color.GREEN);
@@ -140,7 +136,7 @@ public class RegisterGUI extends JDialog {
 			    	  *  must use login name to delete, or the user may delete others account!!
 			    	  */
 			    	 UserName = Globals.UserName;
-			    	 Password = Globals.Passwd;
+			    	 Password = Globals.Passwd.toString();
 			    	 RegisterWarningMessage.setText("");
 			    	 if(UserName.length() == 0 || Password.length() == 0) {
 			    		 	RegisterWarningMessage.setForeground(Color.RED);
@@ -150,7 +146,7 @@ public class RegisterGUI extends JDialog {
 						
 			    	 boolean rtn = true;
 			    	 //*****needs to be modified
-					 rtn = clnt.deleteUser(UserName);
+					 rtn = Globals.clnt.deleteUser(UserName);
 			    	 
 			    	 if(rtn) {
 			    		 RegisterWarningMessage.setForeground(new Color(0, 255, 0));
@@ -196,7 +192,7 @@ public class RegisterGUI extends JDialog {
 		
 		PasswordtextField = new JTextField();
 		PasswordtextField.setColumns(10);
-		PasswordtextField.setText(Globals.Passwd);
+		PasswordtextField.setText(Globals.Passwd.toString());
 		
 		
 		GroupLayout gl_contentPanel = new GroupLayout(contentPanel);

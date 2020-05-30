@@ -177,6 +177,7 @@ public class ConnectionHandler implements IConnectionHandler {
                         }
                     case ("create user"):
                         user = (User) input.readObject();
+                        System.out.println(user.getUsername());
                         if (XmlHandler.addUser(user.getUsername(), user.getPassword())) {
                             output.writeObject(
                                     new Message(((Message) recieved).getUsername(), ((Message) recieved).getGroupCode(),

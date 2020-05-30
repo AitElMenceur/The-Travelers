@@ -14,8 +14,6 @@ import com.Reseau.Data.Message;
 import com.Reseau.Data.User;
 import com.Reseau.Data.Data;
 import com.Reseau.Data.Group;
-//added by Rebecca 05292020
-import com.gui.*;
 
 public class Client implements Runnable {
     private User user;

@@ -1,8 +1,11 @@
 package com.gui;
 
+import com.Reseau.Client.Client;
+
 public class Globals {
-	    public static String UserName = "";
-	    public static String Passwd = "";
+	    public static String UserName;
+		public static char[] Passwd ;
+		static Client clnt = new Client("localhost", 6669);
 	    // public static String[] Chatters = {"Rebecca", "Nassim", "Marine"};
 	    public static String[] Chatters = {};
 	    // public static int totalChatters = 0;

@@ -1,15 +1,10 @@
 package com.gui;
 
-import com.Reseau.Client.Client;
-//import com.Reseau.Client.Client.Globals;
 import com.Reseau.Client.*;
-
-import java.awt.BorderLayout;
 import java.awt.EventQueue;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JPanel;
@@ -30,7 +25,7 @@ import javax.swing.LayoutStyle.ComponentPlacement;
  */
 
 public class LogInGUI extends JDialog implements ActionListener{
-	static Client clnt;
+
 
 	/*
 	 * 
@@ -58,19 +53,7 @@ public class LogInGUI extends JDialog implements ActionListener{
 	private JPasswordField passwordField;
 	private JLabel WarningMessageLabel = new JLabel("");
 
-	public static void main(String arg[]) {
-		int i = 6669;
 
-		clnt = new Client("localhost", i);
-		new Thread(clnt).start();
-        
-          try { 
-        	  LogInGUI dialog = new LogInGUI();
-          dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-          dialog.setVisible(true);
-          } catch (Exception e) { e.printStackTrace(); } //end
-         
-    }
 
 	/**
 	 * Create the dialog.
@@ -177,19 +160,17 @@ public class LogInGUI extends JDialog implements ActionListener{
 		getContentPane().setLayout(groupLayout);
 	}
 
-	@SuppressWarnings("deprecation")
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		// TODO Auto-generated method stub
 		switch(e.getActionCommand()) {
 		case "loginButton" :
 			boolean login = true;
 			
 			Globals.UserName = NameTextField.getText();
-			Globals.Passwd = passwordField.getText();
-			if(Globals.UserName.length() != 0 && Globals.Passwd.length() != 0) {
-				
-				login = clnt.connect(Globals.UserName, Globals.Passwd);
+			Globals.Passwd = passwordField.getPassword();
+			if(Globals.UserName.length() != 0 && Globals.Passwd.length != 0) {
+				System.out.println( Globals.Passwd.toString());
+				login = Globals.clnt.connect(Globals.UserName, Globals.Passwd.toString());
 				System.out.println(login);
 				
 			}
@@ -223,7 +204,7 @@ public class LogInGUI extends JDialog implements ActionListener{
 					public void run() {
 						try {
 							Globals.UserName = NameTextField.getText();
-							Globals.Passwd = passwordField.getText();
+							Globals.Passwd = passwordField.getPassword();
 							RegisterGUI frame= new RegisterGUI();
 							frame.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 							frame.setVisible(true);
@@ -237,6 +218,14 @@ public class LogInGUI extends JDialog implements ActionListener{
 		}
 	}
 	
-		
+	public static void main(String arg[]) {
+		new Thread(Globals.clnt).start();
+          try { 
+        	  LogInGUI dialog = new LogInGUI();
+          dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+          dialog.setVisible(true);
+          } catch (Exception e) { e.printStackTrace(); } //end
+         
+    }
 }
 
