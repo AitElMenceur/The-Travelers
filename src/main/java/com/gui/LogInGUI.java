@@ -168,9 +168,9 @@ public class LogInGUI extends JDialog implements ActionListener{
 			
 			Globals.UserName = NameTextField.getText();
 			Globals.Passwd = passwordField.getPassword();
+			System.out.println(new String(Globals.Passwd));
 			if(Globals.UserName.length() != 0 && Globals.Passwd.length != 0) {
-				System.out.println( Globals.Passwd.toString());
-				login = Globals.clnt.connect(Globals.UserName, Globals.Passwd.toString());
+				login = Globals.clnt.connect(Globals.UserName, new String(Globals.Passwd));
 				System.out.println(login);
 				
 			}
