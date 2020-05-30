@@ -24,7 +24,7 @@ public class Client implements Runnable {
     private ObjectOutputStream output;
     private ObjectInputStream input;
     private ArrayList<Group> list = new ArrayList<Group>();
-    private Message recieved;
+    private Object recieved;
 
     public Client(String ip, int port, String nom) {
         this.user = new User("Username", "Password");
@@ -362,7 +362,7 @@ public class Client implements Runnable {
     }
 
     public Message getMessage() {
-        return recieved;
+        return (Message) recieved;
     }
     public ArrayList<Group> getLisGroup(){
         return  list;
