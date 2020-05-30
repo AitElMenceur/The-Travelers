@@ -78,8 +78,8 @@ public class ConnectionHandler implements IConnectionHandler {
                              * addGroup(grp, output); }
                              */
                         } else {
-                            output.writeObject(
-                                    new Message(user.getUsername(), "", user.getCommand(), "Wrong password or username"));
+                            output.writeObject(new Message(user.getUsername(), "", user.getCommand(),
+                                    "Wrong password or username"));
                             isConnected = false;
                         }
                         break;
@@ -115,7 +115,8 @@ public class ConnectionHandler implements IConnectionHandler {
                         if (isConnected) {
 
                             addGroup(((Message) recieved).getGroupCode(), output);
-                            if (XmlHandler.addGroupCodeToUser(((Message) recieved).getGroupCode(),((Message) recieved).getUsername())) {
+                            if (XmlHandler.addGroupCodeToUser(((Message) recieved).getGroupCode(),
+                                    ((Message) recieved).getUsername())) {
                                 output.writeObject(new Message(((Message) recieved).getUsername(),
                                         ((Message) recieved).getGroupCode(), recieved.getCommand(),
                                         "You join the chat " + ((Message) recieved).getGroupCode()));
@@ -135,6 +136,10 @@ public class ConnectionHandler implements IConnectionHandler {
                                         ((Message) recieved).getGroupCode(), recieved.getCommand(),
                                         "You leave the chat " + ((Message) recieved).getGroupCode()));
 
+                            } else {
+                                output.writeObject(new Message(((Message) recieved).getUsername(),
+                                        ((Message) recieved).getGroupCode(), recieved.getCommand(), "Error"));
+
                             }
                         }
                         break;
@@ -153,40 +158,58 @@ public class ConnectionHandler implements IConnectionHandler {
                                     new Message(((Message) recieved).getUsername(), ((Message) recieved).getGroupCode(),
                                             recieved.getCommand(), "GoodBye! " + ((Message) recieved).getUsername()));
                             output.flush();
-                            isConnected=false;
+                            isConnected = false;
                             finish = true;
                         }
                         break;
                     case ("create group"):
                         if (isConnected) {
-                            Server.LIST_GROUP.add(new Group(((Message) recieved).getGroupCode()));
-                            output.writeObject(new Message(((Message) recieved).getUsername(),
-                                    ((Message) recieved).getGroupCode(), recieved.getCommand(),
-                                    "Group " + ((Message) recieved).getGroupCode() + " has been created"));
-                            XmlHandler.createGroup(((Message) recieved).getGroupCode());
+                            if (XmlHandler.createGroup(((Message) recieved).getGroupCode())) {
+                                Server.LIST_GROUP.add(new Group(((Message) recieved).getGroupCode()));
+                                output.writeObject(new Message(((Message) recieved).getUsername(),
+                                        ((Message) recieved).getGroupCode(), recieved.getCommand(),
+                                        "Group " + ((Message) recieved).getGroupCode() + " has been created"));
+                            } else {
+                                output.writeObject(new Message(((Message) recieved).getUsername(),
+                                        ((Message) recieved).getGroupCode(), recieved.getCommand(), "Error"));
+                            }
                             break;
                         }
                     case ("create user"):
                         user = (User) input.readObject();
                         if (XmlHandler.addUser(user.getUsername(), user.getPassword())) {
-                            output.writeObject(new Message(((Message) recieved).getUsername(), ((Message) recieved).getGroupCode(),recieved.getCommand(), "User has been created"));
+                            output.writeObject(
+                                    new Message(((Message) recieved).getUsername(), ((Message) recieved).getGroupCode(),
+                                            recieved.getCommand(), "User has been created"));
+
+                        } else {
+                            output.writeObject(new Message(((Message) recieved).getUsername(),
+                                    ((Message) recieved).getGroupCode(), recieved.getCommand(), "Error"));
 
                         }
                         break;
                     case ("delete user"):
                         user = (User) input.readObject();
                         if (XmlHandler.deleteUser(user.getUsername())) {
-                            output.writeObject(new Message(((Message) recieved).getUsername(), ((Message) recieved).getGroupCode(),recieved.getCommand(), "User has been erased"));
+                            output.writeObject(
+                                    new Message(((Message) recieved).getUsername(), ((Message) recieved).getGroupCode(),
+                                            recieved.getCommand(), "User has been erased"));
+                        } else {
+                            output.writeObject(new Message(((Message) recieved).getUsername(),
+                                    ((Message) recieved).getGroupCode(), recieved.getCommand(), "Error"));
                         }
                         break;
                     case ("delete group"):
                         if (isConnected) {
-
-                            Server.LIST_GROUP.remove(((Message) recieved).getGroupCode());
-                            output.writeObject(new Message(((Message) recieved).getUsername(),
-                                    ((Message) recieved).getGroupCode(), recieved.getCommand(),
-                                    "Group " + ((Message) recieved).getGroupCode() + " has been deleted"));
-                            XmlHandler.deleteGroup(((Message) recieved).getGroupCode());
+                            if (XmlHandler.deleteGroup(((Message) recieved).getGroupCode())) {
+                                Server.LIST_GROUP.remove(((Message) recieved).getGroupCode());
+                                output.writeObject(new Message(((Message) recieved).getUsername(),
+                                        ((Message) recieved).getGroupCode(), recieved.getCommand(),
+                                        "Group " + ((Message) recieved).getGroupCode() + " has been deleted"));
+                            } else {
+                                output.writeObject(new Message(((Message) recieved).getUsername(),
+                                        ((Message) recieved).getGroupCode(), recieved.getCommand(), "Error"));
+                            }
 
                         }
                         break;
