@@ -139,7 +139,9 @@ public class Client implements Runnable {
         if (getMessage().getMessage().equals("Welcome to the server " + user.getUsername())) {
             return true;
 
-        }else{return false;}
+        } else {
+            return false;
+        }
     }
 
     /**
@@ -162,37 +164,58 @@ public class Client implements Runnable {
 
     /**
      * @param Groupcode Join a group
+     * @return
      */
-    public void join(String Groupcode) {
+    public boolean join(String Groupcode) {
+
         try {
             output.writeObject(new Message(user.getUsername(), "", "display list", ""));
-
             TimeUnit.MILLISECONDS.sleep(100);
 
             for (Group group : list) {
                 System.out.println(group.toString());
             }
+
             output.writeObject(new Message(user.getUsername(), Groupcode, "join", ""));
-        } catch (IOException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
+            TimeUnit.MILLISECONDS.sleep(100);
         } catch (InterruptedException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        if (getMessage().getMessage().equals("You join the chat " + getMessage().getGroupCode())) {
+            return true;
+
+        } else {
+            return false;
         }
     }
 
     /**
      * @param Groupcode leave a group
+     * @return
      */
-    public void leave(String Groupcode) {
+    public boolean leave(String Groupcode) {
         try {
             output.writeObject(new Message("", "", "leave", Groupcode));
+
+            TimeUnit.MILLISECONDS.sleep(100);
         } catch (SocketTimeoutException exc) {
         } catch (UnknownHostException uhe) {
             System.out.println(uhe.getMessage());
         } catch (IOException ioe) {
             System.out.println(ioe.getMessage());
+        } catch (InterruptedException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        if (getMessage().getMessage().equals("You leave the chat " + getMessage().getGroupCode())) {
+            return true;
+
+        } else {
+            return false;
         }
     }
 
@@ -233,20 +256,16 @@ public class Client implements Runnable {
                         System.out.println(connect(Username, Password));
                     }
                     if (send_data.equalsIgnoreCase("join")) {
-                        output.writeObject(new Message(user.getUsername(), "", "display list", ""));
-                        TimeUnit.MILLISECONDS.sleep(100);
                         for (Group group : list) {
                             System.out.println(group.toString());
                         }
                         System.out.println("Which Group?");
-                        groupcode = scan.next();
-                        output.writeObject(new Message(user.getUsername(), groupcode, "join", ""));
+                        System.out.println(join(scan.next()));
 
                     } else if (send_data.equalsIgnoreCase("leave")) {
-                        message = new Message(user.getUsername(), "", send_data, "");
+
                         System.out.println("Which Group?");
-                        ((Message) message).setGroupCode(scan.next());
-                        output.writeObject(message);
+                        System.out.println(scan.next());
 
                     } else if (send_data.equalsIgnoreCase("disconnect")) {
                         output.writeObject(new Message(user.getUsername(), groupcode, "disconnect", ""));
@@ -348,9 +367,6 @@ public class Client implements Runnable {
             System.out.println(uhe.getMessage());
         } catch (IOException ioe) {
             System.out.println(ioe.getMessage());
-        } catch (InterruptedException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
         }
     }
 
