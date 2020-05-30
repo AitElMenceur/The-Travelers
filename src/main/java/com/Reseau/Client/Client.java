@@ -17,19 +17,16 @@ import com.Reseau.Data.Group;
 //added by Rebecca 05292020
 import com.gui.*;
 
-
 public class Client implements Runnable {
-    private String Name;
+    private User user;
     private Socket socket;
     private String send_data = null;
     private ObjectOutputStream output;
     private ObjectInputStream input;
     private ArrayList<Group> list;
-    
-    
 
     public Client(String ip, int port, String nom) {
-        this.Name = nom;
+        this.user = new User("Username", "Password");
         try {
             this.socket = new Socket(ip, port);
             this.output = new ObjectOutputStream(socket.getOutputStream()); // ouvre un flux de sortie vers le socket
@@ -45,11 +42,38 @@ public class Client implements Runnable {
      */
     public void createGroup(String groupCode) {
 
-        Message message = new Message(Name, "groupcode", groupCode, "");
+        Message message = new Message(user.getUsername(), "groupcode", groupCode, "");
         try {
+
             output.writeObject(message);
         } catch (IOException e) {
             // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+    }
+
+    public void updatePassword(String username, String np, String op) {
+        try {
+
+            Message message = new Message(username, op, "update password", np);
+
+            output.writeObject(message);
+
+        } catch (IOException e) {
+
+            e.printStackTrace();
+        }
+    }
+
+    public void updateUsername(String username, String nu, String op) {
+        try {
+
+            Message message = new Message(username, op, "update password", nu);
+
+            output.writeObject(message);
+
+        } catch (IOException e) {
+
             e.printStackTrace();
         }
     }
@@ -59,7 +83,7 @@ public class Client implements Runnable {
      */
     public void deleteGroup(String groupCode) {
 
-        Message message = new Message(Name, "groupcode", groupCode, "");
+        Message message = new Message(user.getUsername(), "groupcode", groupCode, "");
         try {
             output.writeObject(message);
         } catch (IOException e) {
@@ -69,34 +93,36 @@ public class Client implements Runnable {
 
     }
 
-
-    public void CreateUser(String username) {
-
-        Message message = new Message(Name, "username", username, "");
+    /**
+     * @param Username
+     * @param Password Send a request to create a user
+     */
+    public void createUser(String Username, String Password) {
         try {
+            Message message = new Message(user.getUsername(), "username", "create user", "");
             output.writeObject(message);
+            User user = new User(Username, Password);
+
+            output.writeObject(user);
         } catch (IOException e) {
-            // TODO Auto-generated catch block
+
             e.printStackTrace();
         }
-
     }
 
+    /**
+     * @param username Send a request to delete a user
+     */
     public void deleteUser(String username) {
-
-        Message message = new Message(Name, "username", username, "");
         try {
+            Message message = new Message(username, "", "delete user", "");
+
             output.writeObject(message);
         } catch (IOException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
 
     }
-
-
-
-
 
     /**
      * 
@@ -106,6 +132,7 @@ public class Client implements Runnable {
         try {
             output.writeObject(new Message("", "", "connect", ""));
             output.writeObject(new User(Username, Password));
+            user = new User(Username, Password);
         } catch (SocketTimeoutException exc) {
             System.out.println("la");
         } catch (UnknownHostException uhe) {
@@ -121,7 +148,7 @@ public class Client implements Runnable {
      */
     public void diconnect() {
         try {
-            output.writeObject(new Message(Name, "", "disconnect", ""));
+            output.writeObject(new Message(user.getUsername(), "", "disconnect", ""));
             output.close();
             input.close();
         } catch (SocketTimeoutException exc) {
@@ -138,7 +165,7 @@ public class Client implements Runnable {
      */
     public void join(String Groupcode) {
         try {
-            output.writeObject(new Message(Name, "", "display list", ""));
+            output.writeObject(new Message(user.getUsername(), "", "display list", ""));
 
             TimeUnit.MILLISECONDS.sleep(100);
 
@@ -147,7 +174,7 @@ public class Client implements Runnable {
             }
             System.out.println("Which Group?");
 
-            output.writeObject(new Message(Name, Groupcode, "join", ""));
+            output.writeObject(new Message(user.getUsername(), Groupcode, "join", ""));
         } catch (IOException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
@@ -178,7 +205,7 @@ public class Client implements Runnable {
      */
     public void send(String Groupcode, String Name, String message) {
         try {
-            output.writeObject(new Message(Name, Groupcode, "send", message));
+            output.writeObject(new Message(user.getUsername(), Groupcode, "send", message));
         } catch (SocketTimeoutException exc) {
         } catch (UnknownHostException uhe) {
             System.out.println(uhe.getMessage());
@@ -219,11 +246,10 @@ public class Client implements Runnable {
                         }
                     }
                     if (send_data.equalsIgnoreCase("join")) {
-                        output.writeObject(new Message(Name, "", "display list", ""));
+                        output.writeObject(new Message(user.getUsername(), "", "display list", ""));
                         try {
                             TimeUnit.MILLISECONDS.sleep(100);
                         } catch (InterruptedException e) {
-                            // TODO Auto-generated catch block
                             e.printStackTrace();
                         }
                         for (Group group : list) {
@@ -231,32 +257,98 @@ public class Client implements Runnable {
                         }
                         System.out.println("Which Group?");
                         groupcode = scan.next();
-                        output.writeObject(new Message(Name, groupcode, "join", ""));
+                        output.writeObject(new Message(user.getUsername(), groupcode, "join", ""));
                     } else if (send_data.equalsIgnoreCase("leave")) {
-                        message = new Message(Name, "", send_data, "");
+                        message = new Message(user.getUsername(), "", send_data, "");
                         System.out.println("Which Group?");
                         ((Message) message).setGroupCode(scan.next());
                         output.writeObject(message);
                     } else if (send_data.equalsIgnoreCase("disconnect")) {
-                        output.writeObject(new Message(Name, groupcode, "disconnect", ""));
+                        output.writeObject(new Message(user.getUsername(), groupcode, "disconnect", ""));
                         scan.close();
                         output.close();
                         input.close();
                         return;
 
                     } else if (send_data.equalsIgnoreCase("create group")) {
-                        message = new Message(Name, "groupcode", send_data, "");
+                        message = new Message(user.getUsername(), "groupcode", send_data, "");
                         System.out.println("Which Group?");
                         ((Message) message).setGroupCode(scan.next());
                         output.writeObject(message);
                     } else if (send_data.equalsIgnoreCase("delete group")) {
-                        message = new Message(Name, "groupcode", send_data, "");
+
                         System.out.println("Which Group?");
-                        ((Message) message).setGroupCode(scan.next());
+                        groupcode = scan.next();
+                        message = new Message(user.getUsername(), groupcode, send_data, "");
                         output.writeObject(message);
 
-                    } else {
-                        message = new Message(Name, groupcode, "send", send_data);
+                    } else if (send_data.equalsIgnoreCase("create user")) {
+                        try {
+                            message = new Message(user.getUsername(), "username", "create user", "");
+                            output.writeObject(message);
+                            System.out.println("Which User?");
+                            String username = scan.next();
+                            System.out.println("Which Password?");
+                            String password = scan.next();
+                            User user = new User(username, password);
+
+                            output.writeObject(user);
+                        } catch (IOException e) {
+
+                            e.printStackTrace();
+                        }
+                    } else if (send_data.equalsIgnoreCase("delete user")) {
+                        try {
+                            message = new Message("", "", "delete user", "");
+                            output.writeObject(message);
+                            System.out.println("Which User?");
+                            String username = scan.next();
+                            System.out.println("Which Password?");
+                            String password = scan.next();
+                            User user = new User(username, password);
+
+                            output.writeObject(user);
+                        } catch (IOException e) {
+
+                            e.printStackTrace();
+                        }
+
+                    } else if (send_data.equalsIgnoreCase("update password")) {
+                        try {
+                            System.out.println("Which User?");
+                            String username = scan.next();
+                            System.out.println("new password?");
+                            String np = scan.next();
+                            System.out.println("old password?");
+                            String op = scan.next();
+                            message = new Message(username, op, "update password", np);
+
+                            output.writeObject(message);
+
+                        } catch (IOException e) {
+
+                            e.printStackTrace();
+                        }
+                    } else if (send_data.equalsIgnoreCase("update username")) {
+                        try {
+                            System.out.println("Which User?");
+                            String username = scan.next();
+                            System.out.println("new username?");
+                            String nu = scan.next();
+                            System.out.println("old password?");
+                            String op = scan.next();
+                            message = new Message(username, op, "update password", nu);
+
+                            output.writeObject(message);
+
+                        } catch (IOException e) {
+
+                            e.printStackTrace();
+                        }
+                    }
+
+                    else {
+                        message = new Message(user.getUsername(), groupcode, "send", send_data);
                         output.writeObject(message);
                     }
                     send_data = null;
@@ -284,9 +376,9 @@ public class Client implements Runnable {
                     recieved = (Message) recieved;
                     System.out.println(((Message) recieved).getUsername() + " [" + ((Message) recieved).getGroupCode()
                             + "] " + " >" + ((Message) recieved).getMessage());
-                    //added by Rebecca 05292020
-                    ChatGUI chatgui = new ChatGUI();
-                    chatgui.PutTextToChatTextArea(((Message) recieved).getGroupCode(), ((Message) recieved).getUsername(), ((Message) recieved).getMessage());
+                    // added by Rebecca 05292020
+                    chatgui.PutTextToChatTextArea(((Message) recieved).getGroupCode(),
+                            ((Message) recieved).getUsername(), ((Message) recieved).getMessage());
                 }
 
             } catch (ClassNotFoundException e) {
