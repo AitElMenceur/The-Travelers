@@ -139,8 +139,8 @@ public class ChatGUI extends JFrame implements ActionListener {
 	    	 public void popupMenuWillBecomeVisible(PopupMenuEvent e) {
 	    		ArrayList<Group> al =new ArrayList<Group>();
 	    		 // call needed*****
-	    		//al = clnt.getLisGroup();
-	    	   // Globals.GroupCode = al.toString();
+	    		al = clnt.getLisGroup();
+	    	    Globals.GroupCode = al.toArray(Globals.GroupCode);
 	    		 comboBox.removeAllItems();
 	    		 for(int i=0;i<Globals.GroupCode.length; i++) {
 	            		comboBox.addItem(Globals.GroupCode[i]);
