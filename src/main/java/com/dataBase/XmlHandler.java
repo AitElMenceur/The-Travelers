@@ -161,18 +161,13 @@ public class XmlHandler {
 	 * @return int
 	 */
 	public static int getLength() {
-		 if (doc.getElementsByTagName("Users").getLength() != 0) {
-		 return doc.getElementsByTagName("Users").getLength();
-		 }
-		 if (doc.getElementsByTagName("Users").getLength() != 0) {
-		 return doc.getElementsByTagName("Users").getLength();
-		 }
-		 if (doc.getElementsByTagName("Users").getLength() != 0) {
-		 return doc.getElementsByTagName("Users").getLength();
+		 if (doc.getElementsByTagName("User").getLength() != 0) {
+			 return doc.getElementsByTagName("User").getLength();
+
 		 } else {
 		 return 0;
 		 }
-		 }
+	}
 
 	
 	/** 
