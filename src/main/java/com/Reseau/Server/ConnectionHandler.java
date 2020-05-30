@@ -79,14 +79,14 @@ public class ConnectionHandler implements IConnectionHandler {
                              */
                         } else {
                             output.writeObject(
-                                    new Message(user.getUsername(), "", user.getCommand(), "Wrong password"));
+                                    new Message(user.getUsername(), "", user.getCommand(), "Wrong password or username"));
                             isConnected = false;
                         }
                         break;
                     case ("update password"):
                         if (XmlHandler.updatePassword(((Message) recieved).getUsername(),
                                 ((Message) recieved).getGroupCode(), ((Message) recieved).getMessage())) {
-                            output.writeObject(new Message("server", "", "", "Done"));
+                            output.writeObject(new Message("server", "", "", "Password has been updated"));
                             isConnected = false;
                         } else {
                             output.writeObject(new Message("server", "", "", "Error"));
@@ -98,7 +98,7 @@ public class ConnectionHandler implements IConnectionHandler {
                                 ((Message) recieved).getCommand()))
                             if (XmlHandler.updateUserName(((Message) recieved).getUsername(),
                                     ((Message) recieved).getMessage())) {
-                                output.writeObject(new Message("server", "", "", "Done"));
+                                output.writeObject(new Message("server", "", "", "Username has been updated"));
                                 isConnected = false;
                             } else {
                                 output.writeObject(new Message("server", "", "", "Error"));
@@ -115,9 +115,7 @@ public class ConnectionHandler implements IConnectionHandler {
                         if (isConnected) {
 
                             addGroup(((Message) recieved).getGroupCode(), output);
-
-                            if (XmlHandler.addGroupCodeToUser(((Message) recieved).getGroupCode(),
-                                    ((Message) recieved).getUsername())) {
+                            if (XmlHandler.addGroupCodeToUser(((Message) recieved).getGroupCode(),((Message) recieved).getUsername())) {
                                 output.writeObject(new Message(((Message) recieved).getUsername(),
                                         ((Message) recieved).getGroupCode(), recieved.getCommand(),
                                         "You join the chat " + ((Message) recieved).getGroupCode()));
@@ -153,8 +151,9 @@ public class ConnectionHandler implements IConnectionHandler {
                         if (isConnected) {
                             output.writeObject(
                                     new Message(((Message) recieved).getUsername(), ((Message) recieved).getGroupCode(),
-                                            recieved.getCommand(), "bye " + ((Message) recieved).getUsername()));
+                                            recieved.getCommand(), "GoodBye! " + ((Message) recieved).getUsername()));
                             output.flush();
+                            isConnected=false;
                             finish = true;
                         }
                         break;
@@ -170,18 +169,14 @@ public class ConnectionHandler implements IConnectionHandler {
                     case ("create user"):
                         user = (User) input.readObject();
                         if (XmlHandler.addUser(user.getUsername(), user.getPassword())) {
-                            output.writeObject(
-                                    new Message(((Message) recieved).getUsername(), ((Message) recieved).getGroupCode(),
-                                            recieved.getCommand(), "User has been created"));
+                            output.writeObject(new Message(((Message) recieved).getUsername(), ((Message) recieved).getGroupCode(),recieved.getCommand(), "User has been created"));
 
                         }
                         break;
                     case ("delete user"):
                         user = (User) input.readObject();
                         if (XmlHandler.deleteUser(user.getUsername())) {
-                            output.writeObject(
-                                    new Message(((Message) recieved).getUsername(), ((Message) recieved).getGroupCode(),
-                                            recieved.getCommand(), "User has been erased"));
+                            output.writeObject(new Message(((Message) recieved).getUsername(), ((Message) recieved).getGroupCode(),recieved.getCommand(), "User has been erased"));
                         }
                         break;
                     case ("delete group"):

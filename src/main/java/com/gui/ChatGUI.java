@@ -62,7 +62,7 @@ public class ChatGUI extends JFrame implements ActionListener {
 
 	
 	int i = 6668;
-	Client clnt = new Client("localhost", i, "User"+i);
+	Client clnt = new Client("localhost", i);
 	
 	private JPanel contentPane;
 	private JTextField inputtextField;

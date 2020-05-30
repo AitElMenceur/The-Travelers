@@ -24,7 +24,7 @@ public class Client implements Runnable {
     private ObjectOutputStream output;
     private ObjectInputStream input;
     private ArrayList<Group> list = new ArrayList<Group>();
-    private Object recieved;
+    private Object message;
 
     public Client(String ip, int port) {
         this.user = new User("Username", "Password");
@@ -124,18 +124,22 @@ public class Client implements Runnable {
      * 
      * connect to the server
      */
-    public void connect(String Username, String Password) {
+    public boolean connect(String Username, String Password) {
         try {
             output.writeObject(new Message("", "", "connect", ""));
+
             output.writeObject(new User(Username, Password));
             user = new User(Username, Password);
-        } catch (SocketTimeoutException exc) {
-            System.out.println("la");
-        } catch (UnknownHostException uhe) {
-            System.out.println(uhe.getMessage());
-        } catch (IOException ioe) {
-            System.out.println(ioe.getMessage());
+
+            TimeUnit.MILLISECONDS.sleep(100);
+        } catch (InterruptedException | IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
         }
+        if (getMessage().getMessage().equals("Welcome to the server " + user.getUsername())) {
+            return true;
+
+        }else{return false;}
     }
 
     /**
@@ -222,22 +226,11 @@ public class Client implements Runnable {
                 if (send_data != null) {
                     Data message;
                     if (send_data.equalsIgnoreCase("connect")) {
-                        try {
-                            output.writeObject(new Message("", "", "connect", ""));
-                            System.out.println("username?");
-                            String username = scan.next();
-                            System.out.println("password");
-                            String password = scan.next();
-                            output.writeObject(new User(username, password));
-                            user = new User(username, password);
-                        } catch (SocketTimeoutException exc) {
-                            System.out.println(exc.getMessage());
-                        } catch (UnknownHostException uhe) {
-                            System.out.println(uhe.getMessage());
-                        } catch (IOException ioe) {
-                            System.out.println(ioe.getMessage());
-
-                        }
+                        System.out.println("username?");
+                        String Username = scan.next();
+                        System.out.println("password");
+                        String Password = scan.next();
+                        System.out.println(connect(Username, Password));
                     }
                     if (send_data.equalsIgnoreCase("join")) {
                         output.writeObject(new Message(user.getUsername(), "", "display list", ""));
@@ -362,10 +355,11 @@ public class Client implements Runnable {
     }
 
     public Message getMessage() {
-        return (Message) recieved;
+        return (Message) message;
     }
-    public ArrayList<Group> getLisGroup(){
-        return  list;
+
+    public ArrayList<Group> getLisGroup() {
+        return list;
     }
 
     @Override
@@ -379,6 +373,7 @@ public class Client implements Runnable {
 
                 } else if (recieved instanceof Message) {
                     recieved = (Message) recieved;
+                    message = recieved;
                     System.out.println(((Message) recieved).getUsername() + " [" + ((Message) recieved).getGroupCode()
                             + "] " + " >" + ((Message) recieved).getMessage());
                     // added by Rebecca 05292020
@@ -404,7 +399,7 @@ public class Client implements Runnable {
      * @param arg[]
      */
     public static void main(String arg[]) {
-        int i = 6668;
+        int i = 6669;
 
         Client client = new Client("localhost", i);
         new Thread(client).start();
