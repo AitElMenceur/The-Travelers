@@ -9,6 +9,7 @@ import javax.swing.JDialog;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
+import com.Reseau.Client.Client;
 import com.gui.Globals;
 
 import javax.swing.JLabel;
@@ -30,16 +31,16 @@ public class RegisterGUI extends JDialog {
 	private JTextField NametextField;
 	private JTextField PasswordtextField;
 
-	String UserName="", Password="", OldUserName="", NewUserName="", OldPassword="", NewPassword="";
-
+	private String UserName="", Password="", OldUserName="", NewUserName="", OldPassword="", NewPassword="";
+	private JButton UpdateButton = new JButton("Update");
+	private JButton DeleteButton = new JButton("Delete");
+	private JLabel RegisterWarningMessage = new JLabel("");
+	int i = 6668;
+	//Client clnt = new Client("localhost", i, "User"+i);
+	Client clnt = new Client("localhost", i);
 	/**
 	 * Create the dialog.
 	 */
-	
-	JButton UpdateButton = new JButton("Update");
-	JButton DeleteButton = new JButton("Delete");
-	JLabel RegisterWarningMessage = new JLabel("");
-	
 	
 	public RegisterGUI() {
 		setBounds(100, 100, 450, 300);
@@ -67,11 +68,11 @@ public class RegisterGUI extends JDialog {
 							RegisterWarningMessage.setText("Please fill in your Name and Password!");
 					 }
 					 else {
-						 int rtn = 1 ;
+						boolean rtn = true;
 						//*****needs to be modified
-						//rtn = clnt.addUser(UserName, Password);
+						rtn = clnt.createUser(UserName, Password);
 						 
-						 if(rtn == 1) {
+						 if(rtn) {
 							 RegisterWarningMessage.setForeground(Color.GREEN);
 							 RegisterWarningMessage.setText("Register Succceeded!");
 						 }
@@ -104,22 +105,22 @@ public class RegisterGUI extends JDialog {
 					}
 					else {
 					
-					int rtn1 =1, rtn2 = 1;
+					boolean rtn1 =true, rtn2 = true;
 					//*****needs to be modified
-					//rtn1 = clnt.UpdateUserNamme(OldUserName, NewUserName);
-					//rtn2 = clnt.UpdatePassword(UserName, OldPassword, NewPassword);
+					rtn1 = clnt.updateUsername(OldUserName, NewUserName, OldPassword);
+					rtn2 = clnt.updatePassword(UserName, OldPassword, NewPassword);
 					
-					if(rtn1 == 1 && rtn2 == 1) {
+					if(rtn1 && rtn2) {
 						RegisterWarningMessage.setForeground(Color.GREEN);
 						 RegisterWarningMessage.setText("Update Succceeded!");
 						 Globals.UserName = NewUserName;
 						 Globals.Passwd = NewPassword;
 						 }
-					else if(rtn1 != 1 && rtn2 ==1) {
+					else if( !rtn1 && rtn2) {
 						RegisterWarningMessage.setForeground(Color.RED);
 						RegisterWarningMessage.setText("Please check your User Name!");
 					}
-					else if(rtn1== 1 && rtn2 != 1) {
+					else if(rtn1 && !rtn2) {
 						RegisterWarningMessage.setForeground(Color.RED);
 						RegisterWarningMessage.setText("Please check your Password!");
 					}
@@ -147,11 +148,11 @@ public class RegisterGUI extends JDialog {
 						}
 						else {
 						
-			    	 int rtn =1;
+			    	 boolean rtn = true;
 			    	 //*****needs to be modified
-					 //rtn = clnt.DeleteUser(UserName);
+					 rtn = clnt.deleteUser(UserName);
 			    	 
-			    	 if(rtn == 1) {
+			    	 if(rtn) {
 			    		 RegisterWarningMessage.setForeground(new Color(0, 255, 0));
 			    		 RegisterWarningMessage.setText("User Deleted!");
 					 }
@@ -204,17 +205,18 @@ public class RegisterGUI extends JDialog {
 				.addGroup(gl_contentPanel.createSequentialGroup()
 					.addContainerGap()
 					.addGroup(gl_contentPanel.createParallelGroup(Alignment.LEADING)
-						.addComponent(userAccountLabel, GroupLayout.PREFERRED_SIZE, 216, GroupLayout.PREFERRED_SIZE)
-						.addGroup(gl_contentPanel.createSequentialGroup()
-							.addGroup(gl_contentPanel.createParallelGroup(Alignment.LEADING)
-								.addComponent(RegisterPasswordLabel)
-								.addComponent(RegisterNewNameLabel))
-							.addGap(45)
-							.addGroup(gl_contentPanel.createParallelGroup(Alignment.LEADING)
-								.addComponent(PasswordtextField, GroupLayout.PREFERRED_SIZE, 213, GroupLayout.PREFERRED_SIZE)
-								.addComponent(NametextField, GroupLayout.PREFERRED_SIZE, 213, GroupLayout.PREFERRED_SIZE)
-								.addComponent(RegisterWarningMessage))))
+						.addComponent(RegisterPasswordLabel)
+						.addComponent(RegisterNewNameLabel))
+					.addGap(45)
+					.addGroup(gl_contentPanel.createParallelGroup(Alignment.LEADING)
+						.addComponent(PasswordtextField, GroupLayout.PREFERRED_SIZE, 213, GroupLayout.PREFERRED_SIZE)
+						.addComponent(NametextField, GroupLayout.PREFERRED_SIZE, 213, GroupLayout.PREFERRED_SIZE)
+						.addComponent(RegisterWarningMessage))
 					.addGap(66))
+				.addGroup(gl_contentPanel.createSequentialGroup()
+					.addGap(104)
+					.addComponent(userAccountLabel, GroupLayout.DEFAULT_SIZE, 216, Short.MAX_VALUE)
+					.addGap(98))
 		);
 		gl_contentPanel.setVerticalGroup(
 			gl_contentPanel.createParallelGroup(Alignment.LEADING)
