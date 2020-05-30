@@ -44,10 +44,10 @@ public class Client implements Runnable {
             output.writeObject(message);
             TimeUnit.MILLISECONDS.sleep(100);
         } catch (IOException e) {
-            // TODO Auto-generated catch block
+            
             e.printStackTrace();
         } catch (InterruptedException e) {
-            // TODO Auto-generated catch block
+            
             e.printStackTrace();
         }
         if (getMessage().getMessage().equals("Group " + getMessage().getGroupCode() + " has been created")) {
@@ -59,6 +59,13 @@ public class Client implements Runnable {
 
     }
 
+    
+    /** 
+     * @param username
+     * @param np
+     * @param op
+     * @return boolean
+     */
     public boolean updatePassword(String username, String np, String op) {
         try {
 
@@ -68,10 +75,10 @@ public class Client implements Runnable {
             TimeUnit.MILLISECONDS.sleep(100);
 
         } catch (IOException e) {
-            // TODO Auto-generated catch block
+            
             e.printStackTrace();
         } catch (InterruptedException e) {
-            // TODO Auto-generated catch block
+            
             e.printStackTrace();
         }
         if (getMessage().getMessage().equals("Password has been updated")) {
@@ -83,6 +90,13 @@ public class Client implements Runnable {
 
     }
 
+    
+    /** 
+     * @param username
+     * @param nu
+     * @param op
+     * @return boolean
+     */
     public boolean updateUsername(String username, String nu, String op) {
         try {
 
@@ -91,10 +105,10 @@ public class Client implements Runnable {
             output.writeObject(message);
             TimeUnit.MILLISECONDS.sleep(100);
         } catch (IOException e) {
-            // TODO Auto-generated catch block
+            
             e.printStackTrace();
         } catch (InterruptedException e) {
-            // TODO Auto-generated catch block
+            
             e.printStackTrace();
         }
         if (getMessage().getMessage().equals("Username has been updated")) {
@@ -117,7 +131,7 @@ public class Client implements Runnable {
             output.writeObject(message);
             TimeUnit.MILLISECONDS.sleep(100);
         } catch (InterruptedException | IOException e) {
-            // TODO Auto-generated catch block
+            
             e.printStackTrace();
         }
         if (getMessage().getMessage().equals("Group " + getMessage().getGroupCode() + " has been deleted")) {
@@ -142,7 +156,7 @@ public class Client implements Runnable {
             output.writeObject(user);
             TimeUnit.MILLISECONDS.sleep(100);
         } catch (InterruptedException | IOException e) {
-            // TODO Auto-generated catch block
+            
             e.printStackTrace();
         }
         if (getMessage().getMessage().equals("User has been created")) {
@@ -166,7 +180,7 @@ public class Client implements Runnable {
         } catch (IOException e) {
             e.printStackTrace();
         } catch (InterruptedException e) {
-            // TODO Auto-generated catch block
+            
             e.printStackTrace();
         }
         if (getMessage().getMessage().equals("User has been erased")) {
@@ -191,7 +205,7 @@ public class Client implements Runnable {
 
             TimeUnit.MILLISECONDS.sleep(100);
         } catch (InterruptedException | IOException e) {
-            // TODO Auto-generated catch block
+            
             e.printStackTrace();
         }
         if (getMessage().getMessage().equals("Welcome to the server " + user.getUsername())) {
@@ -237,10 +251,10 @@ public class Client implements Runnable {
             output.writeObject(new Message(user.getUsername(), Groupcode, "join", ""));
             TimeUnit.MILLISECONDS.sleep(100);
         } catch (InterruptedException e) {
-            // TODO Auto-generated catch block
+            
             e.printStackTrace();
         } catch (IOException e) {
-            // TODO Auto-generated catch block
+            
             e.printStackTrace();
         }
         if (getMessage().getMessage().equals("You join the chat " + getMessage().getGroupCode())) {
@@ -266,7 +280,7 @@ public class Client implements Runnable {
         } catch (IOException ioe) {
             System.out.println(ioe.getMessage());
         } catch (InterruptedException e) {
-            // TODO Auto-generated catch block
+            
             e.printStackTrace();
         }
         if (getMessage().getMessage().equals("You leave the chat " + getMessage().getGroupCode())) {
@@ -398,10 +412,20 @@ public class Client implements Runnable {
         }
     }
 
+    
+    /** 
+     * @return Message
+     * Return the last message recieved
+     */
     public Message getMessage() {
         return (Message) message;
     }
 
+    
+    /** 
+     * @return ArrayList<Group>
+     * return the list of group 
+     */
     public ArrayList<Group> getLisGroup() {
         return list;
     }

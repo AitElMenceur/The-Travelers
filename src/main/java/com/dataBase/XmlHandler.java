@@ -2,9 +2,7 @@ package com.dataBase;
 
 
 import java.io.File;
-import java.nio.file.Files;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import javax.xml.parsers.DocumentBuilder;
@@ -28,14 +26,28 @@ public class XmlHandler {
 		doc = initializeXml(XmlName);
 	}
 	
+	
+	/** 
+	 * @return Document
+	 */
 	public static Document getDocument() {
 		return doc;
 	}
 
+	
+	/** 
+	 * @return String
+	 */
 	public static String getFilepath() {
 		return filepath;
 	}
 	
+	
+	/** 
+	 * @param xmlRoot
+	 * @return Document
+	 * Initialise the XMl Tree
+	 */
 	public static Document initializeXml(String xmlRoot)
 	{
 		DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
@@ -50,6 +62,12 @@ public class XmlHandler {
 		}
 		return null;
 	}
+	
+	/** 
+	 * @param xmlRoot
+	 * @return Document
+	 * create a new XMl Tree
+	 */
 	public static Document newXml(String xmlRoot)
 	{
 		DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
@@ -71,6 +89,10 @@ public class XmlHandler {
 		return null;
 	}
 	
+	
+	/** 
+	 * @return boolean
+	 */
 	public static boolean transformerXml() {
 		 // for output to file, console
 		try {
@@ -98,6 +120,13 @@ public class XmlHandler {
 		return false;
 	}
 	
+	
+	/** 
+	 * @param UserName
+	 * @param Password
+	 * @return boolean
+	 * Add a user to the xml tree
+	 */
 	public static boolean addUser( String UserName, String Password) {
 		Element user = doc.createElement("User");
 		
@@ -127,6 +156,10 @@ public class XmlHandler {
         	return false; 
 	}
 	
+	
+	/** 
+	 * @return int
+	 */
 	public static int getLength() {
 		 if (doc.getElementsByTagName("Users").getLength() != 0) {
 		 return doc.getElementsByTagName("Users").getLength();
@@ -141,6 +174,13 @@ public class XmlHandler {
 		 }
 		 }
 
+	
+	/** 
+	 * @param User
+	 * @param FriendName
+	 * @return boolean
+	 * * Add user's friend to the xml tree
+	 */
 	public static boolean addFriend(String User, String FriendName) {
 		Element friend = doc.createElement("Friend");
 		
@@ -163,12 +203,25 @@ public class XmlHandler {
 		return false;
 	}
 	
+	
+	/** 
+	 * @param element
+	 * @param name
+	 * @param value
+	 * @return Node
+	 */
 	public static Node addElement(Element element, String name, String value) {
 		Element node = doc.createElement(name);
 		node.appendChild(doc.createTextNode(value));
 		return node;
 	}
 	
+	
+	/** 
+	 * @param UserToDelete
+	 * @return boolean
+	 * Delete user of the xml
+	 */
 	public static boolean deleteUser(String UserToDelete) {
 		NodeList users = doc.getElementsByTagName("User");
 		Element user = null;
@@ -189,7 +242,14 @@ public class XmlHandler {
 		return false;
 	}
 	
-    public static boolean deleteFriend(String User, String FriendToDelete) {
+    
+	/** 
+	 * @param User
+	 * @param FriendToDelete
+	 * @return boolean
+	* Delete user's friend of the xml
+	 */
+	public static boolean deleteFriend(String User, String FriendToDelete) {
     NodeList users = doc.getElementsByTagName("User");
     Element user = null;
    
@@ -220,6 +280,13 @@ public class XmlHandler {
     return false;
 }
 	
+	
+	/** 
+	 * @param OldUserName
+	 * @param NewUserName
+	 * @return boolean
+	 * Update the username  of a user in the xml tree
+	 */
 	public static boolean updateUserName(String OldUserName, String NewUserName) {
 		NodeList users = doc.getElementsByTagName("User");
 		Element user = null;
@@ -241,6 +308,14 @@ public class XmlHandler {
 		
 	}
 	
+	
+	/** 
+	 * @param UserName
+	 * @param OldPassword
+	 * @param NewPassword
+	 * @return boolean
+	 * Update the password of a user in the xml tree
+	 */
 	public static boolean updatePassword(String UserName, String OldPassword, String NewPassword) {
 
 		NodeList users = doc.getElementsByTagName("User");
@@ -264,6 +339,13 @@ public class XmlHandler {
 		
 	}
 
+	
+	/** 
+	 * @param Groupcode
+	 * @param UserName
+	 * @return boolean
+	 * Add a group of a user 
+	 */
 	public static boolean addGroupCodeToUser(String Groupcode, String UserName) {
 		Element node = doc.createElement("Keys");
 		node.appendChild(doc.createTextNode(Groupcode));
@@ -287,6 +369,14 @@ public class XmlHandler {
 		return false;
 	}
 	
+	
+	/** 
+	 * @param Groupcode
+	 * @param UserName
+	 * @param message
+	 * @return boolean
+	 * Append a message to the group history
+	 */
 	public static boolean addMessage(String Groupcode, String UserName, String message) {
 		
 		NodeList group = doc.getElementsByTagName("Group");
@@ -315,6 +405,12 @@ public class XmlHandler {
 			
 	}
 	
+	
+	/** 
+	 * @param Groupcode
+	 * @return boolean
+	 * Create a new group
+	 */
 	public static boolean createGroup(String Groupcode) {
 		Element group = doc.createElement("Group");
 
@@ -334,6 +430,14 @@ public class XmlHandler {
 				
 	}
 	
+	
+	/** 
+	 * @param Groupcode
+	 * @param UserName
+	 * @param message
+	 * @return boolean
+	 * delete a message from a group history
+	 */
 	public static boolean deleteMessage(String Groupcode, String UserName, String message) {
 		NodeList group = doc.getElementsByTagName("Group");
 		Element groupcode = null;
@@ -377,6 +481,13 @@ public class XmlHandler {
 		return false;
 	}
 	
+	
+	/** 
+	 * @param Groupcode
+	 * @param UserName
+	 * @return boolean
+	 * user leave a group
+	 */
 	public static boolean deleteGroupcodeOfAUser(String Groupcode, String UserName) {
 		NodeList users = doc.getElementsByTagName("User");
 		Element user = null;
@@ -407,6 +518,12 @@ public class XmlHandler {
 		return false;
 	}
 	
+	 
+	 /** 
+	  * @param Groupcode
+	  * @return boolean
+	  * Delete  a group
+	  */
 	 public static boolean deleteGroup(String Groupcode) {
 	        NodeList group = doc.getElementsByTagName("Group");
 	        Element groupcode = null;
@@ -424,6 +541,13 @@ public class XmlHandler {
 	        return false;
 	    }
 
+	
+	/** 
+	 * @param Groupcode
+	 * @param numberOfMessages
+	 * @return String[][]
+	 * Diplay the History of a group 
+	 */
 	public static String[][] displayHistory(String Groupcode, int numberOfMessages) {
 		
 		String[][] history = new String[numberOfMessages][2];
@@ -453,6 +577,10 @@ public class XmlHandler {
 		return history; 
 	}
 	
+	
+	/** 
+	 * @return String[]
+	 */
 	public static String[] listUser() {
 		
 		NodeList users = doc.getElementsByTagName("User");
@@ -467,6 +595,11 @@ public class XmlHandler {
 		return usersList;
 	}
 
+	
+	/** 
+	 * @param UserName
+	 * @return String[]
+	 */
 	public static String[] listFriend(String UserName) {
 
 		NodeList users = doc.getElementsByTagName("User");
@@ -495,6 +628,11 @@ public class XmlHandler {
 		
 	}
 	
+	
+	/** 
+	 * @param UserName
+	 * @return String[]
+	 */
 	public static String[] listOfGroupsOfAUser(String UserName) {
         String[] ListOfGroups;
        
@@ -525,6 +663,11 @@ public class XmlHandler {
        
     }
 	
+	
+	/** 
+	 * @param GroupCode
+	 * @return String[]
+	 */
 	public static String[] listOfUsersInGroup(String GroupCode) {
 	        List<String> DynamicList = new ArrayList<>();
 	       
@@ -550,6 +693,10 @@ public class XmlHandler {
 	        return ListOfUsersInGroup;
 	    }
 	
+	
+	/** 
+	 * @return String[]
+	 */
 	public static String[] listOfGroups() {
 		NodeList groups = doc.getElementsByTagName("Groups");
 		Element currentGroupCode = null;
@@ -565,6 +712,12 @@ public class XmlHandler {
 		return listOfAllGroups;
 	}
 	
+	
+	/** 
+	 * @param list
+	 * @param value
+	 * @return boolean
+	 */
 	public static boolean inTheList(String[] list, String value) {
 	       
 	        for(int i = 0; i < list.length; i++) {
@@ -575,6 +728,14 @@ public class XmlHandler {
 	        return false;
 	    }
 	
+	
+	/** 
+	 * @param doc
+	 * @param UserName
+	 * @param Password
+	 * @return boolean
+	 * Check the credential of a user
+	 */
 	public static boolean checkingLogins(Document doc , String UserName, String Password) {
         Element user = null;
         NodeList users = doc.getElementsByTagName("User");
