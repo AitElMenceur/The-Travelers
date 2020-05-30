@@ -26,7 +26,7 @@ public class Client implements Runnable {
     private ArrayList<Group> list = new ArrayList<Group>();
     private Object recieved;
 
-    public Client(String ip, int port, String nom) {
+    public Client(String ip, int port) {
         this.user = new User("Username", "Password");
         this.socket = Singletons.getSocket(ip, port);
         this.output = Singletons.getOutput(socket);
@@ -406,7 +406,7 @@ public class Client implements Runnable {
     public static void main(String arg[]) {
         int i = 6668;
 
-        Client client = new Client("localhost", i, "User" + i);
+        Client client = new Client("localhost", i);
         new Thread(client).start();
 
         client.writing();
