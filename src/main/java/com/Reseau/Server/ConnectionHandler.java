@@ -15,9 +15,7 @@ public class ConnectionHandler implements IConnectionHandler {
     private ObjectOutputStream output;
     private ObjectInputStream input;
     private Data recieved;
-    private static ArrayList<Group> LIST_GROUP = Server.LIST_GROUP;
     private static ArrayList<User> LIST_USER = Server.LIST_USER;
-    
 
     public ConnectionHandler(Socket socket) {
         this.socket = socket;
@@ -28,7 +26,7 @@ public class ConnectionHandler implements IConnectionHandler {
      * @param output      Remove a group from the list
      */
     public synchronized void removeGroup(String groupNumber, ObjectOutputStream output) {
-        for (Group p : LIST_GROUP) {
+        for (Group p : Server.LIST_GROUP) {
             if (p.getGroupCode().equals(groupNumber)) {
                 p.leave(output);
             }
@@ -40,9 +38,9 @@ public class ConnectionHandler implements IConnectionHandler {
      * @param output      Add a group from the list
      */
     public synchronized void addGroup(String groupNumber, ObjectOutputStream output) {
-        for (Group p : LIST_GROUP) {
+        for (Group p : Server.LIST_GROUP) {
             if (p.getGroupCode().equals(groupNumber)) {
-                System.out.println(p.getGroupCode() + "ok");
+                System.out.println(p.getGroupCode() + " ok");
                 p.join(output);
             }
         }
@@ -56,10 +54,10 @@ public class ConnectionHandler implements IConnectionHandler {
      * Check for incoming message, and give an appropriate answer
      */
     public void handle() {
-        
+
         try {
             boolean finish = false;
-            boolean isConnected = true;
+            boolean isConnected = false;
             output = new ObjectOutputStream(socket.getOutputStream());
             input = new ObjectInputStream(socket.getInputStream());
             while (!finish) {
@@ -75,9 +73,10 @@ public class ConnectionHandler implements IConnectionHandler {
                             output.writeObject(new Message(user.getUsername(), "", user.getCommand(),
                                     "Welcome to the server " + user.getUsername()));
                             System.out.println("Connected in port " + socket.getLocalPort());
-                            for (String grp : XmlHandler.listOfGroupsOfAUser(user.getUsername())) {
-                                addGroup(grp, output);
-                            }
+                            /*
+                             * for (String grp : XmlHandler.listOfGroupsOfAUser(user.getUsername())) {
+                             * addGroup(grp, output); }
+                             */
                         } else {
                             output.writeObject(
                                     new Message(user.getUsername(), "", user.getCommand(), "Wrong password"));
@@ -107,33 +106,42 @@ public class ConnectionHandler implements IConnectionHandler {
 
                         break;
                     case ("display list"):
-                        output.writeObject(LIST_GROUP);
+                        for (Group g : Server.LIST_GROUP) {
+                            System.out.println(g.getGroupCode());
+                        }
+                        output.writeObject(Server.LIST_GROUP);
                         break;
                     case ("join"):
                         if (isConnected) {
 
                             addGroup(((Message) recieved).getGroupCode(), output);
-                            output.writeObject(new Message(((Message) recieved).getUsername(),
-                                    ((Message) recieved).getGroupCode(), recieved.getCommand(),
-                                    "You join the chat " + ((Message) recieved).getGroupCode()));
-                            XmlHandler.addGroupCodeToUser(((Message) recieved).getGroupCode(),
-                                    ((Message) recieved).getUsername());
+
+                            if (XmlHandler.addGroupCodeToUser(((Message) recieved).getGroupCode(),
+                                    ((Message) recieved).getUsername())) {
+                                output.writeObject(new Message(((Message) recieved).getUsername(),
+                                        ((Message) recieved).getGroupCode(), recieved.getCommand(),
+                                        "You join the chat " + ((Message) recieved).getGroupCode()));
+
+                            }
                         } else {
-                            System.out.println("No");
+                            System.out.println("Not connected");
                         }
                         break;
                     case ("leave"):
                         if (isConnected) {
                             removeGroup(((Message) recieved).getGroupCode(), output);
-                            output.writeObject(new Message(((Message) recieved).getUsername(),
-                                    ((Message) recieved).getGroupCode(), recieved.getCommand(),
-                                    "You leave the chat " + ((Message) recieved).getGroupCode()));
-                            XmlHandler.deleteGroupcodeOfAUser(((Message) recieved).getGroupCode(),
-                                    ((Message) recieved).getUsername());
+
+                            if (XmlHandler.deleteGroupcodeOfAUser(((Message) recieved).getGroupCode(),
+                                    ((Message) recieved).getUsername())) {
+                                output.writeObject(new Message(((Message) recieved).getUsername(),
+                                        ((Message) recieved).getGroupCode(), recieved.getCommand(),
+                                        "You leave the chat " + ((Message) recieved).getGroupCode()));
+
+                            }
                         }
                         break;
                     case ("send"):
-                        for (Group p : LIST_GROUP) {
+                        for (Group p : Server.LIST_GROUP) {
                             if (p.getGroupCode().equals(((Message) recieved).getGroupCode())) {
                                 p.send((Message) recieved);
                             }
@@ -152,7 +160,7 @@ public class ConnectionHandler implements IConnectionHandler {
                         break;
                     case ("create group"):
                         if (isConnected) {
-                            LIST_GROUP.add(new Group(((Message) recieved).getGroupCode()));
+                            Server.LIST_GROUP.add(new Group(((Message) recieved).getGroupCode()));
                             output.writeObject(new Message(((Message) recieved).getUsername(),
                                     ((Message) recieved).getGroupCode(), recieved.getCommand(),
                                     "Group " + ((Message) recieved).getGroupCode() + " has been created"));
@@ -161,16 +169,25 @@ public class ConnectionHandler implements IConnectionHandler {
                         }
                     case ("create user"):
                         user = (User) input.readObject();
-                        XmlHandler.addUser(user.getUsername(), user.getPassword());
+                        if (XmlHandler.addUser(user.getUsername(), user.getPassword())) {
+                            output.writeObject(
+                                    new Message(((Message) recieved).getUsername(), ((Message) recieved).getGroupCode(),
+                                            recieved.getCommand(), "User has been created"));
+
+                        }
                         break;
                     case ("delete user"):
                         user = (User) input.readObject();
-                        XmlHandler.deleteUser(user.getUsername());
+                        if (XmlHandler.deleteUser(user.getUsername())) {
+                            output.writeObject(
+                                    new Message(((Message) recieved).getUsername(), ((Message) recieved).getGroupCode(),
+                                            recieved.getCommand(), "User has been erased"));
+                        }
                         break;
                     case ("delete group"):
                         if (isConnected) {
 
-                            LIST_GROUP.remove(((Message) recieved).getGroupCode());
+                            Server.LIST_GROUP.remove(((Message) recieved).getGroupCode());
                             output.writeObject(new Message(((Message) recieved).getUsername(),
                                     ((Message) recieved).getGroupCode(), recieved.getCommand(),
                                     "Group " + ((Message) recieved).getGroupCode() + " has been deleted"));
