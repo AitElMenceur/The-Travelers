@@ -24,43 +24,32 @@ import javax.swing.SwingConstants;
 import java.awt.Font;
 import javax.swing.LayoutStyle.ComponentPlacement;
 
+
 /*
  * @author Rebecca
  */
 
 public class LogInGUI extends JDialog implements ActionListener{
+	static Client clnt;
 
-	int i = 6669;
-	//Client clnt = new Client("localhost", i);
-	 Client clnt = new Client("localhost", i);
-	 ChatGUI chatgui = new ChatGUI();
 	/*
-	 
-     //new Thread(clnt).start();
-	 new Thread(new Runnable() 
-	    {
-	        @Override
-	        public void run() 
-	        {
-	        	do {
-	 			   try {
-	 			    Thread.sleep(300);
-	 			    //incomming =clnt.getMessage();
-	 			   // chatgui.PutTextToChatTextArea(incomming.getGroupCode(), incomming.getUsername(), incomming.getMessage());
-	 			    chatgui.PutTextToChatTextArea("RR", "Ivan", "Thread test");
-	 			   } catch (InterruptedException e) {
-	 			   
-	 			    e.printStackTrace();
-	 			   }
-	 			   System.out.println("Thread is running :");
-	 			  }while(true);
-	 		
-	        }
-	    }
-	    ).start();
-	    
-	 }
-	*/
+	 * 
+	 * //new Thread(clnt).start(); new Thread(new Runnable() {
+	 * 
+	 * @Override public void run() { do { try { Thread.sleep(300); //incomming
+	 * =clnt.getMessage(); //
+	 * chatgui.PutTextToChatTextArea(incomming.getGroupCode(),
+	 * incomming.getUsername(), incomming.getMessage());
+	 * chatgui.PutTextToChatTextArea("RR", "Ivan", "Thread test"); } catch
+	 * (InterruptedException e) {
+	 * 
+	 * e.printStackTrace(); } System.out.println("Thread is running :");
+	 * }while(true);
+	 * 
+	 * } } ).start();
+	 * 
+	 * }
+	 */
 	private static final long serialVersionUID = 1L;
 	private final JPanel contentPanel = new JPanel();
 	private JPanel buttonPane;
@@ -68,11 +57,12 @@ public class LogInGUI extends JDialog implements ActionListener{
 	private JTextField NameTextField;
 	private JPasswordField passwordField;
 	private JLabel WarningMessageLabel = new JLabel("");
-	
-	 
 
 	public static void main(String arg[]) {
-        // added by Rebecca
+		int i = 6669;
+
+		clnt = new Client("localhost", i);
+		new Thread(clnt).start();
         
           try { 
         	  LogInGUI dialog = new LogInGUI();

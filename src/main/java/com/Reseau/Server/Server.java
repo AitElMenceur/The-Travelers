@@ -14,13 +14,14 @@ public class Server extends AbstractServer {
     public Server(String ip) {
         new XmlHandler("Database");
         this.ip = ip;
+        Server.LIST_USER = new ArrayList<User>();
+
         try {
             Server.LIST_GROUP = initializeGroup();
         } catch (NullPointerException e) {
             Server.LIST_GROUP = new ArrayList<Group>();
 
         }
-        Server.LIST_USER = new ArrayList<User>();
     }
 
     private ArrayList<Group> initializeGroup() {
