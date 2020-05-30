@@ -162,7 +162,7 @@ public class XmlHandler {
 	 */
 	public static int getLength() {
 		 if (doc.getElementsByTagName("User").getLength() != 0) {
-			 return doc.getElementsByTagName("User").getLength();
+		 return doc.getElementsByTagName("User").getLength();
 
 		 } else {
 		 return 0;
