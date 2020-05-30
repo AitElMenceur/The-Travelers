@@ -1,7 +1,6 @@
 package com.Reseau.Server;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import com.Reseau.Data.Group;
 import com.Reseau.Data.User;
@@ -11,9 +10,6 @@ public class Server extends AbstractServer {
     private String ip;
     static protected ArrayList<Group> LIST_GROUP;
     static protected ArrayList<User> LIST_USER;
-    
-    
-
     public Server(String ip) {
         new XmlHandler("Database");
         this.ip = ip;
@@ -21,6 +17,7 @@ public class Server extends AbstractServer {
         
         Server.LIST_USER = new ArrayList<User>();
     }
+    
     private ArrayList<Group> initializeGroup() {
         ArrayList<Group> list =new ArrayList<Group>();
         for(String g: XmlHandler.listOfGroups()){

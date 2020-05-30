@@ -24,17 +24,13 @@ public class Client implements Runnable {
     private ObjectOutputStream output;
     private ObjectInputStream input;
     private ArrayList<Group> list = new ArrayList<Group>();
+    private Message recieved;
 
     public Client(String ip, int port, String nom) {
         this.user = new User("Username", "Password");
-        try {
-            this.socket = new Socket(ip, port);
-            this.output = new ObjectOutputStream(socket.getOutputStream()); // ouvre un flux de sortie vers le socket
-            this.input = new ObjectInputStream(socket.getInputStream()); // ouvre un flux d’entrée vers le socket
-        } catch (IOException e) {
-            e.printStackTrace();
-            port += 1;
-        }
+        this.socket = Singletons.getSocket(ip, port);
+        this.output = Singletons.getOutput(socket);
+        this.input = Singletons.getInput(socket);
     }
 
     /**
@@ -233,7 +229,7 @@ public class Client implements Runnable {
                             System.out.println("password");
                             String password = scan.next();
                             output.writeObject(new User(username, password));
-                            user=new User(username, password);
+                            user = new User(username, password);
                         } catch (SocketTimeoutException exc) {
                             System.out.println(exc.getMessage());
                         } catch (UnknownHostException uhe) {
@@ -248,7 +244,7 @@ public class Client implements Runnable {
                         TimeUnit.MILLISECONDS.sleep(100);
                         for (Group group : list) {
                             System.out.println(group.toString());
-                        } 
+                        }
                         System.out.println("Which Group?");
                         groupcode = scan.next();
                         output.writeObject(new Message(user.getUsername(), groupcode, "join", ""));
@@ -365,6 +361,13 @@ public class Client implements Runnable {
         }
     }
 
+    public Message getMessage() {
+        return recieved;
+    }
+    public ArrayList<Group> getLisGroup(){
+        return  list;
+    }
+
     @Override
     public void run() {
         while (true) {
@@ -373,7 +376,6 @@ public class Client implements Runnable {
                 Object recieved = input.readObject();
                 if (recieved instanceof ArrayList<?>) {
                     list = (ArrayList<Group>) recieved;
-                         
 
                 } else if (recieved instanceof Message) {
                     recieved = (Message) recieved;
@@ -383,9 +385,8 @@ public class Client implements Runnable {
                     ChatGUI chatgui = new ChatGUI();
                     chatgui.PutTextToChatTextArea(((Message) recieved).getGroupCode(),
                             ((Message) recieved).getUsername(), ((Message) recieved).getMessage());
-                    
+
                 }
-                
 
             } catch (ClassNotFoundException e) {
             } catch (SocketException se) {
