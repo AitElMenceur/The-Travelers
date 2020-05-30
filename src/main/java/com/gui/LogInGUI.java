@@ -30,8 +30,8 @@ import javax.swing.LayoutStyle.ComponentPlacement;
 
 public class LogInGUI extends JDialog implements ActionListener{
 
-	int i = 6668;
-	Client clnt = new Client("localhost", i, "User"+i);
+	//int i = 6668;
+	//Client clnt = new Client("localhost", i, "User"+i);
 	
 	private static final long serialVersionUID = 1L;
 	private final JPanel contentPanel = new JPanel();
@@ -41,7 +41,7 @@ public class LogInGUI extends JDialog implements ActionListener{
 	private JPasswordField passwordField;
 
 	
-	private JLabel WarningMessageLabel = new JLabel("");
+	JLabel WarningMessageLabel = new JLabel("");
 	
 	 
 
@@ -50,9 +50,8 @@ public class LogInGUI extends JDialog implements ActionListener{
         
           try { 
         	  LogInGUI dialog = new LogInGUI();
-        	  dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-        	  //dialog.setAlwaysOnTop(true);
-        	  dialog.setVisible(true);
+          dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+          dialog.setVisible(true);
           } catch (Exception e) { e.printStackTrace(); } //end
          
     }
@@ -88,7 +87,6 @@ public class LogInGUI extends JDialog implements ActionListener{
 					
 					buttonPane.add(btnNew);
 					buttonPane.add(cancelButton);
-					
 				}
 			}
 		}
@@ -172,7 +170,6 @@ public class LogInGUI extends JDialog implements ActionListener{
 			int login = 1;
 			Globals.UserName = NameTextField.getText();
 			Globals.Passwd = passwordField.getText();
-			//this.hide();
 			if(Globals.UserName.length() != 0 && Globals.Passwd.length() != 0) {
 				//*****needs to be modified
 				//login = clnt.connect();  
@@ -191,15 +188,12 @@ public class LogInGUI extends JDialog implements ActionListener{
 					} catch (Exception e) {
 						e.printStackTrace();
 					}
-					
 				}
-				
-			});
-	        this.hide();
+			}); 
 			}
 		else {//login = false
 			WarningMessageLabel.setText("Login Failed");
-			this.show();
+			
 		}
 			break;
 			
@@ -221,7 +215,7 @@ public class LogInGUI extends JDialog implements ActionListener{
 						}
 					}
 				});
-			 System.out.println("here");
+			
 			 break;
 		}
 	}

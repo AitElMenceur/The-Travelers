@@ -30,17 +30,16 @@ public class RegisterGUI extends JDialog {
 	private JTextField NametextField;
 	private JTextField PasswordtextField;
 
-	private String UserName="", Password="", OldUserName="", NewUserName="", OldPassword="", NewPassword="";
+	String UserName="", Password="", OldUserName="", NewUserName="", OldPassword="", NewPassword="";
 
-	
-	
-	private JButton UpdateButton = new JButton("Update");
-	private JButton DeleteButton = new JButton("Delete");
-	private JLabel RegisterWarningMessage = new JLabel("");
-	
 	/**
 	 * Create the dialog.
 	 */
+	
+	JButton UpdateButton = new JButton("Update");
+	JButton DeleteButton = new JButton("Delete");
+	JLabel RegisterWarningMessage = new JLabel("");
+	
 	
 	public RegisterGUI() {
 		setBounds(100, 100, 450, 300);
@@ -205,18 +204,17 @@ public class RegisterGUI extends JDialog {
 				.addGroup(gl_contentPanel.createSequentialGroup()
 					.addContainerGap()
 					.addGroup(gl_contentPanel.createParallelGroup(Alignment.LEADING)
-						.addComponent(RegisterPasswordLabel)
-						.addComponent(RegisterNewNameLabel))
-					.addGap(45)
-					.addGroup(gl_contentPanel.createParallelGroup(Alignment.LEADING)
-						.addComponent(PasswordtextField, GroupLayout.PREFERRED_SIZE, 213, GroupLayout.PREFERRED_SIZE)
-						.addComponent(NametextField, GroupLayout.PREFERRED_SIZE, 213, GroupLayout.PREFERRED_SIZE)
-						.addComponent(RegisterWarningMessage))
+						.addComponent(userAccountLabel, GroupLayout.PREFERRED_SIZE, 216, GroupLayout.PREFERRED_SIZE)
+						.addGroup(gl_contentPanel.createSequentialGroup()
+							.addGroup(gl_contentPanel.createParallelGroup(Alignment.LEADING)
+								.addComponent(RegisterPasswordLabel)
+								.addComponent(RegisterNewNameLabel))
+							.addGap(45)
+							.addGroup(gl_contentPanel.createParallelGroup(Alignment.LEADING)
+								.addComponent(PasswordtextField, GroupLayout.PREFERRED_SIZE, 213, GroupLayout.PREFERRED_SIZE)
+								.addComponent(NametextField, GroupLayout.PREFERRED_SIZE, 213, GroupLayout.PREFERRED_SIZE)
+								.addComponent(RegisterWarningMessage))))
 					.addGap(66))
-				.addGroup(gl_contentPanel.createSequentialGroup()
-					.addGap(104)
-					.addComponent(userAccountLabel, GroupLayout.DEFAULT_SIZE, 216, Short.MAX_VALUE)
-					.addGap(98))
 		);
 		gl_contentPanel.setVerticalGroup(
 			gl_contentPanel.createParallelGroup(Alignment.LEADING)

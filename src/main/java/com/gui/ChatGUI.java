@@ -66,17 +66,16 @@ public class ChatGUI extends JFrame implements ActionListener {
 	
 	private JPanel contentPane;
 	private JTextField inputtextField;
-	private JTextPane chattextArea = new JTextPane();
-	private JButton sendButton = new JButton("send");
-	private JComboBox comboBox = new JComboBox();
-	private JLabel GroupWarningLabel = new JLabel("  "); 
-	private JLabel GroupLabel = new JLabel("@");
+	JTextPane chattextArea = new JTextPane();
+	JButton sendButton = new JButton("send");
+	JComboBox comboBox = new JComboBox();
+	JLabel GroupWarningLabel = new JLabel("  "); 
+	JLabel GroupLabel = new JLabel("@");
 	
 
 	/**
 	 * Create the frame.
 	 */
-	
 	public ChatGUI() {
 		setTitle("The-Travelers");
 		setResizable(false);
