@@ -1,7 +1,8 @@
 package com.gui;
 
 import com.Reseau.Client.Client;
-import com.Reseau.Client.Client.Globals;
+import com.Reseau.Server.Host;
+//import com.Reseau.Client.Client.Globals;
 import com.Reseau.Client.*;
 
 import java.awt.BorderLayout;
@@ -21,14 +22,56 @@ import javax.swing.JTextField;
 import javax.swing.JPasswordField;
 import java.awt.Color;
 import javax.swing.SwingConstants;
+import javax.swing.SwingUtilities;
+
 import java.awt.Font;
 import javax.swing.LayoutStyle.ComponentPlacement;
 
+/*
+ * @author Rebecca
+ */
 
 public class LogInGUI extends JDialog implements ActionListener{
 
-	int i = 6668;
-	Client clnt = new Client("localhost", i, "User"+i);
+	//Host host = new Host();
+	int i = 6669;
+	Client clnt = new Client("localhost", i);
+	// { new Thread(clnt).start();}
+	
+	 
+	 
+	// new Thread(clnt).start();
+/*	public void consoleText(final String consoleUpdatw){
+		SwingUtilities.invokeLater(new Runnable()
+	 { new Thread(new Runnable() 
+				 {
+	        @Override
+	        public void run() 
+	        {
+	        	
+	        	do {
+	 			   try {
+	 			    Thread.sleep(3000);
+	 			    //incomming =clnt.getMessage();
+	 			   // chatgui.PutTextToChatTextArea(incomming.getGroupCode(), incomming.getUsername(), incomming.getMessage());
+	 			     //chatgui.PutTextToChatTextArea("BB", "Ivan", "Thread test");
+	 			  chatgui.PutTextToChatTextArea(Globals.CurrentGroup, Globals.UserName, "Thread ...." );
+	 			   } catch (InterruptedException e) {
+	 			   
+	 			    e.printStackTrace();
+	 			   }
+	 			  //chatgui.PutTextToChatTextArea("BB", "Ivan", "Thread test");
+	 			   //System.out.println("Thread is running :");
+	 			  }while(true);
+	 		
+	        }
+	    }
+	)
+	 }).start();
+	}
+	*/
+	    
+	 
 	
 	private static final long serialVersionUID = 1L;
 	private final JPanel contentPanel = new JPanel();
@@ -36,10 +79,52 @@ public class LogInGUI extends JDialog implements ActionListener{
 	private JLabel NameLabel;
 	private JTextField NameTextField;
 	private JPasswordField passwordField;
-
+	private JLabel WarningMessageLabel = new JLabel("");
 	
-	JLabel WarningMessageLabel = new JLabel("");
+	 
 
+	public static void main(String arg[]) {
+		//final ChatGUI chatgui = new ChatGUI();
+        // added by Rebecca
+		Host host = new Host();
+        int i = 6669;
+		Client clnt = new Client("localhost", i);
+		new Thread(clnt).start();
+		/*
+		Runnable setTextRun = new Runnable() {
+			public void run() {
+				do {
+				try {
+					ChatGUI chatgui = new ChatGUI();
+					Thread.sleep(500);
+					chatgui.PutTextToChatTextArea("BB", "Ivan", "Thread test");
+					System.out.println("about to do setText()");
+				}
+				catch(Exception x) {
+					x.printStackTrace();
+				}
+			}
+			while(true);
+			}
+		};
+		System.out.println("call invokeLater");
+		SwingUtilities.invokeLater(setTextRun);
+		System.out.println("return from invokeLater");
+		//SwingUtilities.invokeLater(new Runnable() {
+		//public void run() {
+		 * */
+		 
+          try { 
+        	  LogInGUI dialog = new LogInGUI();
+        	  dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+        	  dialog.setVisible(true);
+          } catch (Exception e) { e.printStackTrace(); 
+          } //end
+          
+		//});
+		
+         
+    }
 
 	/**
 	 * Create the dialog.
@@ -102,7 +187,7 @@ public class LogInGUI extends JDialog implements ActionListener{
 		JLabel LoginLabel = new JLabel("Login");
 		LoginLabel.setFont(new Font("Tahoma", Font.BOLD, 30));
 		
-		//JLabel WarningMessageLabel = new JLabel("Warning");
+		
 		WarningMessageLabel.setFont(new Font("Tahoma", Font.BOLD, 16));
 		WarningMessageLabel.setForeground(Color.RED);
 		GroupLayout gl_contentPanel = new GroupLayout(contentPanel);
@@ -152,16 +237,18 @@ public class LogInGUI extends JDialog implements ActionListener{
 		// TODO Auto-generated method stub
 		switch(e.getActionCommand()) {
 		case "loginButton" :
-			int login = 1;
+			boolean login = true;
+			
 			Globals.UserName = NameTextField.getText();
 			Globals.Passwd = passwordField.getText();
 			if(Globals.UserName.length() != 0 && Globals.Passwd.length() != 0) {
-				//login = clnt.connect();  
-				//Please return an integer back*****
-				login = 1;//delete this line after "connect" function has modified...
+				
+				login = clnt.connect(Globals.UserName, Globals.Passwd);
+				System.out.println(login);
+				
 			}
 			
-			if(login == 1) {
+			if(login) {
 				WarningMessageLabel.setText(" ");
 			
 	        EventQueue.invokeLater(new Runnable() {
@@ -174,10 +261,11 @@ public class LogInGUI extends JDialog implements ActionListener{
 					}
 				}
 			}); 
+	        this.hide();
 			}
 		else {//login = false
 			WarningMessageLabel.setText("Login Failed");
-			
+			this.show();
 		}
 			break;
 			
@@ -199,11 +287,11 @@ public class LogInGUI extends JDialog implements ActionListener{
 						}
 					}
 				});
-			 //needs to be modified
-			//needs a New to call*****
-			 //clnt.New();
+			
 			 break;
 		}
 	}
+	
 		
 }
+

@@ -1,7 +1,9 @@
 package com.gui;
 import com.gui.LogInGUI;
 import com.Reseau.Client.Client;
-import com.Reseau.Client.Client.Globals;
+import com.Reseau.Data.Group;
+import com.Reseau.Server.Host;
+import com.gui.Globals;
 import com.gui.*;
 
 import java.awt.BorderLayout;
@@ -62,20 +64,21 @@ public class ChatGUI extends JFrame implements ActionListener {
 
 	
 	int i = 6668;
-	Client clnt = new Client("localhost", i, "User"+i);
-	
+	//Client clnt = new Client("localhost", i, "User"+i);
+	Client clnt = new Client("localhost", i);
 	private JPanel contentPane;
 	private JTextField inputtextField;
-	JTextPane chattextArea = new JTextPane();
-	JButton sendButton = new JButton("send");
-	JComboBox comboBox = new JComboBox();
-	JLabel GroupWarningLabel = new JLabel("  "); 
-	JLabel GroupLabel = new JLabel("@");
-	
+	private JTextPane chattextArea = new JTextPane();
+	private JButton sendButton = new JButton("send");
+	private JComboBox comboBox = new JComboBox();
+	private JLabel GroupWarningLabel = new JLabel("  "); 
+	private JLabel GroupLabel = new JLabel("@");
+	//Host host = new Host();
 
 	/**
 	 * Create the frame.
 	 */
+	
 	public ChatGUI() {
 		setTitle("The-Travelers");
 		setResizable(false);
@@ -135,9 +138,10 @@ public class ChatGUI extends JFrame implements ActionListener {
 	            	
 	    comboBox.addPopupMenuListener(new PopupMenuListener () {
 	    	 public void popupMenuWillBecomeVisible(PopupMenuEvent e) {
-	    		 
+	    		 ArrayList<Group> al =new ArrayList<Group>();
 	    		 // call needed*****
-	            	//Globals.GroupCode[] = clnt.getgroupcode;
+	    		al = clnt.getLisGroup();
+	    	    Globals.GroupCode = al.toArray(Globals.GroupCode);
 	    		 comboBox.removeAllItems();
 	    		 for(int i=0;i<Globals.GroupCode.length; i++) {
 	            		comboBox.addItem(Globals.GroupCode[i]);
@@ -273,12 +277,12 @@ public class ChatGUI extends JFrame implements ActionListener {
 		String GroupCode = "AA";
 		int numberOfMessages = 2;
 		String[][] Historymessages = {{"hello","Rebecca"},{"okay","Karina"}};
-		//should be modified*****
+		//need be modified*****
 		//HistoryMessages = displayHistory(doc, GroupCode, numbaerOfMessages);   
 		for( int i=0; i<numberOfMessages; i++) {
 			PutTextToChatTextArea(GroupCode, Historymessages[i][1], Historymessages[i][0] );
 		}
-		//should be modified...
+		
 	}
 
 	public class JTextFieldLimit extends PlainDocument {
@@ -306,19 +310,19 @@ public class ChatGUI extends JFrame implements ActionListener {
 		// TODO Auto-generated method stub
 
 		switch(e.getActionCommand()) {
-		case "contactorButton" :
-			//Need to be modified*****
+		//case "contactorButton" :
+			//Need to be modified
 			//clnt.contactor();
 			
-		break;
+		//break;
 		case "disconnectButton" :
 			//need to be modified*****
-			//clnt.diconnect();
+			clnt.diconnect();
 			System.exit(0);
 			break;
 		case "sendButton" :
 			String writtenText=inputtextField.getText();
-			System.out.print(writtenText);
+			System.out.println(writtenText);
 
 			
 			inputtextField.setText(null);
@@ -336,10 +340,10 @@ public class ChatGUI extends JFrame implements ActionListener {
 			
 			
 		case "joinButton" :
-			int Ret = 1;
+			boolean Ret = true;
 			//join function need to be fixed
 			//Please return an integer back*****
-			 //Ret = clnt.join((String)comboBox.getSelectedItem());
+			Ret = clnt.join((String)comboBox.getSelectedItem());
 			GroupWarningLabel.setText("");
 			GroupLabel.setText("");
 			String GroupName1;
@@ -359,7 +363,7 @@ public class ChatGUI extends JFrame implements ActionListener {
 				GroupWarningLabel.setText("Group coede not exist!");
 				return;
 			}
-			 if(Ret == 1) {
+			 if(Ret) {
 				 
 				 GroupWarningLabel.setForeground(new Color(0, 255, 0));
 				 GroupWarningLabel.setText("Group Joined!");
@@ -377,18 +381,18 @@ public class ChatGUI extends JFrame implements ActionListener {
 			 /*
 			  * if join succeeded, a bunch of user names should be put into Globals.Chattes.
 			  */
-			//need to be modified*****
+			 //need to be modified*****
 			 //Globals.Chatters[]= clnt.join((String)comboBox.getSelectedItem());
 			
 			break;
 		case "leaveButton" :
-			int Ret2 = 1;
+			boolean Ret2 = true;
 			//Please return an integer back*****
-			//Ret2 = clnt.leave(Globals.CurrentGroup);
+			Ret2 = clnt.leave(Globals.CurrentGroup);
 			GroupWarningLabel.setText("");
 			String GroupName2;
 			GroupName2 = (String) comboBox.getSelectedItem();
-			 if(Ret2 == 1) {
+			 if(Ret2) {
 				 GroupWarningLabel.setForeground(new Color(0, 255, 0));
 				 GroupWarningLabel.setText("Group leaved!");
 				 Globals.CurrentGroup = null;
@@ -413,15 +417,14 @@ public class ChatGUI extends JFrame implements ActionListener {
 			
 			GroupWarningLabel.setText("");
 			String GroupName3;
-			int Ret3 = 1;
+			boolean Ret3 = true;
 			GroupName3 = (String) comboBox.getSelectedItem();
 			/*
 			 * need to be fixed*****
 			 * 
 			 */ 
-			//Ret3 = clnt.createGroup(doc, GroupName);
-			//System.out.print("Group Created");
-			 if(Ret3 == 1) {
+			Ret3 = clnt.createGroup( GroupName3);
+			 if(Ret3) {
 				 GroupWarningLabel.setForeground(new Color(0, 255, 0));
 				 GroupWarningLabel.setText("Group Created!");
 			 }
@@ -433,12 +436,12 @@ public class ChatGUI extends JFrame implements ActionListener {
 			break;
 			
 		case "Delete" :
-			int Ret4 =1;
+			boolean Ret4 = true;
 			String GroupName4;
 			GroupName4 = (String) comboBox.getSelectedItem();
 			//needs to be modified*****
-			//Ret4 = clnt.deleteGroup(doc, GroupName2, UserName)
-			if(Ret4 == 1) {
+			Ret4 = clnt.deleteGroup( GroupName4);
+			if(Ret4) {
 				GroupWarningLabel.setForeground(new Color(0, 255, 0));
 				 GroupWarningLabel.setText("Group Deleted!");
 			 }
@@ -452,6 +455,7 @@ public class ChatGUI extends JFrame implements ActionListener {
 	}
 	}
 
+
 /*
  * @param string      groupcode
  * @param name        the user's name
@@ -460,31 +464,34 @@ public class ChatGUI extends JFrame implements ActionListener {
  * The login user will be aligned to the left, the other side will be aligned to the right.
  * 
  */
-	private void PutTextToChatTextArea(String groupcode, String name, String writtenText) {
+	public void PutTextToChatTextArea(String groupcode, String name, String writtenText) {
 		// TODO Auto-generated method stub
-		if(writtenText.length() == 0) {
-			return;
-		}
+		//System.out.println("*****"+writtenText);
+		//if(writtenText.length() == 0) {
+			//return;
+		//}
 		String header = "";
 		StyledDocument doc = chattextArea.getStyledDocument();
 		SimpleAttributeSet attribs = new SimpleAttributeSet();
 		if (name.equals(Globals.UserName)) {
 			header = "Me : ";
-			
+			//System.out.println("#####"+writtenText);
 			StyleConstants.setAlignment(attribs, StyleConstants.ALIGN_LEFT);
 			StyleConstants.setForeground(attribs, Color.DARK_GRAY);
 			
 			chattextArea.setParagraphAttributes(attribs, true);
 		try {
+			//System.out.println("#####"+writtenText);
 			doc.insertString(doc.getLength(), header + writtenText +"\n" , attribs);
 			}
 		catch (BadLocationException e) {
 			// TODO Auto-generated catch block
+			//System.out.println("@@@@@"+writtenText);
 			e.printStackTrace();
-		}
+	    	}
 		}
 		else {
-			
+			//System.out.println("&&&&&"+writtenText);
 			StyleConstants.setAlignment(attribs, StyleConstants.ALIGN_RIGHT);
 			StyleConstants.setForeground(attribs, Color.BLUE);
 			chattextArea.setParagraphAttributes(attribs, true);
@@ -496,9 +503,13 @@ public class ChatGUI extends JFrame implements ActionListener {
 				e.printStackTrace();
 			}
 		}
-		}
+		//System.out.println("-----"+writtenText);		
+	}
 	
-	public static String[] removeItemFromArray(String[] input, String item) {
+
+}
+	
+/*	public static String[] removeItemFromArray(String[] input, String item) {
 	    if (input == null) {
 	        return null;
 	    } else if (input.length <= 0) {
@@ -534,4 +545,4 @@ public class ChatGUI extends JFrame implements ActionListener {
 		
 		
 	}
-}
+*/	
