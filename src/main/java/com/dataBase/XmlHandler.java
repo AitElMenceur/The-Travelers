@@ -596,10 +596,11 @@ public class XmlHandler {
 			String TempString = user.getElementsByTagName("UserName").item(0).getFirstChild().getNodeValue();
 
 			if (TempString.equals(UserName)) {
-
-				NodeList groups = user.getElementsByTagName("GroupCodes").item(0).getChildNodes();
+			
+				NodeList groups = user.getElementsByTagName("Keys"); 
 				Element group = null;
 				ListOfGroups = new String[groups.getLength()];
+				
 				for (int j = 0; j < groups.getLength(); j++) {
 					group = (Element) groups.item(j);
 
@@ -699,16 +700,23 @@ public class XmlHandler {
 		}
 		return false;
 	}
-	/*
+	
 	public static void main(String arg[]) {		
 		XmlHandler xml = new XmlHandler("Database"); 
-		
-		addGroupCodeToUser("Groupe1", "test"); 
+		/*
+		System.out.println(createGroup("Groupe1"));  
+		System.out.println(addGroupCodeToUser("Groupe1", "test")); 
 		System.out.println("main "+ inTheList(listOfGroupsOfAUser("test"), "Groupe1" )); 
-		addGroupCodeToUser("Groupe1", "Test"); 
+		System.out.println(addGroupCodeToUser("Groupe1", "Test")); 
+		*/
 		
+		String[] test = listOfGroupsOfAUser("test"); 
+		for (int i = 0 ; i < test.length ; i ++) {
+			System.out.println(test[i]); 
+		}
+		System.out.println("FIN"); 
 		
     }
-    */
+    
 	
 }

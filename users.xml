@@ -29,67 +29,9 @@
             
             
             <Password>test</Password>
-                                                                                    
-            
-            
-            
-            
-            
             <GroupCodes>
-                                                
-                
-                <Keys>Groupe2</Keys>
-                                            
-                
-                <Keys>Groupe1</Keys>
-                                
-                <Keys>Groupe1</Keys>
-                            
-            </GroupCodes>
-                                                                                    
-            
-            
-            
-            
-            
-            <Friends/>
-                                                                                
-        
-        
-        
-        
-        
-        </User>
-                                                    
-        
-        
-        
-        
-        
-        <User id="1">
-                                                                        
-            
-            
-            
-            
-            <UserName>uhoi</UserName>
-                                                                        
-            
-            
-            
-            
-            <Password>jipo</Password>
-                                                                        
-            
-            
-            
-            
-            <GroupCodes/>
-                                                                        
-            
-            
-            
-            
+<Keys>Groupe1</Keys>
+</GroupCodes>
             <Friends/>
                                                                     
         
@@ -148,42 +90,12 @@
     
     
     </Users>
-                            
-    
-    
-    
-    
-    
     <Groups>
-                                        
-        
-        
-        
-        <Group>
-                                                            
-            
-            
-            
-            <Groupcode>Groupe1</Groupcode>
-                                                        
-        
-        
-        
-        </Group>
-                                    
-        
-        
-            
-    
-    
-        <Group>
-            <Groupcode>Groupe12</Groupcode>
-        </Group>
-    </Groups>
-                        
-
-
-
-
-
+<Group>
+<Groupcode>Groupe1</Groupcode>
+</Group>
+<Group>
+<Groupcode>Groupe1</Groupcode>
+</Group>
+</Groups>
 </Database>
