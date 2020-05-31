@@ -598,7 +598,7 @@ public class XmlHandler {
 			if (TempString.equals(UserName)) {
 
 				NodeList groups = user.getElementsByTagName("GroupCodes").item(0).getChildNodes();
-				Node group = null;
+				Element group = null;
 				ListOfGroups = new String[groups.getLength()];
 				for (int j = 0; j < groups.getLength(); j++) {
 					group = (Element) groups.item(j);
