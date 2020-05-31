@@ -465,9 +465,15 @@ public class Client implements Runnable {
                         Globals.message=(Message) recieved;
 
                     }
-                    /*ChatGUI chatgui;
-                    chatgui.PutTextToChatTextArea(((Message) recieved).getGroupCode(),
-                            ((Message) recieved).getUsername(), ((Message) recieved).getMessage());*/
+                    
+                        try{
+                        Globals.message=Globals.clnt.getMessage();
+                        Globals.chatGUI.PutTextToChatTextArea(Globals.message.getGroupCode(),
+                                        Globals.message.getUsername(), Globals.message.getMessage());
+                        }catch(NullPointerException e){
+            
+                        }
+                    
 
                 }
 

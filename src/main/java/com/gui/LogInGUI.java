@@ -25,25 +25,6 @@ import javax.swing.LayoutStyle.ComponentPlacement;
 
 public class LogInGUI extends JDialog implements ActionListener{
 
-
-	/*
-	 * 
-	 * //new Thread(clnt).start(); new Thread(new Runnable() {
-	 * 
-	 * @Override public void run() { do { try { Thread.sleep(300); //incomming
-	 * =clnt.getMessage(); //
-	 * chatgui.PutTextToChatTextArea(incomming.getGroupCode(),
-	 * incomming.getUsername(), incomming.getMessage());
-	 * chatgui.PutTextToChatTextArea("RR", "Ivan", "Thread test"); } catch
-	 * (InterruptedException e) {
-	 * 
-	 * e.printStackTrace(); } System.out.println("Thread is running :");
-	 * }while(true);
-	 * 
-	 * } } ).start();
-	 * 
-	 * }
-	 */
 	private static final long serialVersionUID = 1L;
 	private final JPanel contentPanel = new JPanel();
 	private JPanel buttonPane;
@@ -180,8 +161,8 @@ public class LogInGUI extends JDialog implements ActionListener{
 	        EventQueue.invokeLater(new Runnable() {
 				public void run() {
 					try {
-						ChatGUI frame = new ChatGUI();
-						frame.setVisible(true);
+						Globals.chatGUI= new ChatGUI();
+						Globals.chatGUI.setVisible(true);
 					} catch (Exception e) {
 						e.printStackTrace();
 					}

@@ -80,7 +80,6 @@ public class ChatGUI extends JFrame implements ActionListener {
 				String writtenText = inputtextField.getText();
 				inputtextField.setText(null);
 				if (sendButton.isEnabled()) {
-					PutTextToChatTextArea(Globals.CurrentGroup, Globals.UserName, writtenText);
 					Globals.clnt.send(Globals.CurrentGroup, Globals.UserName, writtenText);
 				}
 
@@ -123,13 +122,11 @@ public class ChatGUI extends JFrame implements ActionListener {
 
 			@Override
 			public void popupMenuCanceled(PopupMenuEvent e) {
-				
 
 			}
 
 			@Override
 			public void popupMenuWillBecomeInvisible(PopupMenuEvent e) {
-				
 
 			}
 
@@ -268,7 +265,6 @@ public class ChatGUI extends JFrame implements ActionListener {
 	 */
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		
 
 		switch (e.getActionCommand()) {
 			// case "contactorButton" :
@@ -289,7 +285,7 @@ public class ChatGUI extends JFrame implements ActionListener {
 				/*
 				 * @see PutTextToChatTextArea
 				 */
-				PutTextToChatTextArea(Globals.CurrentGroup, Globals.UserName, writtenText);
+				// PutTextToChatTextArea(Globals.CurrentGroup, Globals.UserName, writtenText);
 				Globals.clnt.send(Globals.CurrentGroup, Globals.UserName, writtenText);
 
 				break;
@@ -390,9 +386,6 @@ public class ChatGUI extends JFrame implements ActionListener {
 				boolean Ret4 = true;
 				String GroupName4;
 				GroupName4 = (String) comboBox.getSelectedItem();
-				// needs to be modified*****
-
-				// Ret4 = Globals.clnt.deleteGroup(Globals.UserName, GroupName4);
 				Ret4 = Globals.clnt.deleteGroup(GroupName4);
 				if (Ret4) {
 					GroupWarningLabel.setForeground(new Color(0, 255, 0));
@@ -418,34 +411,39 @@ public class ChatGUI extends JFrame implements ActionListener {
 	 * 
 	 */
 	public void PutTextToChatTextArea(String groupcode, String name, String writtenText) {
-		
+
 		if (writtenText.length() == 0) {
 			return;
 		}
+
 		String header = "";
 		StyledDocument doc = chattextArea.getStyledDocument();
-		SimpleAttributeSet attribs = new SimpleAttributeSet();
+
 		if (name.equals(Globals.UserName)) {
 			header = "Me : ";
-
-			StyleConstants.setAlignment(attribs, StyleConstants.ALIGN_LEFT);
-			StyleConstants.setForeground(attribs, Color.DARK_GRAY);
-
-			chattextArea.setParagraphAttributes(attribs, true);
+			SimpleAttributeSet left = new SimpleAttributeSet();
+			StyleConstants.setAlignment(left, StyleConstants.ALIGN_LEFT);
+			StyleConstants.setForeground(left, Color.RED);
+			StyleConstants.setFontSize(left, 14);
 			try {
-				doc.insertString(doc.getLength(), header + writtenText + "\n", attribs);
+				int offset=doc.getLength();
+				doc.insertString(doc.getLength(), header + writtenText + "\n", left);
+				doc.setParagraphAttributes(offset, 1, left, false);
 			} catch (BadLocationException e) {
 
 				e.printStackTrace();
 			}
 		} else {
+			SimpleAttributeSet right = new SimpleAttributeSet();
+			StyleConstants.setAlignment(right, StyleConstants.ALIGN_RIGHT);
+			StyleConstants.setForeground(right, Color.BLUE);
+			StyleConstants.setFontSize(right, 14);
 
-			StyleConstants.setAlignment(attribs, StyleConstants.ALIGN_RIGHT);
-			StyleConstants.setForeground(attribs, Color.BLUE);
-			chattextArea.setParagraphAttributes(attribs, true);
 			try {
 				header = " : " + name;
-				doc.insertString(doc.getLength(), writtenText + header + "\n", attribs);
+				int offset=doc.getLength();
+				doc.insertString(doc.getLength() , writtenText + header + "\n", right);
+				doc.setParagraphAttributes(offset, 1, right, false);
 			} catch (BadLocationException e) {
 
 				e.printStackTrace();

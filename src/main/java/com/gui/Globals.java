@@ -9,7 +9,8 @@ import com.Reseau.Data.Message;
 public class Globals {
 	public static String UserName;
 	public static char[] Passwd;
-	static Client clnt = new Client("localhost", 6669);
+	public static Client clnt = new Client("localhost", 6668);
+	public static ChatGUI chatGUI;
 	public static Message message=null;
 	public static String[] Chatters = {};
 	//public static ArrayList<String> GroupCode = new ArrayList<String>() ;
