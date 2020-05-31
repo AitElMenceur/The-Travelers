@@ -231,8 +231,6 @@ public class ChatGUI extends JFrame implements ActionListener {
 
 		int numberOfMessages = 2;
 		String[][] Historymessages = {};
-		// need be modified*****
-		// HistoryMessages = displayHistory(doc, GroupCode, numbaerOfMessages);
 
 	}
 
@@ -265,10 +263,6 @@ public class ChatGUI extends JFrame implements ActionListener {
 		Globals.GroupCode = Globals.clnt.list;
 
 		switch (e.getActionCommand()) {
-			// case "contactorButton" :
-			// Need to be modified
-			// Globals.clnt.contactor();
-
 			// break;
 			case "disconnectButton":
 				// need to be modified*****
@@ -283,14 +277,11 @@ public class ChatGUI extends JFrame implements ActionListener {
 				/*
 				 * @see PutTextToChatTextArea
 				 */
-				// PutTextToChatTextArea(Globals.CurrentGroup, Globals.UserName, writtenText);
 				Globals.clnt.send(Globals.CurrentGroup, Globals.UserName, writtenText);
 
 				break;
 
 			case "joinButton":
-				// join function need to be fixed
-				// Please return an integer back*****
 				Globals.clnt.getLisGroup();
 				Globals.GroupCode = Globals.clnt.list;
 				String temp = (String) comboBox.getSelectedItem();
@@ -329,17 +320,13 @@ public class ChatGUI extends JFrame implements ActionListener {
 				/*
 				 * if join succeeded, a bunch of user names should be put into Globals.Chattes.
 				 */
-				// need to be modified*****
-				// Globals.Chatters[]= Globals.clnt.join((String)comboBox.getSelectedItem());
-
 				break;
 			case "leaveButton":
 				boolean Ret2 = true;
-				// Please return an integer back*****
-				
+
 				GroupWarningLabel.setText("");
 				String GroupName2 = (String) comboBox.getSelectedItem();
-				Ret2 = Globals.clnt.leave(GroupName2,Globals.UserName);
+				Ret2 = Globals.clnt.leave(GroupName2, Globals.UserName);
 				if (Ret2) {
 					GroupWarningLabel.setForeground(new Color(0, 255, 0));
 					GroupWarningLabel.setText("Group leaved!");
@@ -402,6 +389,13 @@ public class ChatGUI extends JFrame implements ActionListener {
 				break;
 
 		}
+		this.addWindowListener(new java.awt.event.WindowAdapter() {
+			@Override
+			public void windowClosing(java.awt.event.WindowEvent windowEvent) {
+				Globals.clnt.close();
+				}
+			
+		});
 	}
 
 	/*

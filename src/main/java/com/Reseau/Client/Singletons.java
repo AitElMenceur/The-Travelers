@@ -16,7 +16,7 @@ public class Singletons {
             try {
                 return new Socket(ip, port);
             } catch (IOException e) {
-                e.printStackTrace();
+
             }
 
         }

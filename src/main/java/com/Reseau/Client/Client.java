@@ -3,7 +3,9 @@
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.net.ConnectException;
 import java.net.Socket;
+import java.net.SocketAddress;
 import java.net.SocketException;
 import java.net.SocketTimeoutException;
 import java.net.UnknownHostException;
@@ -24,11 +26,26 @@ public class Client implements Runnable {
     public String list[];
     private Object message;
 
-    public Client(String ip, int port) {
+    public Client(String ip, int port) throws java.net.ConnectException {
         this.user = new User("Username", "Password");
+
         this.socket = Singletons.getSocket(ip, port);
-        this.output = Singletons.getOutput(socket);
-        this.input = Singletons.getInput(socket);
+        if (socket == null) {
+            throw new ConnectException();
+        } else {
+            this.output = Singletons.getOutput(socket);
+            this.input = Singletons.getInput(socket);
+        }
+
+    }
+
+    public void close() {
+        try {
+            socket.close();
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -252,8 +269,7 @@ public class Client implements Runnable {
 
             e.printStackTrace();
         }
-        // System.out.println(getMessage().getMessage().equals("You join the chat " +
-        // getMessage().getGroupCode()));
+
         if (getMessage().getMessage().equals("You join the chat " + getMessage().getGroupCode())) {
             return true;
 
@@ -266,7 +282,7 @@ public class Client implements Runnable {
      * @param Groupcode leave a group
      * @return
      */
-    public boolean leave(String Groupcode,String Username) {
+    public boolean leave(String Groupcode, String Username) {
         try {
             output.writeObject(new Message(Username, Groupcode, "leave", Groupcode));
 
@@ -325,7 +341,7 @@ public class Client implements Runnable {
                         System.out.println(connect(Username, Password));
                     }
                     if (send_data.equalsIgnoreCase("join")) {
-                        for(String s : list){
+                        for (String s : list) {
                             System.out.println(s);
                         }
                         System.out.println("Which Group?");
@@ -443,11 +459,11 @@ public class Client implements Runnable {
 
                 Object recieved = input.readObject();
                 if (recieved instanceof ArrayList<?>) {
-              
-                    list= new String[((ArrayList<String>) recieved).size()];
+
+                    list = new String[((ArrayList<String>) recieved).size()];
 
                     // ArrayList to Array Conversion
-                    for (int j = 0; j < ((ArrayList<String>)recieved).size(); j++) {
+                    for (int j = 0; j < ((ArrayList<String>) recieved).size(); j++) {
 
                         // Assign each value to String array
                         list[j] = ((ArrayList<String>) recieved).get(j);
@@ -488,9 +504,15 @@ public class Client implements Runnable {
      * @param arg[]
      */
     public static void main(String arg[]) {
-        int i = 6668;
+        int i = 6667;
 
-        Client client = new Client("localhost", i);
+        Client client = null;
+        try {
+            client = new Client("localhost", i);
+        } catch (ConnectException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
         new Thread(client).start();
 
         client.writing();

@@ -20,11 +20,14 @@ public class PortListener implements Runnable {
      */
 	public void run() {
 		try {
-			ss = new ServerSocket(port);
+			
 			while (true) {
+				ss = new ServerSocket(port);
 				Socket socket = ss.accept();// establishes connection
+				ss.close();
 				System.out.println("Connected as " + ip);
-				new ConnectionHandler(socket).handle();
+				ConnectionHandler connectionHandler= new ConnectionHandler(socket);
+				connectionHandler.handle();
 			}
 		} catch (IOException ioe) {
 			ioe.printStackTrace();

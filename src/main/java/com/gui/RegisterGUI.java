@@ -228,6 +228,7 @@ public class RegisterGUI extends JDialog {
 		);
 		contentPanel.setLayout(gl_contentPanel);
 		getContentPane().setLayout(groupLayout);
+		
 	}
 
 }

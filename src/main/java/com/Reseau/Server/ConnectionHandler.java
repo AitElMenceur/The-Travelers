@@ -166,6 +166,8 @@ public class ConnectionHandler implements IConnectionHandler {
                                     new Message("Server", ((Message) recieved).getGroupCode(),
                                             recieved.getCommand(), "GoodBye! " + ((Message) recieved).getUsername()));
                             output.flush();
+                            input.close();
+                            output.close();
                             isConnected = false;
                             finish = true;
                         }
