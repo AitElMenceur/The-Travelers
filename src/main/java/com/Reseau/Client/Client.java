@@ -21,7 +21,7 @@ public class Client implements Runnable {
     private String send_data = null;
     private ObjectOutputStream output;
     private ObjectInputStream input;
-    private ArrayList<String> list = new ArrayList<String>();
+    private String list[];
     private Object message;
 
     public Client(String ip, int port) {
@@ -42,10 +42,10 @@ public class Client implements Runnable {
             output.writeObject(message);
             TimeUnit.MILLISECONDS.sleep(100);
         } catch (IOException e) {
-            
+
             e.printStackTrace();
         } catch (InterruptedException e) {
-            
+
             e.printStackTrace();
         }
         if (getMessage().getMessage().equals("Group " + getMessage().getGroupCode() + " has been created")) {
@@ -57,8 +57,7 @@ public class Client implements Runnable {
 
     }
 
-    
-    /** 
+    /**
      * @param username
      * @param np
      * @param op
@@ -73,10 +72,10 @@ public class Client implements Runnable {
             TimeUnit.MILLISECONDS.sleep(100);
 
         } catch (IOException e) {
-            
+
             e.printStackTrace();
         } catch (InterruptedException e) {
-            
+
             e.printStackTrace();
         }
         if (getMessage().getMessage().equals("Password has been updated")) {
@@ -88,8 +87,7 @@ public class Client implements Runnable {
 
     }
 
-    
-    /** 
+    /**
      * @param username
      * @param nu
      * @param op
@@ -103,10 +101,10 @@ public class Client implements Runnable {
             output.writeObject(message);
             TimeUnit.MILLISECONDS.sleep(100);
         } catch (IOException e) {
-            
+
             e.printStackTrace();
         } catch (InterruptedException e) {
-            
+
             e.printStackTrace();
         }
         if (getMessage().getMessage().equals("Username has been updated")) {
@@ -129,7 +127,7 @@ public class Client implements Runnable {
             output.writeObject(message);
             TimeUnit.MILLISECONDS.sleep(100);
         } catch (InterruptedException | IOException e) {
-            
+
             e.printStackTrace();
         }
         if (getMessage().getMessage().equals("Group " + getMessage().getGroupCode() + " has been deleted")) {
@@ -154,7 +152,7 @@ public class Client implements Runnable {
             output.writeObject(user);
             TimeUnit.MILLISECONDS.sleep(100);
         } catch (InterruptedException | IOException e) {
-            
+
             e.printStackTrace();
         }
         if (getMessage().getMessage().equals("User has been created")) {
@@ -178,7 +176,7 @@ public class Client implements Runnable {
         } catch (IOException e) {
             e.printStackTrace();
         } catch (InterruptedException e) {
-            
+
             e.printStackTrace();
         }
         if (getMessage().getMessage().equals("User has been erased")) {
@@ -203,7 +201,7 @@ public class Client implements Runnable {
 
             TimeUnit.MILLISECONDS.sleep(100);
         } catch (InterruptedException | IOException e) {
-            
+
             e.printStackTrace();
         }
         if (getMessage().getMessage().equals("Welcome to the server " + user.getUsername())) {
@@ -241,20 +239,21 @@ public class Client implements Runnable {
         try {
             TimeUnit.MILLISECONDS.sleep(100);
 
-            /*for (Group group : list) {
-                System.out.println(group.toString());
-            }*/
+            /*
+             * for (Group group : list) { System.out.println(group.toString()); }
+             */
 
             output.writeObject(new Message(user.getUsername(), Groupcode, "join", ""));
             TimeUnit.MILLISECONDS.sleep(100);
         } catch (InterruptedException e) {
-            
+
             e.printStackTrace();
         } catch (IOException e) {
-            
+
             e.printStackTrace();
         }
-        //System.out.println(getMessage().getMessage().equals("You join the chat " + getMessage().getGroupCode()));
+        // System.out.println(getMessage().getMessage().equals("You join the chat " +
+        // getMessage().getGroupCode()));
         if (getMessage().getMessage().equals("You join the chat " + getMessage().getGroupCode())) {
             return true;
 
@@ -278,7 +277,7 @@ public class Client implements Runnable {
         } catch (IOException ioe) {
             System.out.println(ioe.getMessage());
         } catch (InterruptedException e) {
-            
+
             e.printStackTrace();
         }
         if (getMessage().getMessage().equals("You leave the chat " + getMessage().getGroupCode())) {
@@ -326,6 +325,9 @@ public class Client implements Runnable {
                         System.out.println(connect(Username, Password));
                     }
                     if (send_data.equalsIgnoreCase("join")) {
+                        for(String s : list){
+                            System.out.println(s);
+                        }
                         System.out.println("Which Group?");
                         System.out.println(join(scan.next()));
 
@@ -407,24 +409,20 @@ public class Client implements Runnable {
         }
     }
 
-    
-    /** 
-     * @return Message
-     * Return the last message recieved
+    /**
+     * @return Message Return the last message recieved
      */
     public Message getMessage() {
         return (Message) message;
     }
 
-    
-    /** 
-     * @return ArrayList<Group>
-     * return the list of group 
+    /**
+     * @return ArrayList<Group> return the list of group
      */
-    public ArrayList<String> getLisGroup() {
+    public String[] getLisGroup() {
         try {
             output.writeObject(new Message(user.getUsername(), "", "display list", ""));
-            
+
             TimeUnit.MILLISECONDS.sleep(100);
 
         } catch (IOException e) {
@@ -445,27 +443,33 @@ public class Client implements Runnable {
 
                 Object recieved = input.readObject();
                 if (recieved instanceof ArrayList<?>) {
-                    list = ( ArrayList<String>) recieved;
+              
+                    list= new String[((ArrayList<String>) recieved).size()];
 
-                } else{
+                    // ArrayList to Array Conversion
+                    for (int j = 0; j < ((ArrayList<String>)recieved).size(); j++) {
+
+                        // Assign each value to String array
+                        list[j] = ((ArrayList<String>) recieved).get(j);
+                    }
+
+                } else {
                     recieved = (Message) recieved;
                     message = recieved;
                     System.out.println(((Message) message).getUsername() + " [" + ((Message) message).getGroupCode()
                             + "] " + " >" + ((Message) message).getMessage());
-                    if( ((Message)recieved).getCommand().equals("send"))
-                    {
-                        Globals.message=(Message) recieved;
+                    if (((Message) recieved).getCommand().equals("send")) {
+                        Globals.message = (Message) recieved;
 
                     }
-                    
-                        try{
-                        Globals.message=Globals.clnt.getMessage();
+
+                    try {
+                        Globals.message = Globals.clnt.getMessage();
                         Globals.chatGUI.PutTextToChatTextArea(Globals.message.getGroupCode(),
-                                        Globals.message.getUsername(), Globals.message.getMessage());
-                        }catch(NullPointerException e){
-            
-                        }
-                    
+                                Globals.message.getUsername(), Globals.message.getMessage());
+                    } catch (NullPointerException e) {
+
+                    }
 
                 }
 

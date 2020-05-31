@@ -109,8 +109,13 @@ public class ConnectionHandler implements IConnectionHandler {
                            ArrayList<String> listgroup=new ArrayList<String>();
                         for (Group g : Server.LIST_GROUP) {
                             listgroup.add(g.getGroupCode());
-                            System.out.println(g.getGroupCode());
+                            //System.out.println(g.getGroupCode());
                         }
+                        for (String g : listgroup) {
+                            System.out.println(g);
+                           
+                        }
+                        
                         output.writeObject(listgroup);
                         break;
                     case ("join"):
