@@ -21,7 +21,7 @@ public class Client implements Runnable {
     private String send_data = null;
     private ObjectOutputStream output;
     private ObjectInputStream input;
-    private ArrayList<String> list = new ArrayList<String>();
+    private ArrayList<String>list = new ArrayList<String>();
     private Object message;
 
     public Client(String ip, int port) {
@@ -422,6 +422,8 @@ public class Client implements Runnable {
      * return the list of group 
      */
     public ArrayList<String> getLisGroup() {
+        
+   
         try {
             output.writeObject(new Message(user.getUsername(), "", "display list", ""));
             
@@ -445,7 +447,13 @@ public class Client implements Runnable {
 
                 Object recieved = input.readObject();
                 if (recieved instanceof ArrayList<?>) {
-                    list = ( ArrayList<String>) recieved;
+                
+                   
+                    list = ( ArrayList<String>)recieved;
+                    
+                    for (String p : list) {
+                        System.out.println(p);
+                    }
 
                 } else{
                     recieved = (Message) recieved;
