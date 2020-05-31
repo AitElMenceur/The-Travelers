@@ -456,7 +456,7 @@ public class XmlHandler {
 			String TempString = user.getElementsByTagName("UserName").item(0).getFirstChild().getNodeValue();
 
 			if (TempString.equals(UserName)) {
-				NodeList GroupeCodes = doc.getElementsByTagName("Keys");
+				NodeList GroupeCodes = doc.getElementsByTagName("GroupCode");
 				Element groupcode = null;
 
 				for (int k = 0; k < GroupeCodes.getLength(); k++) {
