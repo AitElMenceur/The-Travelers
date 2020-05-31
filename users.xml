@@ -5,9 +5,18 @@
         <User id="0">
             <UserName>test</UserName>
             <Password>test</Password>
-            <GroupCodes/>
+            <GroupCodes>
+<Keys>Groupe1</Keys>
+</GroupCodes>
             <Friends/>
         </User>
     </Users>
-    <Groups/>
+    <Groups>
+<Group>
+<Groupcode>Groupe1</Groupcode>
+</Group>
+<Group>
+<Groupcode>Groupe1</Groupcode>
+</Group>
+</Groups>
 </Database>
