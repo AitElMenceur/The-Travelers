@@ -9,6 +9,13 @@
             "name": "CodeLens (Launch) - LogInGUI",
             "request": "launch",
             "mainClass": "com.gui.LogInGUI",
+            "projectName": "The-Travelers"
+        },
+        {
+            "type": "java",
+            "name": "CodeLens (Launch) - LogInGUI",
+            "request": "launch",
+            "mainClass": "com.gui.LogInGUI",
             "projectName": "Reseau"
         },
         {

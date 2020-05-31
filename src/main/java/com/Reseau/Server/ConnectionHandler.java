@@ -106,7 +106,7 @@ public class ConnectionHandler implements IConnectionHandler {
 
                         break;
                     case ("display list"):
-                           ArrayList<String> listgroup=new ArrayList<String>();
+                           ArrayList<String> listgroup = new ArrayList<String>();
                         for (Group g : Server.LIST_GROUP) {
                             listgroup.add(g.getGroupCode());
                             //System.out.println(g.getGroupCode());
