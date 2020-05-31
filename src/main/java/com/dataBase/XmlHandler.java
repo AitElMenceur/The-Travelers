@@ -17,6 +17,9 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
+import com.Reseau.Server.AbstractServer;
+import com.Reseau.Server.Server;
+
 public class XmlHandler {
 	private static Document doc;
 	private static final String filepath = "users.xml";
@@ -306,8 +309,15 @@ public class XmlHandler {
 	 * @return boolean Add a group of a user
 	 */
 	public static boolean addGroupCodeToUser(String Groupcode, String UserName) {
+		
+		
+		if(!inTheList(listOfGroups(), Groupcode)) {
+			return false; 	
+		}
+		
 		Element node = doc.createElement("Keys");
 		node.appendChild(doc.createTextNode(Groupcode));
+		
 
 		NodeList users = doc.getElementsByTagName("User");
 		Element user = null;
@@ -641,12 +651,12 @@ public class XmlHandler {
 		NodeList groups = doc.getElementsByTagName("Group");
 		Element currentGroupCode = null;
 		String[] listOfAllGroups = new String[groups.getLength()];
-
+		
 		for (int i = 0; i < groups.getLength(); i++) {
 			currentGroupCode = (Element) groups.item(i);
 
-			listOfAllGroups[i] = currentGroupCode.getElementsByTagName("Groupcode").item(0).getFirstChild()
-					.getNodeValue();
+			listOfAllGroups[i] = currentGroupCode.getElementsByTagName("Groupcode").item(0).getFirstChild().getNodeValue();
+			
 		}
 
 		return listOfAllGroups;
@@ -660,10 +670,11 @@ public class XmlHandler {
 	public static boolean inTheList(String[] list, String value) {
 
 		for (int i = 0; i < list.length; i++) {
-			if (list[i] == value) {
+			if (list[i].equals(value)) {
 				return true;
 			}
 		}
+		
 		return false;
 	}
 
@@ -680,7 +691,7 @@ public class XmlHandler {
 		for (int i = 0; i < users.getLength(); i++) {
 			user = (Element) users.item(i);
 			String TempString = user.getElementsByTagName("UserName").item(0).getFirstChild().getNodeValue();
-			System.out.println(TempString + UserName);
+			//System.out.println(TempString + UserName);
 			if (TempString.equals(UserName)) {
 				if (user.getElementsByTagName("Password").item(0).getFirstChild().getNodeValue().equals(Password))
 					return true;
@@ -689,6 +700,13 @@ public class XmlHandler {
 		}
 		return false;
 	}
-	// fonctions nécessaires toutes faites
+	/*
+	public static void main(String arg[]) {
+		
+		XmlHandler xml = new XmlHandler("Database"); 
 
+		
+		
+    }
+	*/
 }
