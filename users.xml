@@ -15,7 +15,9 @@
             <Password>test</Password>
                                     
             
-            <GroupCodes/>
+            <GroupCodes>
+<Keys>Groupe1</Keys>
+</GroupCodes>
                                     
             
             <Friends/>
