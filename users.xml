@@ -1,14 +1,34 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <Database>
-        
+            
+    
     
     <Users>
-                
+                        
+        
         <User id="0">
-                        
+                                    
+            
             <UserName>test</UserName>
-                        
+                                    
+            
             <Password>test</Password>
+                                    
+            
+            <GroupCodes/>
+                                    
+            
+            <Friends/>
+                                
+        
+        </User>
+                    
+        
+        <User id="1">
+                        
+            <UserName>uhoi</UserName>
+                        
+            <Password>jipo</Password>
                         
             <GroupCodes/>
                         
@@ -16,14 +36,14 @@
                     
         </User>
             
-        <User id="1">
-            <UserName>uhoi</UserName>
-            <Password>jipo</Password>
-            <GroupCodes/>
-            <Friends/>
-        </User>
     </Users>
-        
-    <Groups/>
+            
     
+    <Groups>
+        <Group>
+            <Groupcode>Groupe1</Groupcode>
+        </Group>
+    </Groups>
+        
+
 </Database>

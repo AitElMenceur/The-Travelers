@@ -230,12 +230,9 @@ public class ChatGUI extends JFrame implements ActionListener {
 		contentPane.setLayout(gl_contentPane);
 
 		int numberOfMessages = 2;
-		String[][] Historymessages = { };
+		String[][] Historymessages = {};
 		// need be modified*****
 		// HistoryMessages = displayHistory(doc, GroupCode, numbaerOfMessages);
-		for (int i = 0; i < numberOfMessages; i++) {
-			PutTextToChatTextArea(GroupCode, Historymessages[i][1], Historymessages[i][0]);
-		}
 
 	}
 
@@ -264,6 +261,8 @@ public class ChatGUI extends JFrame implements ActionListener {
 	 */
 	@Override
 	public void actionPerformed(ActionEvent e) {
+		Globals.clnt.getLisGroup();
+		Globals.GroupCode = Globals.clnt.list;
 
 		switch (e.getActionCommand()) {
 			// case "contactorButton" :
