@@ -291,6 +291,8 @@ public class ChatGUI extends JFrame implements ActionListener {
 			case "joinButton":
 				// join function need to be fixed
 				// Please return an integer back*****
+				Globals.clnt.getLisGroup();
+				Globals.GroupCode = Globals.clnt.list;
 				String temp = (String) comboBox.getSelectedItem();
 				boolean Ret = Globals.clnt.join(temp);
 				GroupWarningLabel.setText("");

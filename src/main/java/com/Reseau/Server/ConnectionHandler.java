@@ -122,6 +122,7 @@ public class ConnectionHandler implements IConnectionHandler {
                         if (isConnected) {
 
                             addGroup(((Message) recieved).getGroupCode(), output);
+                            
                             if (XmlHandler.addGroupCodeToUser(((Message) recieved).getGroupCode(),
                                     ((Message) recieved).getUsername())) {
                                 output.writeObject(new Message("Server",
