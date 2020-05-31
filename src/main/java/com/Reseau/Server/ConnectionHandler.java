@@ -53,7 +53,7 @@ public class ConnectionHandler implements IConnectionHandler {
     /**
      * Check for incoming message, and give an appropriate answer
      */
-    public void handle() {
+    public synchronized void handle() {
 
         try {
             boolean finish = false;
@@ -209,8 +209,14 @@ public class ConnectionHandler implements IConnectionHandler {
                         break;
                     case ("delete group"):
                         if (isConnected) {
+
                             if (XmlHandler.deleteGroup(((Message) recieved).getGroupCode())) {
-                                Server.LIST_GROUP.remove(((Message) recieved).getGroupCode());
+                                for(Group g: Server.LIST_GROUP){
+                                    if(g.getGroupCode().equals(((Message) recieved).getGroupCode())){
+                                         Server.LIST_GROUP.remove(g);
+                                    }
+                                }
+                               
                                 output.writeObject(new Message("Server",
                                         ((Message) recieved).getGroupCode(), recieved.getCommand(),
                                         "Group " + ((Message) recieved).getGroupCode() + " has been deleted"));

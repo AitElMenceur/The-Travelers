@@ -17,9 +17,6 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
-import com.Reseau.Server.AbstractServer;
-import com.Reseau.Server.Server;
-
 public class XmlHandler {
 	private static Document doc;
 	private static final String filepath = "users.xml";

@@ -142,7 +142,7 @@ public class LogInGUI extends JDialog implements ActionListener{
 	}
 
 	@Override
-	public void actionPerformed(ActionEvent e) {
+	public  void  actionPerformed(ActionEvent e) {
 		switch(e.getActionCommand()) {
 		case "loginButton" :
 			boolean login = true;
