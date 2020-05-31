@@ -12,8 +12,8 @@ import java.util.Scanner;
 import java.util.concurrent.TimeUnit;
 import com.Reseau.Data.Message;
 import com.Reseau.Data.User;
+import com.gui.Globals;
 import com.Reseau.Data.Data;
-import com.Reseau.Data.Group;
 
 public class Client implements Runnable {
     private User user;
@@ -21,7 +21,7 @@ public class Client implements Runnable {
     private String send_data = null;
     private ObjectOutputStream output;
     private ObjectInputStream input;
-    private ArrayList<Group> list = new ArrayList<Group>();
+    private ArrayList<String> list = new ArrayList<String>();
     private Object message;
 
     public Client(String ip, int port) {
@@ -239,12 +239,11 @@ public class Client implements Runnable {
     public boolean join(String Groupcode) {
 
         try {
-            output.writeObject(new Message(user.getUsername(), "", "display list", ""));
             TimeUnit.MILLISECONDS.sleep(100);
 
-            for (Group group : list) {
+            /*for (Group group : list) {
                 System.out.println(group.toString());
-            }
+            }*/
 
             output.writeObject(new Message(user.getUsername(), Groupcode, "join", ""));
             TimeUnit.MILLISECONDS.sleep(100);
@@ -255,6 +254,7 @@ public class Client implements Runnable {
             
             e.printStackTrace();
         }
+        //System.out.println(getMessage().getMessage().equals("You join the chat " + getMessage().getGroupCode()));
         if (getMessage().getMessage().equals("You join the chat " + getMessage().getGroupCode())) {
             return true;
 
@@ -326,9 +326,6 @@ public class Client implements Runnable {
                         System.out.println(connect(Username, Password));
                     }
                     if (send_data.equalsIgnoreCase("join")) {
-                        for (Group group : list) {
-                            System.out.println(group.toString());
-                        }
                         System.out.println("Which Group?");
                         System.out.println(join(scan.next()));
 
@@ -424,7 +421,20 @@ public class Client implements Runnable {
      * @return ArrayList<Group>
      * return the list of group 
      */
-    public ArrayList<Group> getLisGroup() {
+    public ArrayList<String> getLisGroup() {
+        try {
+            output.writeObject(new Message(user.getUsername(), "", "display list", ""));
+            
+            TimeUnit.MILLISECONDS.sleep(100);
+
+        } catch (IOException e) {
+
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+
+            e.printStackTrace();
+        }
+
         return list;
     }
 
@@ -435,15 +445,19 @@ public class Client implements Runnable {
 
                 Object recieved = input.readObject();
                 if (recieved instanceof ArrayList<?>) {
-                    list = (ArrayList<Group>) recieved;
+                    list = ( ArrayList<String>) recieved;
 
-                } else if (recieved instanceof Message) {
+                } else{
                     recieved = (Message) recieved;
                     message = recieved;
-                    System.out.println(((Message) recieved).getUsername() + " [" + ((Message) recieved).getGroupCode()
-                            + "] " + " >" + ((Message) recieved).getMessage());
-                    // added by Rebecca 05292020
-                   /* ChatGUI chatgui = new ChatGUI();
+                    System.out.println(((Message) message).getUsername() + " [" + ((Message) message).getGroupCode()
+                            + "] " + " >" + ((Message) message).getMessage());
+                    if( ((Message)recieved).getCommand().equals("send"))
+                    {
+                        Globals.message=(Message) recieved;
+
+                    }
+                    /*ChatGUI chatgui;
                     chatgui.PutTextToChatTextArea(((Message) recieved).getGroupCode(),
                             ((Message) recieved).getUsername(), ((Message) recieved).getMessage());*/
 
@@ -455,7 +469,6 @@ public class Client implements Runnable {
                 return;
 
             } catch (IOException e) {
-                // TODO Auto-generate
                 e.printStackTrace();
             }
         }
@@ -465,7 +478,7 @@ public class Client implements Runnable {
      * @param arg[]
      */
     public static void main(String arg[]) {
-        int i = 6669;
+        int i = 6668;
 
         Client client = new Client("localhost", i);
         new Thread(client).start();

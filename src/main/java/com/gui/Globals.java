@@ -1,21 +1,27 @@
 package com.gui;
 
+import java.util.ArrayList;
+
 import com.Reseau.Client.Client;
+import com.Reseau.Data.Message;
+
 
 public class Globals {
-	    public static String UserName;
-		public static char[] Passwd ;
-		static Client clnt = new Client("localhost", 6669);
-	    // public static String[] Chatters = {"Rebecca", "Nassim", "Marine"};
-	    public static String[] Chatters = {};
-	    // public static int totalChatters = 0;
-	    // public static String[] Freinds = {"Nassim", "Marine", "Karina", "Ilyes"};
-	    // public static int totalFreinds = 4;
-	    // public static String[] Users = {"Clara", "Meta", "Stella", "Neils"};
-	    // public static int totalUsers = 4;
-	    // public static String[] GroupMembers = {"Marine", "Nassim",};
-	    // public static int totalgroupMembers = 2;
-	    public static String[] GroupCode = { "AA", "BB", "CC" };
-	    // public static int totalgroupCode = 3;
-	    public static String CurrentGroup;
+	public static String UserName;
+	public static char[] Passwd;
+	static Client clnt = new Client("localhost", 6669);
+	public static Message message=null;
+	public static String[] Chatters = {};
+	//public static ArrayList<String> GroupCode = new ArrayList<String>() ;
+	public static ArrayList<String> GroupCode = initGroupCode() ;
+	public static String CurrentGroup;
+
+	public static ArrayList<String> initGroupCode() {
+		ArrayList<String> gp = new ArrayList<String>();
+		for (String g : clnt.getLisGroup()) {
+			gp.add(g);
+			}
+			return gp;
+			
+		}
 	}

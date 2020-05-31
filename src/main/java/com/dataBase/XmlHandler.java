@@ -692,7 +692,7 @@ public class XmlHandler {
 	 * @return String[]
 	 */
 	public static String[] listOfGroups() {
-		NodeList groups = doc.getElementsByTagName("Groups");
+		NodeList groups = doc.getElementsByTagName("Group");
 		Element currentGroupCode = null;
 		String[] listOfAllGroups = new String[groups.getLength()];
 

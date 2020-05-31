@@ -29,6 +29,7 @@ public class Server extends AbstractServer {
         for (String g : XmlHandler.listOfGroups()) {
 
             list.add(new Group(g));
+            System.out.println(g);
         }
         return list;
 
@@ -36,7 +37,6 @@ public class Server extends AbstractServer {
 
     @Override
     public void connect() {
-        LIST_GROUP.add(new Group("AA"));
         for (int port = 6666; port < 6680; port++) {
             new Thread(new PortListener(ip, port)).start();
         }
