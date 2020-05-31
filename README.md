@@ -10,7 +10,7 @@ This project allows users to chat in the a group for a specific topic.
 
 ### How can I start a chat?
 1. Pull down the combo box to choose a group to join.
-2. press **join** to start the conversation.
+2. Press **join** to start the conversation.
 
 ### No topics that you like?
 1. Type in a topic that you want to talk about.
