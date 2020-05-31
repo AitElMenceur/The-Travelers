@@ -27,8 +27,15 @@ public class ServerTest {
     @Test
     public void TestremoveGroup() {
         Group test = new Group("Groupcode");
-        server.addGroup(test);
-        server.removeGroup(test);
+        server.addGroup(new Group("Groupcode"));
+        server.addGroup(new Group("a"));
+
+        for(Group g: Server.LIST_GROUP){
+        if(g.getGroupCode().equals("Groupcode")){
+            Server.LIST_GROUP.remove(g);
+        }
+        }
+        //server.removeGroup(test);
         assertThat(Server.LIST_GROUP, not(hasItem(test)));
     }
 
