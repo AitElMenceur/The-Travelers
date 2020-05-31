@@ -41,6 +41,7 @@ public class ChatGUI extends JFrame implements ActionListener {
 	private JComboBox<Object> comboBox = new JComboBox<Object>();
 	private JLabel GroupWarningLabel = new JLabel("  ");
 	private JLabel GroupLabel = new JLabel("@");
+	private String GroupCode;
 
 	private Object makeObj(final String item) {
 		return new Object() {
@@ -228,9 +229,8 @@ public class ChatGUI extends JFrame implements ActionListener {
 		chatPanel.add(scrollPane, BorderLayout.CENTER);
 		contentPane.setLayout(gl_contentPane);
 
-		String GroupCode = "AA";
 		int numberOfMessages = 2;
-		String[][] Historymessages = { { "hello", "Rebecca" }, { "okay", "Karina" } };
+		String[][] Historymessages = { };
 		// need be modified*****
 		// HistoryMessages = displayHistory(doc, GroupCode, numbaerOfMessages);
 		for (int i = 0; i < numberOfMessages; i++) {
