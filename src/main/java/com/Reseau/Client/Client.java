@@ -21,7 +21,7 @@ public class Client implements Runnable {
     private String send_data = null;
     private ObjectOutputStream output;
     private ObjectInputStream input;
-    private String list[];
+    public String list[];
     private Object message;
 
     public Client(String ip, int port) {
@@ -312,7 +312,7 @@ public class Client implements Runnable {
         try {
             Scanner scan = new Scanner(System.in);
             String groupcode = null;
-            output.writeObject(new Message(user.getUsername(), "", "display list", ""));
+            getLisGroup();
             while (true) {
                 send_data = scan.nextLine();
                 if (send_data != null) {

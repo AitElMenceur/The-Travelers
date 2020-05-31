@@ -35,6 +35,7 @@ public class LogInGUI extends JDialog implements ActionListener{
 
 
 
+
 	/**
 	 * Create the dialog.
 	 */
@@ -201,6 +202,8 @@ public class LogInGUI extends JDialog implements ActionListener{
 	public static void main(String arg[]) {
 		new Thread(Globals.clnt).start();
           try { 
+			  Globals.clnt.getLisGroup();
+			  Globals.GroupCode=Globals.clnt.list;
         	  LogInGUI dialog = new LogInGUI();
           dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
           dialog.setVisible(true);

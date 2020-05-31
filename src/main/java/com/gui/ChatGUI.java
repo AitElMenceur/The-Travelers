@@ -108,15 +108,14 @@ public class ChatGUI extends JFrame implements ActionListener {
 		UserNameLabel.setText(Globals.UserName);
 
 		comboBox.setEditable(true);
-		for (String s : Globals.GroupCode) {
-
-			comboBox.addItem(makeObj(s));
-
-		}
 
 		comboBox.addPopupMenuListener(new PopupMenuListener() {
 			public void popupMenuWillBecomeVisible(PopupMenuEvent e) {
-				// call needed*****
+				comboBox.removeAllItems();
+				for (String s : Globals.clnt.list) {
+
+					comboBox.addItem(s);
+				}
 
 			}
 
@@ -367,12 +366,16 @@ public class ChatGUI extends JFrame implements ActionListener {
 				String GroupName3;
 				boolean Ret3 = true;
 				GroupName3 = (String) comboBox.getSelectedItem();
+
 				/*
 				 * need to be fixed***** yes it need to be fixed
 				 * 
 				 */
 				Ret3 = Globals.clnt.createGroup(GroupName3);
+
 				if (Ret3) {
+					Globals.clnt.getLisGroup();
+					Globals.GroupCode = Globals.clnt.list;
 					GroupWarningLabel.setForeground(new Color(0, 255, 0));
 					GroupWarningLabel.setText("Group Created!");
 				} else {
@@ -383,11 +386,12 @@ public class ChatGUI extends JFrame implements ActionListener {
 				break;
 
 			case "Delete":
-				boolean Ret4 = true;
 				String GroupName4;
 				GroupName4 = (String) comboBox.getSelectedItem();
-				Ret4 = Globals.clnt.deleteGroup(GroupName4);
+				boolean Ret4 = Globals.clnt.deleteGroup(GroupName4);
 				if (Ret4) {
+					Globals.clnt.getLisGroup();
+					Globals.GroupCode = Globals.clnt.list;
 					GroupWarningLabel.setForeground(new Color(0, 255, 0));
 					GroupWarningLabel.setText("Group Deleted!");
 				} else {
@@ -426,9 +430,22 @@ public class ChatGUI extends JFrame implements ActionListener {
 			StyleConstants.setForeground(left, Color.RED);
 			StyleConstants.setFontSize(left, 14);
 			try {
-				int offset=doc.getLength();
+				int offset = doc.getLength();
 				doc.insertString(doc.getLength(), header + writtenText + "\n", left);
 				doc.setParagraphAttributes(offset, 1, left, false);
+			} catch (BadLocationException e) {
+
+				e.printStackTrace();
+			}
+		} else if (name.equals("Server")) {
+			SimpleAttributeSet center = new SimpleAttributeSet();
+			StyleConstants.setAlignment(center, StyleConstants.ALIGN_CENTER);
+			StyleConstants.setForeground(center, Color.ORANGE);
+			StyleConstants.setFontSize(center, 14);
+			try {
+				int offset = doc.getLength();
+				doc.insertString(doc.getLength(), header + writtenText + "\n", center);
+				doc.setParagraphAttributes(offset, 1, center, false);
 			} catch (BadLocationException e) {
 
 				e.printStackTrace();
@@ -441,8 +458,8 @@ public class ChatGUI extends JFrame implements ActionListener {
 
 			try {
 				header = " : " + name;
-				int offset=doc.getLength();
-				doc.insertString(doc.getLength() , writtenText + header + "\n", right);
+				int offset = doc.getLength();
+				doc.insertString(doc.getLength(), writtenText + header + "\n", right);
 				doc.setParagraphAttributes(offset, 1, right, false);
 			} catch (BadLocationException e) {
 

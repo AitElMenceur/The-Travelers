@@ -70,7 +70,7 @@ public class ConnectionHandler implements IConnectionHandler {
                         if (XmlHandler.checkingLogins(XmlHandler.getDocument(), user.getUsername(),
                                 user.getPassword())) {
                             isConnected = true;
-                            output.writeObject(new Message(user.getUsername(), "", user.getCommand(),
+                            output.writeObject(new Message("Server", "", user.getCommand(),
                                     "Welcome to the server " + user.getUsername()));
                             System.out.println("Connected in port " + socket.getLocalPort());
                             /*
@@ -78,7 +78,7 @@ public class ConnectionHandler implements IConnectionHandler {
                              * addGroup(grp, output); }
                              */
                         } else {
-                            output.writeObject(new Message(user.getUsername(), "", user.getCommand(),
+                            output.writeObject(new Message("Server", "", user.getCommand(),
                                     "Wrong password or username"));
                             isConnected = false;
                         }
@@ -86,10 +86,10 @@ public class ConnectionHandler implements IConnectionHandler {
                     case ("update password"):
                         if (XmlHandler.updatePassword(((Message) recieved).getUsername(),
                                 ((Message) recieved).getGroupCode(), ((Message) recieved).getMessage())) {
-                            output.writeObject(new Message("server", "", "", "Password has been updated"));
+                            output.writeObject(new Message("Server", "", "", "Password has been updated"));
                             isConnected = false;
                         } else {
-                            output.writeObject(new Message("server", "", "", "Error"));
+                            output.writeObject(new Message("Server", "", "", "Error"));
                         }
 
                         break;
@@ -98,24 +98,24 @@ public class ConnectionHandler implements IConnectionHandler {
                                 ((Message) recieved).getCommand()))
                             if (XmlHandler.updateUserName(((Message) recieved).getUsername(),
                                     ((Message) recieved).getMessage())) {
-                                output.writeObject(new Message("server", "", "", "Username has been updated"));
+                                output.writeObject(new Message("Server", "", "", "Username has been updated"));
                                 isConnected = false;
                             } else {
-                                output.writeObject(new Message("server", "", "", "Error"));
+                                output.writeObject(new Message("Server", "", "", "Error"));
                             }
 
                         break;
                     case ("display list"):
-                           ArrayList<String> listgroup = new ArrayList<String>();
+                        ArrayList<String> listgroup = new ArrayList<String>();
                         for (Group g : Server.LIST_GROUP) {
                             listgroup.add(g.getGroupCode());
-                            //System.out.println(g.getGroupCode());
+                            // System.out.println(g.getGroupCode());
                         }
                         for (String g : listgroup) {
                             System.out.println(g);
-                           
+
                         }
-                        
+
                         output.writeObject(listgroup);
                         break;
                     case ("join"):
@@ -124,7 +124,7 @@ public class ConnectionHandler implements IConnectionHandler {
                             addGroup(((Message) recieved).getGroupCode(), output);
                             if (XmlHandler.addGroupCodeToUser(((Message) recieved).getGroupCode(),
                                     ((Message) recieved).getUsername())) {
-                                output.writeObject(new Message(((Message) recieved).getUsername(),
+                                output.writeObject(new Message("Server",
                                         ((Message) recieved).getGroupCode(), recieved.getCommand(),
                                         "You join the chat " + ((Message) recieved).getGroupCode()));
 
@@ -139,12 +139,12 @@ public class ConnectionHandler implements IConnectionHandler {
 
                             if (XmlHandler.deleteGroupcodeOfAUser(((Message) recieved).getGroupCode(),
                                     ((Message) recieved).getUsername())) {
-                                output.writeObject(new Message(((Message) recieved).getUsername(),
+                                output.writeObject(new Message("Server",
                                         ((Message) recieved).getGroupCode(), recieved.getCommand(),
                                         "You leave the chat " + ((Message) recieved).getGroupCode()));
 
                             } else {
-                                output.writeObject(new Message(((Message) recieved).getUsername(),
+                                output.writeObject(new Message("Server",
                                         ((Message) recieved).getGroupCode(), recieved.getCommand(), "Error"));
 
                             }
@@ -162,7 +162,7 @@ public class ConnectionHandler implements IConnectionHandler {
                     case ("disconnect"):
                         if (isConnected) {
                             output.writeObject(
-                                    new Message(((Message) recieved).getUsername(), ((Message) recieved).getGroupCode(),
+                                    new Message("Server", ((Message) recieved).getGroupCode(),
                                             recieved.getCommand(), "GoodBye! " + ((Message) recieved).getUsername()));
                             output.flush();
                             isConnected = false;
@@ -173,11 +173,11 @@ public class ConnectionHandler implements IConnectionHandler {
                         if (isConnected) {
                             if (XmlHandler.createGroup(((Message) recieved).getGroupCode())) {
                                 Server.LIST_GROUP.add(new Group(((Message) recieved).getGroupCode()));
-                                output.writeObject(new Message(((Message) recieved).getUsername(),
+                                output.writeObject(new Message("Server",
                                         ((Message) recieved).getGroupCode(), recieved.getCommand(),
                                         "Group " + ((Message) recieved).getGroupCode() + " has been created"));
                             } else {
-                                output.writeObject(new Message(((Message) recieved).getUsername(),
+                                output.writeObject(new Message("Server",
                                         ((Message) recieved).getGroupCode(), recieved.getCommand(), "Error"));
                             }
                             break;
@@ -187,11 +187,11 @@ public class ConnectionHandler implements IConnectionHandler {
                         System.out.println(user.getUsername());
                         if (XmlHandler.addUser(user.getUsername(), user.getPassword())) {
                             output.writeObject(
-                                    new Message(((Message) recieved).getUsername(), ((Message) recieved).getGroupCode(),
+                                    new Message("Server", ((Message) recieved).getGroupCode(),
                                             recieved.getCommand(), "User has been created"));
 
                         } else {
-                            output.writeObject(new Message(((Message) recieved).getUsername(),
+                            output.writeObject(new Message("Server",
                                     ((Message) recieved).getGroupCode(), recieved.getCommand(), "Error"));
 
                         }
@@ -200,10 +200,10 @@ public class ConnectionHandler implements IConnectionHandler {
                         user = (User) input.readObject();
                         if (XmlHandler.deleteUser(user.getUsername())) {
                             output.writeObject(
-                                    new Message(((Message) recieved).getUsername(), ((Message) recieved).getGroupCode(),
+                                    new Message("Server", ((Message) recieved).getGroupCode(),
                                             recieved.getCommand(), "User has been erased"));
                         } else {
-                            output.writeObject(new Message(((Message) recieved).getUsername(),
+                            output.writeObject(new Message("Server",
                                     ((Message) recieved).getGroupCode(), recieved.getCommand(), "Error"));
                         }
                         break;
@@ -211,11 +211,11 @@ public class ConnectionHandler implements IConnectionHandler {
                         if (isConnected) {
                             if (XmlHandler.deleteGroup(((Message) recieved).getGroupCode())) {
                                 Server.LIST_GROUP.remove(((Message) recieved).getGroupCode());
-                                output.writeObject(new Message(((Message) recieved).getUsername(),
+                                output.writeObject(new Message("Server",
                                         ((Message) recieved).getGroupCode(), recieved.getCommand(),
                                         "Group " + ((Message) recieved).getGroupCode() + " has been deleted"));
                             } else {
-                                output.writeObject(new Message(((Message) recieved).getUsername(),
+                                output.writeObject(new Message("Server",
                                         ((Message) recieved).getGroupCode(), recieved.getCommand(), "Error"));
                             }
 
