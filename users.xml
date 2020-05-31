@@ -1,126 +1,124 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <Database>
-                                
-    
-    
-    
-    
+                    
     
     
     
     <Users>
-                                                                
-        
-        
-        
+                                        
         
         
         
         <User id="0">
-                                                                                                
-            
-            
-            
+                                                            
             
             
             
             <UserName>test</UserName>
-                                                                                                
-            
-            
-            
+                                                            
             
             
             
             <Password>test</Password>
-                        
+                                                            
+            
+            
+            
             <GroupCodes>
+                                                                
                 
-                <Keys>Groupe1</Keys>
                 
+                                                
+                
+                
+                <Keys>k,ml</Keys>
+                                                                
+                
+                
+                <Keys>456</Keys>
+                                                            
+                
+                
+                <Keys>Group12</Keys>
+                                            
+            
             </GroupCodes>
-                        
+                                                            
+            
+            
+            
             <Friends/>
-                                                                                
-        
-        
+                                                        
         
         
         
         </User>
-                                                    
-        
-        
+                                        
         
         
         
         <User id="2">
-                                                                        
-            
+                                                            
             
             
             
             <UserName>Ilyes</UserName>
-                                                                        
-            
+                                                            
             
             
             
             <Password>456</Password>
-                                                                        
+                                                            
             
             
             
-            
-            <GroupCodes>
-                                                                                                
-                
-                
-                
-                
-                <Keys>Groupe1</Keys>
-                                                                                                
-                
-                
-                
-                
-                <Keys>Groupe1</Keys>
-                                                                                            
-            
-            
-            
-            
-            </GroupCodes>
-                                                                        
-            
+            <GroupCodes/>
+                                                            
             
             
             
             <Friends/>
-                                                                    
-        
+                                                        
         
         
         
         </User>
-                                            
-    
+                                    
     
     
     
     </Users>
-        
-    <Groups>
-        
-        <Group>
-            
-            <Groupcode>Groupe1</Groupcode>
-            
-        </Group>
-        
-        <Group>
-            <Groupcode>Group1</Groupcode>
-        </Group>
-    </Groups>
+                    
     
+    
+    
+    <Groups>
+                                    
+        
+        
+        
+    
+        
+        
+        <Group>
+                                    
+            
+            <Groupcode>Group1</Groupcode>
+                                
+        
+        </Group>
+                        
+    
+        
+        <Group>
+                        
+            <Groupcode>456</Groupcode>
+                    
+        </Group>
+            
+    </Groups>
+                
+
+
+
 </Database>

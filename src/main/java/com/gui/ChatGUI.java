@@ -336,10 +336,10 @@ public class ChatGUI extends JFrame implements ActionListener {
 			case "leaveButton":
 				boolean Ret2 = true;
 				// Please return an integer back*****
-				Ret2 = Globals.clnt.leave(Globals.CurrentGroup);
+				
 				GroupWarningLabel.setText("");
-				String GroupName2;
-				GroupName2 = (String) comboBox.getSelectedItem();
+				String GroupName2 = (String) comboBox.getSelectedItem();
+				Ret2 = Globals.clnt.leave(GroupName2,Globals.UserName);
 				if (Ret2) {
 					GroupWarningLabel.setForeground(new Color(0, 255, 0));
 					GroupWarningLabel.setText("Group leaved!");

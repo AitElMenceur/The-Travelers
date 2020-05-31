@@ -266,9 +266,9 @@ public class Client implements Runnable {
      * @param Groupcode leave a group
      * @return
      */
-    public boolean leave(String Groupcode) {
+    public boolean leave(String Groupcode,String Username) {
         try {
-            output.writeObject(new Message("", "", "leave", Groupcode));
+            output.writeObject(new Message(Username, Groupcode, "leave", Groupcode));
 
             TimeUnit.MILLISECONDS.sleep(100);
         } catch (SocketTimeoutException exc) {

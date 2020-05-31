@@ -312,7 +312,7 @@ public class XmlHandler {
 			return false; 	
 		}
 		if (inTheList(listOfGroupsOfAUser(UserName), Groupcode))
-			return false; 
+			return true; 
 		
 		Element node = doc.createElement("Keys");
 		node.appendChild(doc.createTextNode(Groupcode));
@@ -448,6 +448,7 @@ public class XmlHandler {
 	 * @return boolean user leave a group
 	 */
 	public static boolean deleteGroupcodeOfAUser(String Groupcode, String UserName) {
+
 		NodeList users = doc.getElementsByTagName("User");
 		Element user = null;
 
@@ -456,7 +457,7 @@ public class XmlHandler {
 			String TempString = user.getElementsByTagName("UserName").item(0).getFirstChild().getNodeValue();
 
 			if (TempString.equals(UserName)) {
-				NodeList GroupeCodes = doc.getElementsByTagName("GroupCode");
+				NodeList GroupeCodes = user.getElementsByTagName("Keys");
 				Element groupcode = null;
 
 				for (int k = 0; k < GroupeCodes.getLength(); k++) {
@@ -490,6 +491,7 @@ public class XmlHandler {
 
 			if (tempString.equals(Groupcode)) {
 				groupcode.getParentNode().removeChild(groupcode);
+				transformerXml();
 				return true;
 
 			}
