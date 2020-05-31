@@ -1,10 +1,7 @@
 package com.XmlTest;
 
 import static org.junit.Assert.*;
-
-import java.io.FileOutputStream;
 import java.io.StringWriter;
-
 import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerFactory;
