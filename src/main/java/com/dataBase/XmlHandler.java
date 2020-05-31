@@ -308,9 +308,11 @@ public class XmlHandler {
 	public static boolean addGroupCodeToUser(String Groupcode, String UserName) {
 		
 		
-		if(!inTheList(listOfGroups(), Groupcode)) {
+		if(!inTheList(listOfGroups(), Groupcode) ){
 			return false; 	
 		}
+		if (inTheList(listOfGroupsOfAUser(UserName), Groupcode))
+			return false; 
 		
 		Element node = doc.createElement("Keys");
 		node.appendChild(doc.createTextNode(Groupcode));
@@ -584,7 +586,7 @@ public class XmlHandler {
 	 * @return String[]
 	 */
 	public static String[] listOfGroupsOfAUser(String UserName) {
-		String[] ListOfGroups;
+		String[] ListOfGroups; 
 
 		NodeList users = doc.getElementsByTagName("User");
 		Element user = null;
@@ -608,8 +610,8 @@ public class XmlHandler {
 			}
 
 		}
-
-		return null;
+		ListOfGroups = new String[0];
+		return ListOfGroups;
 
 	}
 
@@ -665,7 +667,7 @@ public class XmlHandler {
 	 * @return boolean
 	 */
 	public static boolean inTheList(String[] list, String value) {
-
+		
 		for (int i = 0; i < list.length; i++) {
 			if (list[i].equals(value)) {
 				return true;
@@ -698,12 +700,15 @@ public class XmlHandler {
 		return false;
 	}
 	/*
-	public static void main(String arg[]) {
-		
+	public static void main(String arg[]) {		
 		XmlHandler xml = new XmlHandler("Database"); 
-
+		
+		addGroupCodeToUser("Groupe1", "test"); 
+		System.out.println("main "+ inTheList(listOfGroupsOfAUser("test"), "Groupe1" )); 
+		addGroupCodeToUser("Groupe1", "Test"); 
 		
 		
     }
-	*/
+    */
+	
 }

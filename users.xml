@@ -31,6 +31,13 @@
             <Password>test</Password>
                                                                                     
             
+<<<<<<< HEAD
+=======
+            <GroupCodes>
+<Keys>Groupe1</Keys>
+</GroupCodes>
+                                    
+>>>>>>> 6f3bf5c50ce00e586a95eefeb6f8d531d0eca8df
             
             
             
