@@ -1,6 +1,6 @@
+com\Reseau\Server\MockConnectionHandler.class
+com\XmlTest\XmlHandlerTest.class
 com\Reseau\Server\TestPortListener.class
 com\Reseau\Server\ServerTest.class
 com\Reseau\Server\TestConnectionHandler.class
 com\Reseau\Server\MockPortListener.class
-com\Reseau\Server\MockConnectionHandler.class
-com\XmlTest\XmlHandlerTest.class

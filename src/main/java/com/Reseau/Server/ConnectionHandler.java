@@ -1,4 +1,4 @@
-﻿package com.Reseau.Server;
+package com.Reseau.Server;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;

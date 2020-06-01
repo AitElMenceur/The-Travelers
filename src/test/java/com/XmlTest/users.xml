@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<Database>
+    <Users>
+        <User id="0">
+            <UserName>Nassim</UserName>
+            <Password>MotDePasse</Password>
+            <GroupCodes/>
+            <Friends/>
+        </User>
+    </Users>
+    <Groups/>
+</Database>
