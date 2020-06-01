@@ -64,6 +64,7 @@ public class RegisterGUI extends JDialog {
 						 if(rtn) {
 							 RegisterWarningMessage.setForeground(Color.GREEN);
 							 RegisterWarningMessage.setText("Register Succceeded!");
+							 
 						 }
 						 else {
 							 RegisterWarningMessage.setForeground(Color.RED);

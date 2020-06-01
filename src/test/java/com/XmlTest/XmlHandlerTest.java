@@ -1,4 +1,4 @@
-package com.XmlTest;
+﻿package com.XmlTest;
 
 import static org.junit.Assert.*;
 import java.io.StringWriter;

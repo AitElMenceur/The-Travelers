@@ -1,0 +1,629 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" name="com.XmlTest.XmlHandlerTest" time="0.897" tests="28" errors="0" skipped="0" failures="28">
+  <properties>
+    <property name="java.specification.version" value="14"/>
+    <property name="sun.cpu.isalist" value="amd64"/>
+    <property name="sun.jnu.encoding" value="Cp1252"/>
+    <property name="java.class.path" value="c:\Users\Ilturner\Desktop\Java\Project\The-Travelers\target\test-classes;c:\Users\Ilturner\Desktop\Java\Project\The-Travelers\target\classes;C:\Users\Ilturner\.m2\repository\junit\junit\4.13\junit-4.13.jar;C:\Users\Ilturner\.m2\repository\org\hamcrest\hamcrest-core\1.3\hamcrest-core-1.3.jar;"/>
+    <property name="java.vm.vendor" value="AdoptOpenJDK"/>
+    <property name="sun.arch.data.model" value="64"/>
+    <property name="user.variant" value=""/>
+    <property name="java.vendor.url" value="https://adoptopenjdk.net/"/>
+    <property name="user.timezone" value="Europe/Paris"/>
+    <property name="os.name" value="Windows 7"/>
+    <property name="java.vm.specification.version" value="14"/>
+    <property name="sun.java.launcher" value="SUN_STANDARD"/>
+    <property name="user.country" value="FR"/>
+    <property name="sun.boot.library.path" value="C:\Program Files\AdoptOpenJDK\jdk-14.0.1.7-hotspot\bin"/>
+    <property name="sun.java.command" value="C:\Users\Ilturner\AppData\Local\Temp\surefire4884083666688306210\surefirebooter17467054505923327666.jar C:\Users\Ilturner\AppData\Local\Temp\surefire4884083666688306210 2020-06-01T00-05-07_347-jvmRun1 surefire13732034062056123921tmp surefire_07937514478048372763tmp"/>
+    <property name="jdk.debug" value="release"/>
+    <property name="surefire.test.class.path" value="c:\Users\Ilturner\Desktop\Java\Project\The-Travelers\target\test-classes;c:\Users\Ilturner\Desktop\Java\Project\The-Travelers\target\classes;C:\Users\Ilturner\.m2\repository\junit\junit\4.13\junit-4.13.jar;C:\Users\Ilturner\.m2\repository\org\hamcrest\hamcrest-core\1.3\hamcrest-core-1.3.jar;"/>
+    <property name="sun.cpu.endian" value="little"/>
+    <property name="user.home" value="C:\Users\Ilturner"/>
+    <property name="user.language" value="fr"/>
+    <property name="java.specification.vendor" value="Oracle Corporation"/>
+    <property name="java.version.date" value="2020-04-14"/>
+    <property name="java.home" value="C:\Program Files\AdoptOpenJDK\jdk-14.0.1.7-hotspot"/>
+    <property name="file.separator" value="\"/>
+    <property name="basedir" value="c:\Users\Ilturner\Desktop\Java\Project\The-Travelers"/>
+    <property name="java.vm.compressedOopsMode" value="Zero based"/>
+    <property name="line.separator" value="&#10;"/>
+    <property name="java.vm.specification.vendor" value="Oracle Corporation"/>
+    <property name="java.specification.name" value="Java Platform API Specification"/>
+    <property name="surefire.real.class.path" value="C:\Users\Ilturner\AppData\Local\Temp\surefire4884083666688306210\surefirebooter17467054505923327666.jar"/>
+    <property name="user.script" value=""/>
+    <property name="sun.management.compiler" value="HotSpot 64-Bit Tiered Compilers"/>
+    <property name="java.runtime.version" value="14.0.1+7"/>
+    <property name="user.name" value="Ilturner"/>
+    <property name="path.separator" value=";"/>
+    <property name="os.version" value="6.1"/>
+    <property name="java.runtime.name" value="OpenJDK Runtime Environment"/>
+    <property name="file.encoding" value="Cp1252"/>
+    <property name="java.vm.name" value="OpenJDK 64-Bit Server VM"/>
+    <property name="java.vendor.version" value="AdoptOpenJDK"/>
+    <property name="localRepository" value="C:\Users\Ilturner\.m2\repository"/>
+    <property name="java.vendor.url.bug" value="https://github.com/AdoptOpenJDK/openjdk-support/issues"/>
+    <property name="java.io.tmpdir" value="C:\Users\Ilturner\AppData\Local\Temp\"/>
+    <property name="java.version" value="14.0.1"/>
+    <property name="user.dir" value="c:\Users\Ilturner\Desktop\Java\Project\The-Travelers"/>
+    <property name="os.arch" value="amd64"/>
+    <property name="java.vm.specification.name" value="Java Virtual Machine Specification"/>
+    <property name="sun.os.patch.level" value="Service Pack 1"/>
+    <property name="java.library.path" value="C:\Program Files\AdoptOpenJDK\jdk-14.0.1.7-hotspot\bin;C:\Windows\Sun\Java\bin;C:\Windows\system32;C:\Windows;C:\Program Files\AdoptOpenJDK\jdk-14.0.1.7-hotspot\bin;C:\Program Files (x86)\Common Files\Oracle\Java\javapath;C:\ProgramData\Oracle\Java\javapath;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Program Files\NVIDIA Corporation\NVIDIA NvDLISR;C:\Program Files (x86)\NVIDIA Corporation\PhysX\Common;C:\Android;C:\Program Files\Git\cmd;B:\Mathlab\bin;C:\Users\Ilturner\Miniconda3;C:\Users\Ilturner\Miniconda3\Scripts;C:\Users\Ilturner\Miniconda3\Library\bin;C:\Users\Ilturner\Miniconda2;C:\Users\Ilturner\Miniconda2\Scripts;C:\Users\Ilturner\Miniconda2\Library\bin;C:\Users\Ilturner\AppData\Local\Programs\Microsoft VS Code\bin;."/>
+    <property name="java.vm.info" value="mixed mode, sharing"/>
+    <property name="java.vendor" value="AdoptOpenJDK"/>
+    <property name="java.vm.version" value="14.0.1+7"/>
+    <property name="sun.io.unicode.encoding" value="UnicodeLittle"/>
+    <property name="java.class.version" value="58.0"/>
+  </properties>
+  <testcase name="testAddMessage" classname="com.XmlTest.XmlHandlerTest" time="0.006">
+    <failure message="Not yet implemented" type="java.lang.AssertionError">java.lang.AssertionError: Not yet implemented
+	at com.XmlTest.XmlHandlerTest.testAddMessage(XmlHandlerTest.java:137)
+</failure>
+  </testcase>
+  <testcase name="testGetDocument" classname="com.XmlTest.XmlHandlerTest" time="0">
+    <failure message="Not yet implemented" type="java.lang.AssertionError">java.lang.AssertionError: Not yet implemented
+	at com.XmlTest.XmlHandlerTest.testGetDocument(XmlHandlerTest.java:27)
+</failure>
+  </testcase>
+  <testcase name="testAddGroupCodeToUser" classname="com.XmlTest.XmlHandlerTest" time="0.002">
+    <failure message="Not yet implemented" type="java.lang.AssertionError">java.lang.AssertionError: Not yet implemented
+	at com.XmlTest.XmlHandlerTest.testAddGroupCodeToUser(XmlHandlerTest.java:132)
+</failure>
+  </testcase>
+  <testcase name="testInitializeXml" classname="com.XmlTest.XmlHandlerTest" time="0.002">
+    <failure message="Not yet implemented" type="java.lang.AssertionError">java.lang.AssertionError: Not yet implemented
+	at com.XmlTest.XmlHandlerTest.testInitializeXml(XmlHandlerTest.java:37)
+</failure>
+  </testcase>
+  <testcase name="testDeleteGroupcodeOfAUser" classname="com.XmlTest.XmlHandlerTest" time="0.006">
+    <failure message="Not yet implemented" type="java.lang.AssertionError">java.lang.AssertionError: Not yet implemented
+	at com.XmlTest.XmlHandlerTest.testDeleteGroupcodeOfAUser(XmlHandlerTest.java:152)
+</failure>
+  </testcase>
+  <testcase name="testDeleteGroup" classname="com.XmlTest.XmlHandlerTest" time="0.012">
+    <failure message="Not yet implemented" type="java.lang.AssertionError">java.lang.AssertionError: Not yet implemented
+	at com.XmlTest.XmlHandlerTest.testDeleteGroup(XmlHandlerTest.java:157)
+</failure>
+  </testcase>
+  <testcase name="testDeleteMessage" classname="com.XmlTest.XmlHandlerTest" time="0">
+    <failure message="Not yet implemented" type="java.lang.AssertionError">java.lang.AssertionError: Not yet implemented
+	at com.XmlTest.XmlHandlerTest.testDeleteMessage(XmlHandlerTest.java:147)
+</failure>
+  </testcase>
+  <testcase name="testAddUser" classname="com.XmlTest.XmlHandlerTest" time="0.865">
+    <failure message="Not yet implemented" type="java.lang.AssertionError">java.lang.AssertionError: Not yet implemented
+	at com.XmlTest.XmlHandlerTest.testAddUser(XmlHandlerTest.java:78)
+</failure>
+    <system-out><![CDATA[<?xml version="1.0" encoding="UTF-8" standalone="no"?><Database>
+                                        
+    
+    
+    
+    
+    
+    
+    
+    
+    <Users>
+                                                                                
+        
+        
+        
+        
+        
+        
+        
+        
+        <User id="0">
+                                                                                                                        
+            
+            
+            
+            
+            
+            
+            
+            
+            <UserName>test</UserName>
+                                                                                                                        
+            
+            
+            
+            
+            
+            
+            
+            
+            <Password>test</Password>
+                                                                                                                        
+            
+            
+            
+            
+            
+            
+            
+            
+            <GroupCodes>
+                                                                                                                                                
+                
+                
+                                                
+                
+                
+                
+                
+                
+                
+                
+                <Keys>k,ml</Keys>
+                                                                                                                                                
+                
+                
+                
+                
+                
+                
+                
+                <Keys>456</Keys>
+                                                                                                                                            
+                
+                
+                
+                
+                
+                
+                
+                <Keys>Group12</Keys>
+                                                                                                                            
+            
+            
+                
+                
+                
+                
+                <Keys>Group1</Keys>
+                                                                            
+            
+            
+            
+            </GroupCodes>
+                                                                                                                        
+            
+            
+            
+            
+            
+            
+            
+            
+            <Friends/>
+                                                                                                                    
+        
+        
+        
+        
+        
+        
+        
+        
+        </User>
+                                                                                
+        
+        
+        
+        
+        
+        
+        
+        
+        <User id="2">
+                                                                                                                        
+            
+            
+            
+            
+            
+            
+            
+            
+            <UserName>Ilyes</UserName>
+                                                                                                                        
+            
+            
+            
+            
+            
+            
+            
+            
+            <Password>456</Password>
+                                                                                                                        
+            
+            
+            
+            
+            
+            
+            
+            
+            <GroupCodes/>
+                                                                                                                        
+            
+            
+            
+            
+            
+            
+            
+            
+            <Friends/>
+                                                                                                                    
+        
+        
+        
+        
+        
+        
+        
+        
+        </User>
+                                                                            
+    
+    
+    
+    
+        
+        
+        
+        
+        <User id="2">
+                                                            
+            
+            
+            
+            <UserName>test2</UserName>
+                                                            
+            
+            
+            
+            <Password>test2</Password>
+                                                            
+            
+            
+            
+            <GroupCodes>
+                
+            </GroupCodes>
+                                                            
+            
+            
+            
+            <Friends/>
+                                                        
+        
+        
+        
+        </User>
+                                    
+    
+        
+        
+        <User id="3">
+                                    
+            
+            <UserName>Marine</UserName>
+                                    
+            
+            <Password>MotDePasse</Password>
+                                    
+            
+            <GroupCodes/>
+                                    
+            
+            <Friends/>
+                                
+        
+        </User>
+                    
+        
+        <User id="4">
+                        
+            <UserName>Marine</UserName>
+                        
+            <Password>MotDePasse</Password>
+                        
+            <GroupCodes/>
+                        
+            <Friends/>
+                    
+        </User>
+            
+        <User id="5">
+            <UserName>Marine</UserName>
+            <Password>MotDePasse</Password>
+            <GroupCodes/>
+            <Friends/>
+        </User>
+    <User id="6"><UserName>Marine</UserName><Password>MotDePasse</Password><GroupCodes/><Friends/></User></Users>
+                                        
+    
+    
+    
+    
+    
+    
+    
+    
+    <Groups>
+                                                                            
+        
+        
+        
+    
+        
+        
+        
+                        
+    
+        
+        
+            
+    
+        
+        
+        
+        
+        <Group>
+                                                            
+            
+            
+            
+            <Groupcode>Group1</Groupcode>
+                                                            
+            
+            
+            
+            <UserName>test</UserName>
+                                                            
+            
+            
+            
+            <Message>bonjour</Message>
+                                                            
+            
+            
+            
+            <UserName>test</UserName>
+                                                            
+            
+            
+            
+            <Message>bonjour</Message>
+                                                            
+            
+            
+            
+            <UserName>test2</UserName>
+                                                            
+            
+            
+            
+            <Message>hello</Message>
+                                                            
+            
+            
+            
+            <UserName>test2</UserName>
+                                                            
+            
+            
+            
+            <Message>hello</Message>
+                                                            
+            
+            
+            
+            <UserName>test</UserName>
+                                                            
+            
+            
+            
+            <Message>hello</Message>
+                                                            
+            
+            
+            
+            <UserName>test</UserName>
+                                                            
+            
+            
+            
+            <Message>hello</Message>
+                                                        
+            
+            
+            
+            <UserName>test</UserName>
+                                                
+            
+            
+            <Message>hello</Message>
+                                                
+            
+            
+            <UserName>test</UserName>
+                                                
+            
+            
+            <Message>hello</Message>
+                                                
+            
+            
+            <UserName>test2</UserName>
+                                                
+            
+            
+            <Message>hi</Message>
+                                                
+            
+            
+            <UserName>test2</UserName>
+                                                
+            
+            
+            <Message>hi</Message>
+                                                
+            
+            
+            <UserName>test</UserName>
+                                                
+            
+            
+            <Message>jkh</Message>
+                                                
+            
+            
+            <UserName>test</UserName>
+                                                
+            
+            
+            <Message>jkh</Message>
+                                            
+        
+        
+        </Group>
+                                        
+        
+        
+        
+        <Group>
+                                                            
+            
+            
+            
+            <Groupcode>Group2</Groupcode>
+                                                        
+        
+        
+        
+        </Group>
+                                    
+    
+    
+    
+    </Groups>
+                                    
+
+
+
+
+
+
+
+
+</Database>
+]]></system-out>
+  </testcase>
+  <testcase name="testInTheList" classname="com.XmlTest.XmlHandlerTest" time="0">
+    <failure message="Not yet implemented" type="java.lang.AssertionError">java.lang.AssertionError: Not yet implemented
+	at com.XmlTest.XmlHandlerTest.testInTheList(XmlHandlerTest.java:192)
+</failure>
+  </testcase>
+  <testcase name="testCreateGroup" classname="com.XmlTest.XmlHandlerTest" time="0">
+    <failure message="Not yet implemented" type="java.lang.AssertionError">java.lang.AssertionError: Not yet implemented
+	at com.XmlTest.XmlHandlerTest.testCreateGroup(XmlHandlerTest.java:142)
+</failure>
+  </testcase>
+  <testcase name="testListOfUsersInGroup" classname="com.XmlTest.XmlHandlerTest" time="0">
+    <failure message="Not yet implemented" type="java.lang.AssertionError">java.lang.AssertionError: Not yet implemented
+	at com.XmlTest.XmlHandlerTest.testListOfUsersInGroup(XmlHandlerTest.java:182)
+</failure>
+  </testcase>
+  <testcase name="testListFriend" classname="com.XmlTest.XmlHandlerTest" time="0">
+    <failure message="Not yet implemented" type="java.lang.AssertionError">java.lang.AssertionError: Not yet implemented
+	at com.XmlTest.XmlHandlerTest.testListFriend(XmlHandlerTest.java:172)
+</failure>
+  </testcase>
+  <testcase name="testXmlHandler" classname="com.XmlTest.XmlHandlerTest" time="0">
+    <failure message="Not yet implemented" type="java.lang.AssertionError">java.lang.AssertionError: Not yet implemented
+	at com.XmlTest.XmlHandlerTest.testXmlHandler(XmlHandlerTest.java:22)
+</failure>
+  </testcase>
+  <testcase name="testUpdateUserName" classname="com.XmlTest.XmlHandlerTest" time="0">
+    <failure message="Not yet implemented" type="java.lang.AssertionError">java.lang.AssertionError: Not yet implemented
+	at com.XmlTest.XmlHandlerTest.testUpdateUserName(XmlHandlerTest.java:122)
+</failure>
+  </testcase>
+  <testcase name="testAddElement" classname="com.XmlTest.XmlHandlerTest" time="0">
+    <failure message="Not yet implemented" type="java.lang.AssertionError">java.lang.AssertionError: Not yet implemented
+	at com.XmlTest.XmlHandlerTest.testAddElement(XmlHandlerTest.java:107)
+</failure>
+  </testcase>
+  <testcase name="testCheckingLogins" classname="com.XmlTest.XmlHandlerTest" time="0">
+    <failure message="Not yet implemented" type="java.lang.AssertionError">java.lang.AssertionError: Not yet implemented
+	at com.XmlTest.XmlHandlerTest.testCheckingLogins(XmlHandlerTest.java:197)
+</failure>
+  </testcase>
+  <testcase name="testDeleteFriend" classname="com.XmlTest.XmlHandlerTest" time="0">
+    <failure message="Not yet implemented" type="java.lang.AssertionError">java.lang.AssertionError: Not yet implemented
+	at com.XmlTest.XmlHandlerTest.testDeleteFriend(XmlHandlerTest.java:117)
+</failure>
+  </testcase>
+  <testcase name="testAddFriend" classname="com.XmlTest.XmlHandlerTest" time="0">
+    <failure message="Not yet implemented" type="java.lang.AssertionError">java.lang.AssertionError: Not yet implemented
+	at com.XmlTest.XmlHandlerTest.testAddFriend(XmlHandlerTest.java:102)
+</failure>
+  </testcase>
+  <testcase name="testListOfGroups" classname="com.XmlTest.XmlHandlerTest" time="0">
+    <failure message="Not yet implemented" type="java.lang.AssertionError">java.lang.AssertionError: Not yet implemented
+	at com.XmlTest.XmlHandlerTest.testListOfGroups(XmlHandlerTest.java:187)
+</failure>
+  </testcase>
+  <testcase name="testGetFilepath" classname="com.XmlTest.XmlHandlerTest" time="0">
+    <failure message="Not yet implemented" type="java.lang.AssertionError">java.lang.AssertionError: Not yet implemented
+	at com.XmlTest.XmlHandlerTest.testGetFilepath(XmlHandlerTest.java:32)
+</failure>
+  </testcase>
+  <testcase name="testUpdatePassword" classname="com.XmlTest.XmlHandlerTest" time="0">
+    <failure message="Not yet implemented" type="java.lang.AssertionError">java.lang.AssertionError: Not yet implemented
+	at com.XmlTest.XmlHandlerTest.testUpdatePassword(XmlHandlerTest.java:127)
+</failure>
+  </testcase>
+  <testcase name="testDeleteUser" classname="com.XmlTest.XmlHandlerTest" time="0">
+    <failure message="Not yet implemented" type="java.lang.AssertionError">java.lang.AssertionError: Not yet implemented
+	at com.XmlTest.XmlHandlerTest.testDeleteUser(XmlHandlerTest.java:112)
+</failure>
+  </testcase>
+  <testcase name="testGetLength" classname="com.XmlTest.XmlHandlerTest" time="0">
+    <failure message="Not yet implemented" type="java.lang.AssertionError">java.lang.AssertionError: Not yet implemented
+	at com.XmlTest.XmlHandlerTest.testGetLength(XmlHandlerTest.java:97)
+</failure>
+  </testcase>
+  <testcase name="testDisplayHistory" classname="com.XmlTest.XmlHandlerTest" time="0">
+    <failure message="Not yet implemented" type="java.lang.AssertionError">java.lang.AssertionError: Not yet implemented
+	at com.XmlTest.XmlHandlerTest.testDisplayHistory(XmlHandlerTest.java:162)
+</failure>
+  </testcase>
+  <testcase name="testTransformerXml" classname="com.XmlTest.XmlHandlerTest" time="0">
+    <failure message="Not yet implemented" type="java.lang.AssertionError">java.lang.AssertionError: Not yet implemented
+	at com.XmlTest.XmlHandlerTest.testTransformerXml(XmlHandlerTest.java:47)
+</failure>
+  </testcase>
+  <testcase name="testNewXml" classname="com.XmlTest.XmlHandlerTest" time="0">
+    <failure message="Not yet implemented" type="java.lang.AssertionError">java.lang.AssertionError: Not yet implemented
+	at com.XmlTest.XmlHandlerTest.testNewXml(XmlHandlerTest.java:42)
+</failure>
+  </testcase>
+  <testcase name="testListUser" classname="com.XmlTest.XmlHandlerTest" time="0.001">
+    <failure message="Not yet implemented" type="java.lang.AssertionError">java.lang.AssertionError: Not yet implemented
+	at com.XmlTest.XmlHandlerTest.testListUser(XmlHandlerTest.java:167)
+</failure>
+  </testcase>
+  <testcase name="testListOfGroupsOfAUser" classname="com.XmlTest.XmlHandlerTest" time="0">
+    <failure message="Not yet implemented" type="java.lang.AssertionError">java.lang.AssertionError: Not yet implemented
+	at com.XmlTest.XmlHandlerTest.testListOfGroupsOfAUser(XmlHandlerTest.java:177)
+</failure>
+  </testcase>
+</testsuite>

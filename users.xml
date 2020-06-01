@@ -1,41 +1,66 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <Database>
-                            
+                                                
+    
+    
+    
+    
+    
     
     
     
     
     
     <Users>
-                                                        
+                                                                                                
+        
+        
+        
+        
+        
         
         
         
         
         
         <User id="0">
-                                                                                    
+                                                                                                                                                
+            
+            
+            
+            
+            
             
             
             
             
             
             <UserName>test</UserName>
-                                                                                    
+                                                                                                                                                
+            
+            
+            
+            
+            
             
             
             
             
             
             <Password>test</Password>
-                                                                                    
+                                                                                                                                                
+            
+            
+            
+            
+            
             
             
             
             
             
             <GroupCodes>
-                                                                                                
+                                                                                                                                                                                
                 
                 
                                                 
@@ -43,68 +68,182 @@
                 
                 
                 
+                
+                
+                
+                
+                
                 <Keys>k,ml</Keys>
-                                                                                                
+                                                                                                                                                                                
+                
+                
+                
+                
+                
                 
                 
                 
                 
                 <Keys>456</Keys>
-                                                                                            
+                                                                                                                                                                            
+                
+                
+                
+                
+                
                 
                 
                 
                 
                 <Keys>Group12</Keys>
-                                                                            
+                                                                                                                                                            
             
             
                 
+                
+                
+                
+                
+                
                 <Keys>Group1</Keys>
-                            
+                                                                                                            
+            
+            
+            
+            
+            
             </GroupCodes>
-                                                                                    
+                                                                                                                                                
+            
+            
+            
+            
+            
             
             
             
             
             
             <Friends/>
-                                                                                
+                                                                                                                                            
+        
+        
+        
+        
+        
         
         
         
         
         
         </User>
-                                                        
+                                                                                                
+        
+        
+        
+        
+        
         
         
         
         
         
         <User id="2">
-                                                                                    
+                                                                                                                                                
+            
+            
+            
+            
+            
             
             
             
             
             
             <UserName>Ilyes</UserName>
-                                                                                    
+                                                                                                                                                
+            
+            
+            
+            
+            
             
             
             
             
             
             <Password>456</Password>
-                                                                                    
+                                                                                                                                                
+            
+            
+            
+            
+            
             
             
             
             
             
             <GroupCodes/>
+                                                                                                                                                
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            <Friends/>
+                                                                                                                                            
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        </User>
+                                                                                            
+    
+    
+    
+    
+        
+        
+        
+        
+        
+        
+        <User id="2">
+                                                                                    
+            
+            
+            
+            
+            
+            <UserName>test2</UserName>
+                                                                                    
+            
+            
+            
+            
+            
+            <Password>test2</Password>
+                                                                                    
+            
+            
+            
+            
+            
+            <GroupCodes>
+                
+            </GroupCodes>
                                                                                     
             
             
@@ -121,33 +260,120 @@
         </User>
                                                     
     
-    
-    
-    
         
-        <User id="2">
+        
+        
+        
+        <User id="3">
+                                                            
+            
+            
+            
+            <UserName>Marine</UserName>
+                                                            
+            
+            
+            
+            <Password>MotDePasse</Password>
+                                                            
+            
+            
+            
+            <GroupCodes/>
+                                                            
+            
+            
+            
+            <Friends/>
+                                                        
+        
+        
+        
+        </User>
+                                    
+        
+        
+        
+        <User id="4">
+                                                
+            
+            
+            <UserName>Marine</UserName>
+                                                
+            
+            
+            <Password>MotDePasse</Password>
+                                                
+            
+            
+            <GroupCodes/>
+                                                
+            
+            
+            <Friends/>
+                                            
+        
+        
+        </User>
+                            
+        
+        
+        <User id="5">
+                                    
+            
+            <UserName>Marine</UserName>
+                                    
+            
+            <Password>MotDePasse</Password>
+                                    
+            
+            <GroupCodes/>
+                                    
+            
+            <Friends/>
+                                
+        
+        </User>
+                    
+        
+        <User id="6">
                         
-            <UserName>test2</UserName>
+            <UserName>Marine</UserName>
                         
-            <Password>test2</Password>
+            <Password>MotDePasse</Password>
                         
-            <GroupCodes>
-                
-            </GroupCodes>
+            <GroupCodes/>
                         
             <Friends/>
                     
         </User>
             
+        <User id="7">
+            <UserName>Ilyes</UserName>
+            <Password>0000</Password>
+            <GroupCodes/>
+            <Friends/>
+        </User>
+        <User id="8">
+            <UserName>ilyes</UserName>
+            <Password>0000</Password>
+            <GroupCodes/>
+            <Friends/>
+        </User>
     </Users>
-                            
+                                                
+    
+    
+    
+    
+    
     
     
     
     
     
     <Groups>
-                                                    
+                                                                                            
         
         
         
@@ -162,56 +388,216 @@
             
     
         
+        
+        
+        
+        
+        
         <Group>
-                        
+                                                                                    
+            
+            
+            
+            
+            
             <Groupcode>Group1</Groupcode>
-                        
-            <UserName>test</UserName>
-                        
-            <Message>bonjour</Message>
-                        
-            <UserName>test</UserName>
-                        
-            <Message>bonjour</Message>
-                        
-            <UserName>test2</UserName>
-                        
-            <Message>hello</Message>
-                        
-            <UserName>test2</UserName>
-                        
-            <Message>hello</Message>
-                        
-            <UserName>test</UserName>
-                        
-            <Message>hello</Message>
-                        
-            <UserName>test</UserName>
-                        
-            <Message>hello</Message>
-                    
-            <UserName>test</UserName>
-            <Message>hello</Message>
-            <UserName>test</UserName>
-            <Message>hello</Message>
-            <UserName>test2</UserName>
-            <Message>hi</Message>
-            <UserName>test2</UserName>
-            <Message>hi</Message>
-            <UserName>test</UserName>
-            <Message>jkh</Message>
-            <UserName>test</UserName>
-            <Message>jkh</Message>
-        </Group>
-                
-        <Group>
-                        
-            <Groupcode>Group2</Groupcode>
-                    
-        </Group>
+                                                                                    
             
+            
+            
+            
+            
+            <UserName>test</UserName>
+                                                                                    
+            
+            
+            
+            
+            
+            <Message>bonjour</Message>
+                                                                                    
+            
+            
+            
+            
+            
+            <UserName>test</UserName>
+                                                                                    
+            
+            
+            
+            
+            
+            <Message>bonjour</Message>
+                                                                                    
+            
+            
+            
+            
+            
+            <UserName>test2</UserName>
+                                                                                    
+            
+            
+            
+            
+            
+            <Message>hello</Message>
+                                                                                    
+            
+            
+            
+            
+            
+            <UserName>test2</UserName>
+                                                                                    
+            
+            
+            
+            
+            
+            <Message>hello</Message>
+                                                                                    
+            
+            
+            
+            
+            
+            <UserName>test</UserName>
+                                                                                    
+            
+            
+            
+            
+            
+            <Message>hello</Message>
+                                                                                    
+            
+            
+            
+            
+            
+            <UserName>test</UserName>
+                                                                                    
+            
+            
+            
+            
+            
+            <Message>hello</Message>
+                                                                                
+            
+            
+            
+            
+            
+            <UserName>test</UserName>
+                                                                        
+            
+            
+            
+            
+            <Message>hello</Message>
+                                                                        
+            
+            
+            
+            
+            <UserName>test</UserName>
+                                                                        
+            
+            
+            
+            
+            <Message>hello</Message>
+                                                                        
+            
+            
+            
+            
+            <UserName>test2</UserName>
+                                                                        
+            
+            
+            
+            
+            <Message>hi</Message>
+                                                                        
+            
+            
+            
+            
+            <UserName>test2</UserName>
+                                                                        
+            
+            
+            
+            
+            <Message>hi</Message>
+                                                                        
+            
+            
+            
+            
+            <UserName>test</UserName>
+                                                                        
+            
+            
+            
+            
+            <Message>jkh</Message>
+                                                                        
+            
+            
+            
+            
+            <UserName>test</UserName>
+                                                                        
+            
+            
+            
+            
+            <Message>jkh</Message>
+                                                                    
+        
+        
+        
+        
+        </Group>
+                                                        
+        
+        
+        
+        
+        
+        <Group>
+                                                                                    
+            
+            
+            
+            
+            
+            <Groupcode>Group2</Groupcode>
+                                                                                
+        
+        
+        
+        
+        
+        </Group>
+                                                    
+    
+    
+    
+    
+    
     </Groups>
-                        
+                                            
+
+
+
+
+
 
 
 

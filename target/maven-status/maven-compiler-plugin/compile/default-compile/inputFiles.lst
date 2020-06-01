@@ -1,12 +1,19 @@
-c:\Users\ilyes\Documents\projet java\Network2\The-Travelers\src\main\java\com\Reseau\Interface\IPortListener.java
-c:\Users\ilyes\Documents\projet java\Network2\The-Travelers\src\main\java\com\Reseau\ConnectionHandler.java
-c:\Users\ilyes\Documents\projet java\Network2\The-Travelers\src\main\java\com\Reseau\PortListener.java
-c:\Users\ilyes\Documents\projet java\Network2\The-Travelers\src\main\java\com\Reseau\Interface\IConnectionHandler.java
-c:\Users\ilyes\Documents\projet java\Network2\The-Travelers\src\main\java\com\Reseau\Client.java
-c:\Users\ilyes\Documents\projet java\Network2\The-Travelers\src\main\java\com\Reseau\Group.java
-c:\Users\ilyes\Documents\projet java\Network2\The-Travelers\src\main\java\com\Reseau\Host.java
-c:\Users\ilyes\Documents\projet java\Network2\The-Travelers\src\main\java\com\Reseau\Server.java
-c:\Users\ilyes\Documents\projet java\Network2\The-Travelers\src\main\java\com\Reseau\AbstractServer.java
-c:\Users\ilyes\Documents\projet java\Network2\The-Travelers\src\main\java\com\Reseau\Interface\IMessage.java
-c:\Users\ilyes\Documents\projet java\Network2\The-Travelers\src\main\java\com\Reseau\Message.java
-c:\Users\ilyes\Documents\projet java\Network2\The-Travelers\src\main\java\com\Reseau\Data.java
+c:\Users\Ilturner\Desktop\Java\Project\The-Travelers\src\main\java\com\gui\Globals.java
+c:\Users\Ilturner\Desktop\Java\Project\The-Travelers\src\main\java\com\Reseau\Server\ConnectionHandler.java
+c:\Users\Ilturner\Desktop\Java\Project\The-Travelers\src\main\java\com\Reseau\Data\Data.java
+c:\Users\Ilturner\Desktop\Java\Project\The-Travelers\src\main\java\com\Reseau\Interface\IConnectionHandler.java
+c:\Users\Ilturner\Desktop\Java\Project\The-Travelers\src\main\java\com\Reseau\Data\Message.java
+c:\Users\Ilturner\Desktop\Java\Project\The-Travelers\src\main\java\com\dataBase\XmlHandler.java
+c:\Users\Ilturner\Desktop\Java\Project\The-Travelers\src\main\java\com\Reseau\Client\Singletons.java
+c:\Users\Ilturner\Desktop\Java\Project\The-Travelers\src\main\java\com\Reseau\Interface\IMessage.java
+c:\Users\Ilturner\Desktop\Java\Project\The-Travelers\src\main\java\com\Reseau\Interface\IPortListener.java
+c:\Users\Ilturner\Desktop\Java\Project\The-Travelers\src\main\java\com\gui\LogInGUI.java
+c:\Users\Ilturner\Desktop\Java\Project\The-Travelers\src\main\java\com\Reseau\Client\Client.java
+c:\Users\Ilturner\Desktop\Java\Project\The-Travelers\src\main\java\com\gui\RegisterGUI.java
+c:\Users\Ilturner\Desktop\Java\Project\The-Travelers\src\main\java\com\gui\ChatGUI.java
+c:\Users\Ilturner\Desktop\Java\Project\The-Travelers\src\main\java\com\Reseau\Data\Group.java
+c:\Users\Ilturner\Desktop\Java\Project\The-Travelers\src\main\java\com\Reseau\Server\PortListener.java
+c:\Users\Ilturner\Desktop\Java\Project\The-Travelers\src\main\java\com\Reseau\Server\AbstractServer.java
+c:\Users\Ilturner\Desktop\Java\Project\The-Travelers\src\main\java\com\Reseau\Server\Host.java
+c:\Users\Ilturner\Desktop\Java\Project\The-Travelers\src\main\java\com\Reseau\Data\User.java
+c:\Users\Ilturner\Desktop\Java\Project\The-Travelers\src\main\java\com\Reseau\Server\Server.java
