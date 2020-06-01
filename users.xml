@@ -1,26 +1,89 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <Database>
-                
+                            
+    
+    
+    
     
     
     <Users>
-                                
+                                                        
+        
+        
+        
         
         
         <User id="0">
-                                                
+                                                                                    
+            
+            
+            
             
             
             <UserName>testt</UserName>
-                                                
+                                                                                    
+            
+            
+            
             
             
             <Password>testr</Password>
+                                                                                    
+            
+            
+            
+            
+            
+            <GroupCodes>
+                                                                
+                
+                
+                <Keys>Group1</Keys>
+                                                            
+            
+            
+            </GroupCodes>
+                                                                                    
+            
+            
+            
+            
+            
+            <Friends/>
+                                                                                
+        
+        
+        
+        
+        
+        </User>
+                                                    
+    
+        
+    
+        
+        
+        
+        <User id="1">
+                                                
+            
+            
+            <UserName>USER</UserName>
+                                                
+            
+            
+            <Password>MDP</Password>
                                                 
             
             
             <GroupCodes>
+                                                                
+                
+                
                 <Keys>Group1</Keys>
+                                                            
+            
+            
             </GroupCodes>
                                                 
             
@@ -31,31 +94,177 @@
         
         </User>
                             
-    
         
-    
-        <User id="1">
-            <UserName>USER</UserName>
-            <Password>MDP</Password>
+        
+        <User id="2">
+                                    
+            
+            
+            <Password>MotDePasse</Password>
+                                    
+            
             <GroupCodes>
-                <Keys>Group1</Keys>
+                                
+                <Keys>FRUIT</Keys>
+                            
             </GroupCodes>
+                                    
+            
+            <Friends/>
+                                
+        
+        </User>
+                    
+        
+        <User id="3">
+                        
+            <UserName>Nassim</UserName>
+                        
+            <Password>MotDePasse</Password>
+                        
+            <GroupCodes/>
+                        
+            <Friends/>
+                    
+        </User>
+                
+        <User id="4">
+                        
+            <UserName>Karina</UserName>
+                        
+            <Password>vert</Password>
+                        
+            <GroupCodes/>
+                        
+            <Friends/>
+                    
+        </User>
+                
+        <User id="5">
+                        
+            <UserName>Julie</UserName>
+                        
+            <Password>vert</Password>
+                        
+            <GroupCodes/>
+                        
+            <Friends/>
+                    
+        </User>
+                
+        <User id="6">
+                        
+            <UserName>Marine</UserName>
+                        
+            <Password>MotDePasse</Password>
+                        
+            <GroupCodes/>
+                        
+            <Friends/>
+                    
+        </User>
+            
+        <User id="7">
+            <UserName>Nassim</UserName>
+            <Password>MotDePasse</Password>
+            <GroupCodes/>
+            <Friends/>
+        </User>
+        <User id="8">
+            <UserName>Karina</UserName>
+            <Password>vert</Password>
+            <GroupCodes/>
+            <Friends/>
+        </User>
+        <User id="9">
+            <UserName>Julie</UserName>
+            <Password>vert</Password>
+            <GroupCodes/>
+            <Friends/>
+        </User>
+        <User id="10">
+            <UserName>Marine</UserName>
+            <Password>MotDePasse</Password>
+            <GroupCodes/>
             <Friends/>
         </User>
     </Users>
-                
+                            
+    
+    
+    
     
     
     <Groups>
+                                
+        
+        
         <Group>
+                                                
+            
+            
             <Groupcode>Group1</Groupcode>
+                                                
+            
+            
             <UserName>testt</UserName>
+                                                
+            
+            
             <Message>gfh</Message>
+                                                
+            
+            
             <UserName>USER</UserName>
+                                                
+            
+            
             <Message>hfghf</Message>
+                                            
+        
+        
+        </Group>
+                            
+    
+        
+        <Group>
+                        
+            <Groupcode>FRUIT</Groupcode>
+                        
+            <UserName>Nassim</UserName>
+                    
+        </Group>
+                
+        
+        <Group>
+                        
+            <Groupcode>REWING</Groupcode>
+                    
+        </Group>
+            
+        <Group>
+            <Groupcode>FRUIT</Groupcode>
+        </Group>
+        <Group>
+            <Groupcode>FRUIT</Groupcode>
+        </Group>
+        <Group>
+            <Groupcode>FRUIT</Groupcode>
+        </Group>
+        <Group>
+            <Groupcode>COMPTEZ-VOUS</Groupcode>
+        </Group>
+        <Group>
+            <Groupcode>COMPTEZ-VOUS</Groupcode>
+        </Group>
+        <Group>
+            <Groupcode>REWING</Groupcode>
         </Group>
     </Groups>
-            
+                        
+
+
+
 
 
 </Database>

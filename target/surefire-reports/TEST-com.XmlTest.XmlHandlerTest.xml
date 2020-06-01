@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" name="com.XmlTest.XmlHandlerTest" time="0.122" tests="27" errors="0" skipped="0" failures="0">
+<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" name="com.XmlTest.XmlHandlerTest" time="0.006" tests="27" errors="0" skipped="0" failures="0">
   <properties>
     <property name="java.specification.version" value="14"/>
     <property name="sun.cpu.isalist" value="amd64"/>
@@ -15,7 +15,7 @@
     <property name="sun.java.launcher" value="SUN_STANDARD"/>
     <property name="user.country" value="FR"/>
     <property name="sun.boot.library.path" value="C:\Program Files\AdoptOpenJDK\jdk-14.0.1.7-hotspot\bin"/>
-    <property name="sun.java.command" value="C:\Users\Ilturner\AppData\Local\Temp\surefire18111991804728305059\surefirebooter14286134085143506545.jar C:\Users\Ilturner\AppData\Local\Temp\surefire18111991804728305059 2020-06-01T21-36-38_887-jvmRun1 surefire18249425970717519098tmp surefire_013677443961020767061tmp"/>
+    <property name="sun.java.command" value="C:\Users\Ilturner\AppData\Local\Temp\surefire88708046566658009\surefirebooter11480130395401119628.jar C:\Users\Ilturner\AppData\Local\Temp\surefire88708046566658009 2020-06-01T23-32-04_680-jvmRun1 surefire477265035687030959tmp surefire_015143921353478544249tmp"/>
     <property name="jdk.debug" value="release"/>
     <property name="surefire.test.class.path" value="C:\Users\Ilturner\Desktop\Java\Project\The-Travelers\target\test-classes;C:\Users\Ilturner\Desktop\Java\Project\The-Travelers\target\classes;C:\Users\Ilturner\.m2\repository\junit\junit\4.13\junit-4.13.jar;C:\Users\Ilturner\.m2\repository\org\hamcrest\hamcrest-core\1.3\hamcrest-core-1.3.jar;"/>
     <property name="sun.cpu.endian" value="little"/>
@@ -30,7 +30,7 @@
     <property name="line.separator" value="&#10;"/>
     <property name="java.vm.specification.vendor" value="Oracle Corporation"/>
     <property name="java.specification.name" value="Java Platform API Specification"/>
-    <property name="surefire.real.class.path" value="C:\Users\Ilturner\AppData\Local\Temp\surefire18111991804728305059\surefirebooter14286134085143506545.jar"/>
+    <property name="surefire.real.class.path" value="C:\Users\Ilturner\AppData\Local\Temp\surefire88708046566658009\surefirebooter11480130395401119628.jar"/>
     <property name="user.script" value=""/>
     <property name="sun.management.compiler" value="HotSpot 64-Bit Tiered Compilers"/>
     <property name="java.runtime.version" value="14.0.1+7"/>
@@ -56,31 +56,31 @@
     <property name="sun.io.unicode.encoding" value="UnicodeLittle"/>
     <property name="java.class.version" value="58.0"/>
   </properties>
-  <testcase name="testAddMessage" classname="com.XmlTest.XmlHandlerTest" time="0.056"/>
+  <testcase name="testAddMessage" classname="com.XmlTest.XmlHandlerTest" time="0"/>
   <testcase name="testGetDocument" classname="com.XmlTest.XmlHandlerTest" time="0"/>
-  <testcase name="testAddGroupCodeToUser" classname="com.XmlTest.XmlHandlerTest" time="0.007"/>
+  <testcase name="testAddGroupCodeToUser" classname="com.XmlTest.XmlHandlerTest" time="0"/>
   <testcase name="testInitializeXml" classname="com.XmlTest.XmlHandlerTest" time="0"/>
-  <testcase name="testDeleteGroupcodeOfAUser" classname="com.XmlTest.XmlHandlerTest" time="0.01"/>
+  <testcase name="testDeleteGroupcodeOfAUser" classname="com.XmlTest.XmlHandlerTest" time="0"/>
   <testcase name="testDeleteGroup" classname="com.XmlTest.XmlHandlerTest" time="0"/>
   <testcase name="testDeleteMessage" classname="com.XmlTest.XmlHandlerTest" time="0"/>
-  <testcase name="testAddUser" classname="com.XmlTest.XmlHandlerTest" time="0.002"/>
+  <testcase name="testAddUser" classname="com.XmlTest.XmlHandlerTest" time="0"/>
   <testcase name="testInTheList" classname="com.XmlTest.XmlHandlerTest" time="0"/>
-  <testcase name="testCreateGroup" classname="com.XmlTest.XmlHandlerTest" time="0.003"/>
-  <testcase name="testListOfUsersInGroup" classname="com.XmlTest.XmlHandlerTest" time="0.007"/>
+  <testcase name="testCreateGroup" classname="com.XmlTest.XmlHandlerTest" time="0"/>
+  <testcase name="testListOfUsersInGroup" classname="com.XmlTest.XmlHandlerTest" time="0"/>
   <testcase name="testListFriend" classname="com.XmlTest.XmlHandlerTest" time="0"/>
-  <testcase name="testUpdateUserName" classname="com.XmlTest.XmlHandlerTest" time="0"/>
-  <testcase name="testAddElement" classname="com.XmlTest.XmlHandlerTest" time="0.001"/>
+  <testcase name="testUpdateUserName" classname="com.XmlTest.XmlHandlerTest" time="0.001"/>
+  <testcase name="testAddElement" classname="com.XmlTest.XmlHandlerTest" time="0"/>
   <testcase name="testCheckingLogins" classname="com.XmlTest.XmlHandlerTest" time="0"/>
-  <testcase name="testDeleteFriend" classname="com.XmlTest.XmlHandlerTest" time="0.003"/>
-  <testcase name="testAddFriend" classname="com.XmlTest.XmlHandlerTest" time="0.003"/>
-  <testcase name="testListOfGroups" classname="com.XmlTest.XmlHandlerTest" time="0.01"/>
+  <testcase name="testDeleteFriend" classname="com.XmlTest.XmlHandlerTest" time="0"/>
+  <testcase name="testAddFriend" classname="com.XmlTest.XmlHandlerTest" time="0"/>
+  <testcase name="testListOfGroups" classname="com.XmlTest.XmlHandlerTest" time="0"/>
   <testcase name="testGetFilepath" classname="com.XmlTest.XmlHandlerTest" time="0"/>
-  <testcase name="testUpdatePassword" classname="com.XmlTest.XmlHandlerTest" time="0.003"/>
-  <testcase name="testDeleteUser" classname="com.XmlTest.XmlHandlerTest" time="0.002"/>
+  <testcase name="testUpdatePassword" classname="com.XmlTest.XmlHandlerTest" time="0"/>
+  <testcase name="testDeleteUser" classname="com.XmlTest.XmlHandlerTest" time="0"/>
   <testcase name="testGetLength" classname="com.XmlTest.XmlHandlerTest" time="0"/>
-  <testcase name="testDisplayHistory" classname="com.XmlTest.XmlHandlerTest" time="0.004"/>
+  <testcase name="testDisplayHistory" classname="com.XmlTest.XmlHandlerTest" time="0"/>
   <testcase name="testTransformerXml" classname="com.XmlTest.XmlHandlerTest" time="0"/>
-  <testcase name="testNewXml" classname="com.XmlTest.XmlHandlerTest" time="0.001"/>
+  <testcase name="testNewXml" classname="com.XmlTest.XmlHandlerTest" time="0"/>
   <testcase name="testListUser" classname="com.XmlTest.XmlHandlerTest" time="0"/>
   <testcase name="testListOfGroupsOfAUser" classname="com.XmlTest.XmlHandlerTest" time="0"/>
 </testsuite>

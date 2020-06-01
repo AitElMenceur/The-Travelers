@@ -19,8 +19,8 @@ import org.w3c.dom.NodeList;
 
 public class XmlHandler {
 	private static Document doc;
-	//private static final String filepath = "users.xml";
-	private static final String filepath = "\\src\\test\\java\\com\\XmlTest\\"; // junit test 
+	private static final String filepath = "users.xml";
+	//private static final String filepath = "\\src\\test\\java\\com\\XmlTest\\"; // junit test 
 
 	public XmlHandler(String XmlName) {
 
@@ -101,8 +101,8 @@ public class XmlHandler {
 			DOMSource source = new DOMSource(doc);
 			// write to console or file
 
-			//File TempFile = new File("users.xml");
-			File TempFile = new File("src\\test\\java\\com\\XmlTest\\users.xml"); // For junit 
+			File TempFile = new File("users.xml");
+			//File TempFile = new File("src\\test\\java\\com\\XmlTest\\users.xml"); // For junit 
 
 			TempFile.createNewFile();
 
