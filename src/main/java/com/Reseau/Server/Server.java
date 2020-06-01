@@ -25,6 +25,11 @@ public class Server extends AbstractServer {
         }
     }
 
+    
+    /** 
+     * @return CopyOnWriteArrayList<Group>
+     * Initialize the list of groups
+     */
     private CopyOnWriteArrayList<Group> initializeGroup() {
         CopyOnWriteArrayList<Group> list = new CopyOnWriteArrayList<Group>();
         for (String g : XmlHandler.listOfGroups()) {
@@ -44,18 +49,38 @@ public class Server extends AbstractServer {
 
     }
 
+    
+    /** 
+     * @param a
+     * Append a group to the list
+     */
     public synchronized void addGroup(Group a) {
         LIST_GROUP.add(a);
     }
 
+    
+    /** 
+     * @param a
+     * delete a group to the list
+     */
     public synchronized void removeGroup(Group a) {
         LIST_GROUP.remove(a);
     }
 
+    
+    /** 
+     * @param user
+     * Add a user to the list
+     */
     public synchronized void addUser(User user) {
         LIST_USER.add(user);
     }
 
+    
+    /** 
+     * delete a user from the list 
+     * @param user
+     */
     public synchronized void removeUser(User user) {
         LIST_USER.remove(user);
     }

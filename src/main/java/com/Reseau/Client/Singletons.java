@@ -10,6 +10,13 @@ public class Singletons {
     private static ObjectInputStream input;
     private static Socket socket;
 
+    /**
+     * Build an Socket client
+     * 
+     * @param ip
+     * @param port
+     * @return Socket
+     */
     public static Socket getSocket(String ip, int port) {
         if (socket == null) {
 
@@ -23,6 +30,13 @@ public class Singletons {
         return socket;
     }
 
+    /**
+     * Build an outputStream
+     * 
+     * @param socket
+     * @return ObjectOutputStream
+     * 
+     */
     public static ObjectOutputStream getOutput(Socket socket) {
         if (output == null) {
 
@@ -36,6 +50,12 @@ public class Singletons {
         return output;
     }
 
+    /**
+     * Build an inputStream
+     * @param socket
+     * @return ObjectInputStream
+     * 
+     */
     public static ObjectInputStream getInput(Socket socket) {
         if (input == null) {
 

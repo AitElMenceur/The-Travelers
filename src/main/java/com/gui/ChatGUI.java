@@ -266,7 +266,7 @@ public class ChatGUI extends JFrame implements ActionListener {
 			// break;
 			case "disconnectButton":
 				// need to be modified*****
-				Globals.clnt.diconnect();
+				Globals.clnt.disconnect();
 				System.exit(0);
 				break;
 			case "sendButton":

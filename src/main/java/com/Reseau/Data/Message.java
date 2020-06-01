@@ -10,49 +10,50 @@ public class Message extends Data implements IMessage {
     private String Username;
     private String GroupCode;
     private String Message;
-    public Message(String username,String groupcode,String command,String message){
-      super(command);
-      this.Username=username;
-      this.GroupCode=groupcode;
-      this.Message=message;
+
+    public Message(String username, String groupcode, String command, String message) {
+        super(command);
+        this.Username = username;
+        this.GroupCode = groupcode;
+        this.Message = message;
     }
-    
-    /** 
+
+    /**
      * @return String
      */
     public String toString() {
-        return Username+GroupCode+getCommand()+Message;
-      }
-    
-    /** 
-     * @return String
+        return Username + GroupCode + getCommand() + Message;
+    }
+
+    /**
      * Getter for the Username
+     * @return String
      */
-    public String getUsername(){
+    public String getUsername() {
         return Username;
     }
-    
-    /** 
-     * @return String
+
+    /**
      * Getter for the GroupCode
+     * @return String 
      */
-    public String getGroupCode(){
+    public String getGroupCode() {
         return GroupCode;
     }
-    
-    /** 
-     * @param GC
+
+    /**
      * Setter for the Username
+     * @param GC 
      */
-    public void setGroupCode(String GC){
+    public void setGroupCode(String GC) {
         GroupCode = GC;
     }
-    
-    /** 
-     * @return String
+
+    /**
      * Getter for the Message
+     * @return String 
      */
-    public String getMessage(){
+    public String getMessage() {
         return Message;
     }
 }

@@ -1,4 +1,4 @@
-﻿package com.Reseau.Server;
+package com.Reseau.Server;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -22,8 +22,9 @@ public class ConnectionHandler implements IConnectionHandler {
     }
 
     /**
+     *  Remove a group from the list
      * @param groupNumber
-     * @param output      Remove a group from the list
+     * @param output     
      */
     public synchronized void removeGroup(String groupNumber, ObjectOutputStream output) {
         for (Group p : Server.LIST_GROUP) {
@@ -34,8 +35,9 @@ public class ConnectionHandler implements IConnectionHandler {
     }
 
     /**
+     * Add a group from the list
      * @param groupNumber
-     * @param output      Add a group from the list
+     * @param output      
      */
     public synchronized void addGroup(String groupNumber, ObjectOutputStream output) {
         for (Group p : Server.LIST_GROUP) {

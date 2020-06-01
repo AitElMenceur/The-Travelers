@@ -1,11 +1,10 @@
-﻿package com.Reseau.Client;
+package com.Reseau.Client;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.ConnectException;
 import java.net.Socket;
-import java.net.SocketAddress;
 import java.net.SocketException;
 import java.net.SocketTimeoutException;
 import java.net.UnknownHostException;
@@ -38,7 +37,10 @@ public class Client implements Runnable {
         }
 
     }
-
+    /**
+     * 
+     * Close a connection 
+     */
     public void close() {
         try {
             socket.close();
@@ -49,7 +51,8 @@ public class Client implements Runnable {
     }
 
     /**
-     * @param groupCode Create a new group in the server
+     * Create a new group in the server
+     * @param groupCode 
      * @return
      */
     public boolean createGroup(String groupCode) {
@@ -106,8 +109,8 @@ public class Client implements Runnable {
 
     /**
      * @param username
-     * @param nu
-     * @param op
+     * @param newusername
+     * @param oldusername
      * @return boolean
      */
     public boolean updateUsername(String username, String nu, String op) {
@@ -134,7 +137,8 @@ public class Client implements Runnable {
     }
 
     /**
-     * @param groupCode delete group from the server
+     * delete group from the server
+     * @param groupCode 
      * @return
      */
     public boolean deleteGroup(String groupCode) {
@@ -156,8 +160,9 @@ public class Client implements Runnable {
     }
 
     /**
+     * Send a request to create a user
      * @param Username
-     * @param Password Send a request to create a user
+     * @param Password 
      * @return
      */
     public boolean createUser(String Username, String Password) {
@@ -181,7 +186,8 @@ public class Client implements Runnable {
     }
 
     /**
-     * @param username Send a request to delete a user
+     * Send a request to delete a user
+     * @param username 
      * @return
      */
     public boolean deleteUser(String username) {
@@ -206,7 +212,6 @@ public class Client implements Runnable {
     }
 
     /**
-     * 
      * connect to the server
      */
     public boolean connect(String Username, String Password) {
@@ -230,10 +235,9 @@ public class Client implements Runnable {
     }
 
     /**
-     * 
      * disconnect from the server
      */
-    public void diconnect() {
+    public void disconnect() {
         try {
             output.writeObject(new Message(user.getUsername(), "", "disconnect", ""));
             output.close();
@@ -248,18 +252,14 @@ public class Client implements Runnable {
     }
 
     /**
-     * @param Groupcode Join a group
-     * @return
+     * Join a group
+     * @param Groupcode 
+     * @return state
      */
     public boolean join(String Groupcode) {
 
         try {
             TimeUnit.MILLISECONDS.sleep(100);
-
-            /*
-             * for (Group group : list) { System.out.println(group.toString()); }
-             */
-
             output.writeObject(new Message(user.getUsername(), Groupcode, "join", ""));
             TimeUnit.MILLISECONDS.sleep(100);
         } catch (InterruptedException e) {
@@ -279,7 +279,8 @@ public class Client implements Runnable {
     }
 
     /**
-     * @param Groupcode leave a group
+     *  leave a group
+     * @param Groupcode
      * @return
      */
     public boolean leave(String Groupcode, String Username) {
@@ -305,9 +306,10 @@ public class Client implements Runnable {
     }
 
     /**
+     * Sending a message to the server
      * @param Groupcode
      * @param Name
-     * @param message   Sending a message to the server
+     * @param message   
      */
     public void send(String Groupcode, String Name, String message) {
         try {
@@ -321,7 +323,8 @@ public class Client implements Runnable {
     }
 
     /**
-     * @param Send Message and command to the server,
+     * Message and command to the server,
+     * @param Send 
      * @deprecated used for terminals
      */
     public void writing() {
@@ -426,14 +429,16 @@ public class Client implements Runnable {
     }
 
     /**
-     * @return Message Return the last message recieved
+     *  Return the last message recieved
+     * @return message
      */
     public Message getMessage() {
         return (Message) message;
     }
 
     /**
-     * @return ArrayList<Group> return the list of group
+     *  Return the list of group
+     * @return ArrayList<Group>
      */
     public String[] getLisGroup() {
         try {

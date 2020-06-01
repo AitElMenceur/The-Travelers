@@ -17,8 +17,8 @@ public abstract class Data implements Serializable // must implement Serializabl
 
   
   /** 
-   * @return String
    * toString implementation
+   * @return String
    */
   public String toString() {
     return getCommand();
@@ -26,8 +26,9 @@ public abstract class Data implements Serializable // must implement Serializabl
 
   
   /** 
-   * @return String
    * Getter for command
+   * @return String
+
    */
   public String getCommand() {
     return command;

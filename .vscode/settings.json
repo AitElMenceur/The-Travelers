@@ -1,4 +1,5 @@
 {
-    "java.configuration.updateBuildConfiguration": "interactive",
-    "git.autofetch": true
+    "java.configuration.updateBuildConfiguration": "automatic",
+    "git.autofetch": true,
+    "maven.view": "hierarchical"
 }

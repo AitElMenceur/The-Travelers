@@ -1,4 +1,4 @@
-﻿package com.XmlTest;
+package com.XmlTest;
 
 import static org.junit.Assert.*;
 import java.io.StringWriter;
@@ -13,7 +13,7 @@ import org.junit.Test;
 import com.dataBase.XmlHandler;
 	
 public class XmlHandlerTest {
-
+/*
 	XmlHandler xml = new XmlHandler("Database"); 
 	
 	@Test
@@ -195,6 +195,6 @@ public class XmlHandlerTest {
 	@Test
 	public void testCheckingLogins() {
 		fail("Not yet implemented");
-	}
+	}*/
 
 }

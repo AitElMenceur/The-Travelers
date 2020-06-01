@@ -1,4 +1,4 @@
-﻿package com.Reseau.Server;
+package com.Reseau.Server;
 
 import static org.junit.Assert.assertEquals;
 

@@ -7,9 +7,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class Group implements Serializable{
-    /**
-     *
-     */
+
     private static final long serialVersionUID = 1L;
     private  Set<ObjectOutputStream> writers = new HashSet<>();
     private String groupCode;
