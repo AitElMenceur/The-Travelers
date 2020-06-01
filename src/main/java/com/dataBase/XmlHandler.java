@@ -22,8 +22,13 @@ public class XmlHandler {
 	private static final String filepath = "users.xml";
 
 	public XmlHandler(String XmlName) {
-		doc = initializeXml(XmlName);
+
+		doc = Singleton.getDocument(doc); 
+		if(doc == null) 
+			doc = initializeXml(XmlName);
+
 	}
+
 
 	/**
 	 * @return Document
