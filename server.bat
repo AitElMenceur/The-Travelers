@@ -1,0 +1,1 @@
+java -jar target\The-Travelers-1.0-SNAPSHOT-Server.jar
