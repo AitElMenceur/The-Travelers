@@ -109,8 +109,8 @@ public class Client implements Runnable {
 
     /**
      * @param username
-     * @param newusername
-     * @param oldusername
+     * @param nu
+     * @param op
      * @return boolean
      */
     public boolean updateUsername(String username, String nu, String op) {
@@ -324,7 +324,7 @@ public class Client implements Runnable {
 
     /**
      * Message and command to the server,
-     * @param Send 
+     * @param  
      * @deprecated used for terminals
      */
     public void writing() {
