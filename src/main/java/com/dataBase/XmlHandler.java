@@ -23,8 +23,7 @@ public class XmlHandler {
 
 	public XmlHandler(String XmlName) {
 
-		doc = Singleton.getDocument(doc); 
-		if(doc == null) 
+		if(doc == null) // Singleton design pattern 
 			doc = initializeXml(XmlName);
 
 	}
@@ -732,14 +731,14 @@ public class XmlHandler {
 		System.out.println(addGroupCodeToUser("Groupe1", "test")); 
 		System.out.println("main "+ inTheList(listOfGroupsOfAUser("test"), "Groupe1" )); 
 		System.out.println(addGroupCodeToUser("Groupe1", "Test")); 
-		*/
+		
 		
 		String[] test = listOfGroupsOfAUser("test"); 
 		for (int i = 0 ; i < test.length ; i ++) {
 			System.out.println(test[i]); 
 		}
 		System.out.println("FIN"); 
-		
+		*/
     }
     
 	
