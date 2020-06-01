@@ -13,7 +13,8 @@ Networking team : (Ilyes AIT EL MENCEUR, Karina MOUSSAOUI)
 	Also, did the coder and reviewer practice. 
 
 GUI team: (Rebecca LEE YI HSUAN, Celine LAM) 
-	All the GUI structure implementation was done by Rebecca alone. 
+	All the GUI structure implementation was done by Rebecca (who went back to Taiwan) alone and the other teams came to help her finish.
+
 
  
 
