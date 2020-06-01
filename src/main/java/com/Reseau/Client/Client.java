@@ -37,9 +37,10 @@ public class Client implements Runnable {
         }
 
     }
+
     /**
      * 
-     * Close a connection 
+     * Close a connection
      */
     public void close() {
         try {
@@ -52,7 +53,8 @@ public class Client implements Runnable {
 
     /**
      * Create a new group in the server
-     * @param groupCode 
+     * 
+     * @param groupCode
      * @return
      */
     public boolean createGroup(String groupCode) {
@@ -116,7 +118,7 @@ public class Client implements Runnable {
     public boolean updateUsername(String username, String nu, String op) {
         try {
 
-            Message message = new Message(username, op, "update password", nu);
+            Message message = new Message(username, op, "update username", nu);
 
             output.writeObject(message);
             TimeUnit.MILLISECONDS.sleep(100);
@@ -138,7 +140,8 @@ public class Client implements Runnable {
 
     /**
      * delete group from the server
-     * @param groupCode 
+     * 
+     * @param groupCode
      * @return
      */
     public boolean deleteGroup(String groupCode) {
@@ -161,8 +164,9 @@ public class Client implements Runnable {
 
     /**
      * Send a request to create a user
+     * 
      * @param Username
-     * @param Password 
+     * @param Password
      * @return
      */
     public boolean createUser(String Username, String Password) {
@@ -187,14 +191,17 @@ public class Client implements Runnable {
 
     /**
      * Send a request to delete a user
-     * @param username 
+     * 
+     * @param Username
+     * @param Password
      * @return
      */
-    public boolean deleteUser(String username) {
+    public boolean deleteUser(String Username, String Password) {
         try {
-            Message message = new Message(username, "", "delete user", "");
+            Message message = new Message(Username, "", "delete user", Password);
 
             output.writeObject(message);
+            output.writeObject(new User(Username, Password));
             TimeUnit.MILLISECONDS.sleep(100);
         } catch (IOException e) {
             e.printStackTrace();
@@ -253,7 +260,8 @@ public class Client implements Runnable {
 
     /**
      * Join a group
-     * @param Groupcode 
+     * 
+     * @param Groupcode
      * @return state
      */
     public boolean join(String Groupcode) {
@@ -279,7 +287,8 @@ public class Client implements Runnable {
     }
 
     /**
-     *  leave a group
+     * leave a group
+     * 
      * @param Groupcode
      * @return
      */
@@ -307,9 +316,10 @@ public class Client implements Runnable {
 
     /**
      * Sending a message to the server
+     * 
      * @param Groupcode
      * @param Name
-     * @param message   
+     * @param message
      */
     public void send(String Groupcode, String Name, String message) {
         try {
@@ -324,7 +334,8 @@ public class Client implements Runnable {
 
     /**
      * Message and command to the server,
-     * @param  
+     * 
+     * @param
      * @deprecated used for terminals
      */
     public void writing() {
@@ -384,7 +395,8 @@ public class Client implements Runnable {
                             System.out.println("Which User?");
                             String username = scan.next();
                             System.out.println("Which Password?");
-                            System.out.println(deleteUser(username));
+                            String password = scan.next();
+                            System.out.println(deleteUser(username, password));
 
                             output.writeObject(user);
                         } catch (IOException e) {
@@ -429,7 +441,8 @@ public class Client implements Runnable {
     }
 
     /**
-     *  Return the last message recieved
+     * Return the last message recieved
+     * 
      * @return message
      */
     public Message getMessage() {
@@ -437,7 +450,8 @@ public class Client implements Runnable {
     }
 
     /**
-     *  Return the list of group
+     * Return the list of group
+     * 
      * @return ArrayList<Group>
      */
     public String[] getLisGroup() {
@@ -508,19 +522,15 @@ public class Client implements Runnable {
     /**
      * @param arg[]
      */
-    /*public static void main(String arg[]) {
-        int i = 6667;
-
-        Client client = null;
-        try {
-            client = new Client("localhost", i);
-        } catch (ConnectException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
-        new Thread(client).start();
-
-        client.writing();
-
-    }*/
+    /*
+     * public static void main(String arg[]) { int i = 6667;
+     * 
+     * Client client = null; try { client = new Client("localhost", i); } catch
+     * (ConnectException e) { // TODO Auto-generated catch block
+     * e.printStackTrace(); } new Thread(client).start();
+     * 
+     * client.writing();
+     * 
+     * }
+     */
 }

@@ -87,7 +87,7 @@ public class ConnectionHandler implements IConnectionHandler {
                         break;
                     case ("update password"):
                         if (XmlHandler.updatePassword(((Message) recieved).getUsername(),
-                                ((Message) recieved).getGroupCode(), ((Message) recieved).getMessage())) {
+                                ((Message) recieved).getMessage(), ((Message) recieved).getGroupCode())) {
                             output.writeObject(new Message("Server", "", "", "Password has been updated"));
                             isConnected = false;
                         } else {
@@ -96,8 +96,6 @@ public class ConnectionHandler implements IConnectionHandler {
 
                         break;
                     case ("update username"):
-                        if (XmlHandler.checkingLogins(XmlHandler.getDocument(), ((Message) recieved).getUsername(),
-                                ((Message) recieved).getCommand()))
                             if (XmlHandler.updateUserName(((Message) recieved).getUsername(),
                                     ((Message) recieved).getMessage())) {
                                 output.writeObject(new Message("Server", "", "", "Username has been updated"));
