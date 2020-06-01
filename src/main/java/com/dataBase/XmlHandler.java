@@ -19,7 +19,8 @@ import org.w3c.dom.NodeList;
 
 public class XmlHandler {
 	private static Document doc;
-	private static final String filepath = "users.xml";
+	//private static final String filepath = "users.xml";
+	private static final String filepath = "\\src\\test\\java\\com\\XmlTest\\"; // junit test 
 
 	public XmlHandler(String XmlName) {
 
@@ -58,7 +59,7 @@ public class XmlHandler {
 			Document doc = dBuilder.parse(filepath);
 			return doc;
 		} catch (Exception e) {
-			return newXml("Database");
+			return newXml(xmlRoot);
 		}
 	}
 
@@ -100,7 +101,8 @@ public class XmlHandler {
 			DOMSource source = new DOMSource(doc);
 			// write to console or file
 
-			File TempFile = new File("users.xml");
+			//File TempFile = new File("users.xml");
+			File TempFile = new File("src\\test\\java\\com\\XmlTest\\users.xml"); // For junit 
 
 			TempFile.createNewFile();
 
@@ -301,7 +303,7 @@ public class XmlHandler {
 			String TempString = user.getElementsByTagName("Password").item(0).getFirstChild().getNodeValue();
 
 			String TempUserName = user.getElementsByTagName("UserName").item(0).getFirstChild().getNodeValue();
-			System.out.println(TempString + "=" + OldPassword + TempUserName + NewPassword);
+			//System.out.println(TempString + "=" + OldPassword + TempUserName + NewPassword);
 			if (TempString.equals(OldPassword) && TempUserName.equals(UserName)) {
 				user.getElementsByTagName("Password").item(0).getFirstChild().setNodeValue(NewPassword);
 				transformerXml();
