@@ -215,7 +215,7 @@ public class LogInGUI extends JDialog implements ActionListener {
 			} catch (ConnectException e1) {
 				port += 1;
 				if(port>6680){
-					System.out.println("too many co");
+					System.out.println("too many connection");
 					System.exit(-1);
 				}
 			}

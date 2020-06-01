@@ -503,7 +503,7 @@ public class Client implements Runnable {
     /**
      * @param arg[]
      */
-    public static void main(String arg[]) {
+    /*public static void main(String arg[]) {
         int i = 6667;
 
         Client client = null;
@@ -517,5 +517,5 @@ public class Client implements Runnable {
 
         client.writing();
 
-    }
+    }*/
 }
